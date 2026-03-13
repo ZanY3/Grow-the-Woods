@@ -8,6 +8,19 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public PlantData PlantData => plantData;
 
+    private float timer;
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+
+        while (timer >= plantData.productionInterval)
+        {
+            CoinManager.Instance.AddCoins(plantData.seedsAmount);
+            timer -= plantData.productionInterval;
+        }
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         tooltip.SetActive(true);
