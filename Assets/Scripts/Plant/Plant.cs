@@ -21,11 +21,13 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tooltip.SetActive(true);
+        if(!PackManager.Instance.waitingForClick)
+            tooltip.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        tooltip.SetActive(false);
+        if (!PackManager.Instance.waitingForClick)
+            tooltip.SetActive(false);
     }
 }

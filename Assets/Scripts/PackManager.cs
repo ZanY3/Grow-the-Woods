@@ -1,19 +1,34 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PackManager : MonoBehaviour
 {
+    public static PackManager Instance;
+    public GameObject plantPrefab;
+    [SerializeField] private Cell[] cells;
+
     [SerializeField] private GameObject allPanel;
     [SerializeField] private GameObject openPanel;
     [SerializeField] private GameObject plantChoosePanel;
     [SerializeField] private Button confirmBtn;
+    [SerializeField] private TMP_Text placeClueTxt;
+
+    [HideInInspector] public bool waitingForClick = false;
 
     private PlantData selectedPlant;
     private GameObject selectedPlantObject;
 
-    private float selectedScale = 1.1f;
+    private float selectedScale = 1.2f;
     private const float baseScale = 1.5f;
-
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+            Destroy(gameObject);
+        else
+            Instance = this;
+    }
     public void OpenPack()
     {
         openPanel.SetActive(false);
@@ -52,9 +67,26 @@ public class PackManager : MonoBehaviour
 
     public void ConfirmChoice()
     {
-        openPanel.SetActive(false);
+        if (selectedPlantObject != null)
+        {
+            SetScale(selectedPlantObject, baseScale);
+        }
+
+        openPanel.SetActive(true);
         plantChoosePanel.SetActive(false);
         allPanel.SetActive(false);
+
+        waitingForClick = true;
+
+        ChangePlaceClueTxt(
+            "Click on the <color=yellow>cell</color> where you want to place the <color=green>plant</color>",
+            true
+        );
+    }
+    public void ChangePlaceClueTxt(string text, bool state)
+    {
+        placeClueTxt.text = text;
+        placeClueTxt.gameObject.SetActive(state);
     }
 
     private void SetScale(GameObject obj, float scale)
