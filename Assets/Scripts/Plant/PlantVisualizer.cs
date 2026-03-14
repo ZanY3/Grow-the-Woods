@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlantVisualizer : MonoBehaviour
 {
-    private PlantData data;
+    [SerializeField] private PlantData data;
     [SerializeField] private Image iconImg;
 
     [Space][Header("Tooltip")]
@@ -12,12 +12,23 @@ public class PlantVisualizer : MonoBehaviour
     [SerializeField] private TMP_Text descriptionTxt;
     [SerializeField] private TMP_Text rarityTxt;
 
+    private Plant plant;
+    public PlantData Data => data;
+
     private void Start()
     {
-        data = GetComponent<Plant>().PlantData;
+        if(data != null)
+        {
+            SetData(data);
+        }
         VisualizePlant();
     }
-
+    public void SetData(PlantData dataToSet)
+    {
+        data = dataToSet;
+        if(plant != null)
+            plant.plantData = data;
+    }
     public void VisualizePlant()
     {
         iconImg.sprite = data.icon;

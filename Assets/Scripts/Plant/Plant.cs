@@ -3,10 +3,8 @@ using UnityEngine.EventSystems;
 
 public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private PlantData plantData;
+    [HideInInspector] public PlantData plantData;
     [SerializeField] private GameObject tooltip;
-
-    public PlantData PlantData => plantData;
 
     private float timer;
 

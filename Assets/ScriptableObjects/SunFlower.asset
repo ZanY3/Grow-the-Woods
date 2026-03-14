@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
   icon: {fileID: -256329436847572505, guid: 87e4757eb866b9b4399d64ea47c782a5, type: 3}
   seedsAmount: 1
-  productionInterval: 2
-  description: Produces 1 coin every 2 second.
+  productionInterval: 1
+  description: Produces 1 coin every second.
   rarity: 0
