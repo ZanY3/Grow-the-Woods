@@ -36,7 +36,10 @@ public class ShopManager : MonoBehaviour
 
     public void ChangeBuyBtnVisibility(bool state)
     {
-        buyBtn.GetComponent<Button>().interactable = state;
+        if(PackManager.Instance.IsExistEmptyCell())
+        {
+            buyBtn.GetComponent<Button>().interactable = state;
+        }
     }
     public void BuyOffer()
     {

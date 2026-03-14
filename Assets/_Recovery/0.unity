@@ -6290,6 +6290,7 @@ MonoBehaviour:
   shovelObj: {fileID: 683042630}
   shovelClueTxt: {fileID: 765877679}
   canvas: {fileID: 217090836}
+  waitingForAction: 0
 --- !u!114 &1891508465 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}

@@ -38,6 +38,15 @@ public class PackManager : MonoBehaviour
         selectedPlant = null;
         selectedPlantObject = null;
     }
+    public bool IsExistEmptyCell()
+    {
+        for(int i = 0; i <  cells.Length; i++)
+        {
+            if (!cells[i].isOccupied)
+                return true;
+        }
+        return false;
+    }
 
     public void SelectPlant(GameObject plant)
     {
@@ -77,6 +86,7 @@ public class PackManager : MonoBehaviour
         allPanel.SetActive(false);
 
         waitingForClick = true;
+        InteractionManager.Instance.canPressBtns = false;
 
         ChangePlaceClueTxt(
             "Click on the <color=yellow>cell</color> where you want to place the <color=green>plant</color>",

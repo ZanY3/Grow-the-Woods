@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [HideInInspector] public PlantData plantData;
     [SerializeField] private GameObject tooltip;
@@ -29,5 +29,15 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (!PackManager.Instance.waitingForClick)
             tooltip.SetActive(false);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if(ShovelSlot.Instance.waitingForAction)
+        {
+            GetComponentInParent<Cell>().isOccupied = false;
+            Destroy(gameObject);
+            ShovelSlot.Instance.ReturnShowel();
+        }
     }
 }

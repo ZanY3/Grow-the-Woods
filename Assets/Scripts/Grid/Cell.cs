@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private bool isOccupied;
+    [HideInInspector] public bool isOccupied;
     private Color startColor;
     private Image image;
 
@@ -40,6 +40,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             if(!isOccupied)
             {
                 Plant(PackManager.Instance.plantPrefab);
+                InteractionManager.Instance.canPressBtns = true;
             }
             else
             {
