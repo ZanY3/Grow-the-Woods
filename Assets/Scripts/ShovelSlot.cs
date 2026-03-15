@@ -12,6 +12,7 @@ public class ShovelSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Canvas canvas;
 
     [HideInInspector] public bool waitingForAction = false;
+
     private Vector2 shovelStartPos;
     private Transform startParent;
     private Image shovelImage;
@@ -54,6 +55,10 @@ public class ShovelSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        // ❗ Нельзя брать лопату когда ставим растение
+        if (PackManager.Instance.waitingForClick)
+            return;
+
         waitingForAction = !waitingForAction;
 
         shovelClueTxt.SetActive(waitingForAction);
@@ -69,13 +74,18 @@ public class ShovelSlot : MonoBehaviour, IPointerClickHandler
             ReturnShowel();
         }
     }
+
     public void ReturnShowel()
     {
         waitingForAction = false;
+
         shovelClueTxt.SetActive(false);
+
         shovelObj.SetParent(startParent, false);
         shovelObj.anchoredPosition = shovelStartPos;
+
         shovelImage.raycastTarget = true;
+
         InteractionManager.Instance.canPressBtns = true;
     }
 }
