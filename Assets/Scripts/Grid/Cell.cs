@@ -20,6 +20,8 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     [SerializeField] private Sprite closedCellSprite;
     [SerializeField] private Sprite openedCellSprite;
 
+    [SerializeField] private Color notEnoughColor = new Color(1f, 0.3f, 0.3f); // ДОБАВЛЕНО
+
     private Color startColor;
     private Vector3 startScale;
     private Image image;
@@ -100,17 +102,24 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             }
         }
 
-        if (!isBuyied && !PackManager.Instance.waitingForClick && !ShovelSlot.Instance.waitingForAction && CoinManager.Instance.Coins >= price)
+        if (!isBuyied && !PackManager.Instance.waitingForClick && !ShovelSlot.Instance.waitingForAction)
         {
-            transform.DOKill();
-            transform.DOScale(startScale, 0.15f);
+            if (CoinManager.Instance.Coins >= price)
+            {
+                transform.DOKill();
+                transform.DOScale(startScale, 0.15f);
 
-            CoinManager.Instance.SpendCoins(price);
+                CoinManager.Instance.SpendCoins(price);
 
-            PlaySpendCoinsAnim();
+                PlaySpendCoinsAnim();
 
-            ChangeState(true);
-            isOccupied = false;
+                ChangeState(true);
+                isOccupied = false;
+            }
+            else
+            {
+                PlayCannotBuyAnim(); // ДОБАВЛЕНО
+            }
         }
     }
 
@@ -125,6 +134,31 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             {
                 spendCoinsGroup.gameObject.SetActive(false);
             });
+    }
+
+    // ДОБАВЛЕНА АНИМАЦИЯ "НЕ ХВАТАЕТ ДЕНЕГ"
+    void PlayCannotBuyAnim()
+    {
+        priceTxt.DOKill();
+        transform.DOKill();
+
+        Color originalColor = priceTxt.color;
+
+        Sequence seq = DOTween.Sequence();
+
+        seq.Append(priceTxt.DOColor(notEnoughColor, 0.15f));
+
+        seq.Join(
+            transform.DOShakeScale(
+                0.35f,
+                new Vector3(0.08f, 0.08f, 0f),
+                15,
+                90,
+                false
+            )
+        );
+
+        seq.Append(priceTxt.DOColor(originalColor, 0.25f));
     }
 
     public void ChangeState(bool state)
