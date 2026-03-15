@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class PackManager : MonoBehaviour
 {
     public static PackManager Instance;
+
     public GameObject plantPrefab;
     [SerializeField] private Cell[] cells;
 
@@ -21,8 +23,11 @@ public class PackManager : MonoBehaviour
     private PlantData selectedPlant;
     private GameObject selectedPlantObject;
 
-    private float selectedScale = 1.2f;
-    private const float baseScale = 1.5f;
+    // сохраняем оригинальный scale каждого растения
+    private Dictionary<GameObject, Vector3> originalScales = new Dictionary<GameObject, Vector3>();
+
+    private const float selectedMultiplier = 1.15f;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,6 +35,7 @@ public class PackManager : MonoBehaviour
         else
             Instance = this;
     }
+
     public void OpenPack()
     {
         openPanel.SetActive(false);
@@ -38,14 +44,32 @@ public class PackManager : MonoBehaviour
         confirmBtn.interactable = false;
         selectedPlant = null;
         selectedPlantObject = null;
+
+        CachePlantScales();
+        AnimatePlants();
     }
+
+    void CachePlantScales()
+    {
+        originalScales.Clear();
+
+        RectTransform panel = plantChoosePanel.GetComponent<RectTransform>();
+
+        for (int i = 0; i < panel.childCount; i++)
+        {
+            RectTransform card = panel.GetChild(i).GetComponent<RectTransform>();
+            originalScales.Add(card.gameObject, card.localScale);
+        }
+    }
+
     public bool IsExistEmptyCell()
     {
-        for(int i = 0; i <  cells.Length; i++)
+        for (int i = 0; i < cells.Length; i++)
         {
             if (!cells[i].isOccupied && cells[i].isBuyied)
                 return true;
         }
+
         return false;
     }
 
@@ -53,7 +77,7 @@ public class PackManager : MonoBehaviour
     {
         if (selectedPlantObject == plant)
         {
-            SetScale(plant, baseScale);
+            ResetScale(plant);
 
             selectedPlantObject = null;
             selectedPlant = null;
@@ -64,13 +88,13 @@ public class PackManager : MonoBehaviour
 
         if (selectedPlantObject != null)
         {
-            SetScale(selectedPlantObject, baseScale);
+            ResetScale(selectedPlantObject);
         }
 
         selectedPlantObject = plant;
         selectedPlant = plant.GetComponent<PlantVisualizer>().Data;
 
-        SetScale(plant, baseScale * selectedScale);
+        SetScale(plant);
 
         confirmBtn.interactable = true;
     }
@@ -79,7 +103,7 @@ public class PackManager : MonoBehaviour
     {
         if (selectedPlantObject != null)
         {
-            SetScale(selectedPlantObject, baseScale);
+            ResetScale(selectedPlantObject);
         }
 
         openPanel.SetActive(true);
@@ -95,17 +119,62 @@ public class PackManager : MonoBehaviour
             true
         );
     }
+
     public void ChangePlaceClueTxt(string text, bool state)
     {
         placeClueTxt.text = text;
         placeClueTxt.gameObject.SetActive(state);
-        if(state)
+
+        if (state)
             InteractionManager.Instance.canZoomCam = true;
     }
 
-    private void SetScale(GameObject obj, float scale)
+    void SetScale(GameObject obj)
     {
-        Vector3 currentScale = obj.transform.localScale;
-        obj.transform.localScale = new Vector3(scale, scale, currentScale.z);
+        RectTransform rect = obj.GetComponent<RectTransform>();
+
+        Vector3 original = originalScales[obj];
+
+        rect.localScale = new Vector3(
+            original.x * selectedMultiplier,
+            original.y * selectedMultiplier,
+            1f
+        );
+    }
+
+    void ResetScale(GameObject obj)
+    {
+        RectTransform rect = obj.GetComponent<RectTransform>();
+
+        Vector3 original = originalScales[obj];
+
+        rect.localScale = new Vector3(
+            original.x,
+            original.y,
+            1f
+        );
+    }
+
+    void AnimatePlants()
+    {
+        RectTransform panel = plantChoosePanel.GetComponent<RectTransform>();
+
+        for (int i = 0; i < panel.childCount; i++)
+        {
+            RectTransform card = panel.GetChild(i).GetComponent<RectTransform>();
+
+            Vector3 originalScale = originalScales[card.gameObject];
+            Vector2 targetPos = card.anchoredPosition;
+
+            card.localScale = new Vector3(0f, 0f, 1f);
+            card.anchoredPosition = targetPos + Vector2.up * 20f;
+
+            DG.Tweening.Sequence seq = DOTween.Sequence();
+
+            seq.Append(card.DOScale(originalScale, 0.35f).SetEase(Ease.OutBack));
+            seq.Join(card.DOAnchorPos(targetPos, 0.35f).SetEase(Ease.OutCubic));
+
+            seq.SetDelay(i * 0.05f);
+        }
     }
 }
