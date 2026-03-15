@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,7 +43,7 @@ public class PackManager : MonoBehaviour
     {
         for(int i = 0; i <  cells.Length; i++)
         {
-            if (!cells[i].isOccupied)
+            if (!cells[i].isOccupied && cells[i].isBuyied)
                 return true;
         }
         return false;
@@ -86,6 +87,7 @@ public class PackManager : MonoBehaviour
         allPanel.SetActive(false);
 
         waitingForClick = true;
+        InteractionManager.Instance.canZoomCam = true;
         InteractionManager.Instance.canPressBtns = false;
 
         ChangePlaceClueTxt(
@@ -97,6 +99,8 @@ public class PackManager : MonoBehaviour
     {
         placeClueTxt.text = text;
         placeClueTxt.gameObject.SetActive(state);
+        if(state)
+            InteractionManager.Instance.canZoomCam = true;
     }
 
     private void SetScale(GameObject obj, float scale)

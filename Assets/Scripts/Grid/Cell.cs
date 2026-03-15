@@ -4,29 +4,38 @@ using UnityEngine.UI;
 
 public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [HideInInspector] public bool isOccupied;
+    [HideInInspector] public bool isOccupied = false;
+
+    [SerializeField] private Sprite closedCellSprite;
+    [SerializeField] private Sprite openedCellSprite;
+
     private Color startColor;
     private Image image;
 
     [Space]
     [Header("Only for first cell with plant")]
     [SerializeField] private GameObject currentPlant;
+    public bool isBuyied = false;
 
     private void Start()
     {
         image = GetComponent<Image>();
         startColor = image.color;
+        if(isBuyied == false)
+        {
+            ChangeState(false);
+        }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(PackManager.Instance.waitingForClick && !isOccupied)
+        if(PackManager.Instance.waitingForClick && !isOccupied && isBuyied)
         {
             image.color = Color.white;
         }    
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (PackManager.Instance.waitingForClick)
+        if (PackManager.Instance.waitingForClick && isBuyied)
         {
             image.color = startColor;
         }
@@ -34,7 +43,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (PackManager.Instance.waitingForClick)
+        if (PackManager.Instance.waitingForClick && isBuyied)
         {
             image.color = startColor;
             if(!isOccupied)
@@ -47,6 +56,25 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                 PackManager.Instance.ChangePlaceClueTxt("This <color=yellow>cell</color> is already occupied!", true);
             }
         }
+    }
+    public void ChangeState(bool state)
+    {
+        if (state)
+        {
+            image.sprite = openedCellSprite;
+            image.color = startColor;
+            transform.localScale = Vector3.one;
+        }
+        else
+        {
+            image.sprite = closedCellSprite;
+
+            var a = image.color.a;
+
+            transform.localScale = Vector3.one * 0.75f;
+        }
+
+        isBuyied = state;
     }
 
     public void Plant(GameObject plantPrefab)

@@ -6,6 +6,7 @@ public class InteractionManager : MonoBehaviour
     public static InteractionManager Instance;
 
     [HideInInspector] public bool canPressBtns = true;
+    [HideInInspector] public bool canZoomCam = true;
     [SerializeField] private Button[] buttons;
 
     private void Awake()

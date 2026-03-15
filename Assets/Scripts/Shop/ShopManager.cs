@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics.Tracing;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
@@ -31,6 +32,11 @@ public class ShopManager : MonoBehaviour
 
             selectedOffer = null;
             ChangeBuyBtnVisibility(false);
+            InteractionManager.Instance.canZoomCam = true;
+        }
+        else
+        {
+            InteractionManager.Instance.canZoomCam = false;
         }
     }
 
@@ -52,6 +58,7 @@ public class ShopManager : MonoBehaviour
 
                 ChangeShopVisibility();
                 ChangeBuyBtnVisibility(false);
+                InteractionManager.Instance.canZoomCam = false;
                 defaultPackPanel.SetActive(true);
             }
             else
