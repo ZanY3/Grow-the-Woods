@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [HideInInspector] public bool isOccupied = false;
-
+    [SerializeField] private GameObject closedClue;
     [SerializeField] private Sprite closedCellSprite;
     [SerializeField] private Sprite openedCellSprite;
 
@@ -28,13 +28,21 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if(!isBuyied)
+        {
+            
+        }
         if(PackManager.Instance.waitingForClick && !isOccupied && isBuyied)
         {
             image.color = Color.white;
-        }    
+        }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (!isBuyied)
+        {
+
+        }
         if (PackManager.Instance.waitingForClick && isBuyied)
         {
             image.color = startColor;
@@ -46,12 +54,16 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         if (PackManager.Instance.waitingForClick && isBuyied)
         {
             image.color = startColor;
-            if(!isOccupied)
+            if(!isOccupied && isBuyied)
             {
                 Plant(PackManager.Instance.plantPrefab);
                 InteractionManager.Instance.canPressBtns = true;
             }
-            else
+            else if(!isBuyied)
+            {
+                PackManager.Instance.ChangePlaceClueTxt("This <color=yellow>cell</color> isn't even bought!", true);
+            }
+            else if(isBuyied && isOccupied)
             {
                 PackManager.Instance.ChangePlaceClueTxt("This <color=yellow>cell</color> is already occupied!", true);
             }
@@ -61,6 +73,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (state)
         {
+            closedClue.SetActive(false);
             image.sprite = openedCellSprite;
             image.color = startColor;
             transform.localScale = Vector3.one;
@@ -68,10 +81,10 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         else
         {
             image.sprite = closedCellSprite;
+            image.color = new Color(0.5f, 0.5f, 0.5f, 0.75f);
+            closedClue.SetActive(true);
 
-            var a = image.color.a;
-
-            transform.localScale = Vector3.one * 0.75f;
+            //transform.localScale = Vector3.one * 0.75f;
         }
 
         isBuyied = state;
@@ -91,4 +104,5 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         isOccupied = true;
         PackManager.Instance.waitingForClick = false;
     }
+
 }
