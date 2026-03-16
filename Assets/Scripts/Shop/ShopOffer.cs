@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class ShopOffer : MonoBehaviour, IPointerClickHandler
@@ -13,31 +15,95 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     [SerializeField] private int offerPrice;
 
     [SerializeField] private GameObject iconObject;
-    [SerializeField] private RectTransform shimmer; // ← shimmer
+    [SerializeField] private TMP_Text priceTxt;
+    [SerializeField] private RectTransform shimmer;
 
     [SerializeField] private ShopManager shopManager;
+
+    [Header("Feedback")]
+    [SerializeField] private Color notEnoughMoneyColor = Color.red;
 
     private float selectedScale = 1.1f;
 
     private Vector3 defaultScale;
     private Vector3 shimmerDefaultScale;
+    private Vector3 defaultPosition;
+
+    private Color defaultPriceColor;
 
     public int Price => offerPrice;
 
     private void Start()
     {
         defaultScale = iconObject.transform.localScale;
+        defaultPosition = iconObject.transform.localPosition;
 
         if (shimmer != null)
             shimmerDefaultScale = shimmer.localScale;
+
+        defaultPriceColor = priceTxt.color;
+
+        priceTxt.text = offerPrice.ToString();
+    }
+
+    public void UpdatePrice(int newPrice)
+    {
+        offerPrice = newPrice;
+        priceTxt.text = offerPrice.ToString();
     }
 
     public void ResetScale()
     {
         iconObject.transform.localScale = defaultScale;
+        iconObject.transform.localPosition = defaultPosition;
 
         if (shimmer != null)
             shimmer.localScale = shimmerDefaultScale;
+    }
+
+    Vector3 GetTargetScale()
+    {
+        if (shopManager.selectedOffer == this)
+            return defaultScale * selectedScale;
+
+        return defaultScale;
+    }
+
+    public void PlayNotEnoughMoneyFeedback()
+    {
+        Transform icon = iconObject.transform;
+
+        // убиваем старые анимации
+        icon.DOKill();
+        priceTxt.DOKill();
+
+        // сбрасываем позицию и scale
+        icon.localPosition = defaultPosition;
+        icon.localScale = GetTargetScale();
+
+        // SHAKE
+        icon.DOShakePosition(
+            duration: 0.3f,
+            strength: 12f,
+            vibrato: 20,
+            randomness: 90,
+            snapping: false,
+            fadeOut: true
+        );
+
+        // PUNCH SCALE
+        icon.DOPunchScale(
+            icon.localScale * 0.15f,
+            0.25f,
+            10,
+            1
+        );
+
+        // FLASH PRICE
+        Sequence seq = DOTween.Sequence();
+
+        seq.Append(priceTxt.DOColor(notEnoughMoneyColor, 0.08f));
+        seq.Append(priceTxt.DOColor(defaultPriceColor, 0.25f));
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -54,6 +120,7 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
         }
 
         iconObject.transform.localScale = defaultScale * selectedScale;
+        iconObject.transform.localPosition = defaultPosition;
 
         if (shimmer != null)
             shimmer.localScale = shimmerDefaultScale * selectedScale;

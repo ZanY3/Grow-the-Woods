@@ -17,7 +17,7 @@ public class FieldZoom : MonoBehaviour
     private RectTransform fieldContainer;
 
     private float targetZoom = 1f;
-    private float currentZoom = 1f;
+    private float currentZoom = 0.9f;
 
     private Vector2 startPos;
     private Vector2 velocity;
@@ -26,7 +26,14 @@ public class FieldZoom : MonoBehaviour
     {
         fieldContainer = GetComponent<RectTransform>();
 
-        currentZoom = targetZoom;
+        currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+        targetZoom = currentZoom;
+
+        Vector3 scale = fieldContainer.localScale;
+        scale.x = currentZoom;
+        scale.y = currentZoom;
+        fieldContainer.localScale = scale;
+
         startPos = fieldContainer.anchoredPosition;
     }
 
@@ -52,7 +59,10 @@ public class FieldZoom : MonoBehaviour
 
         currentZoom = Mathf.Lerp(currentZoom, targetZoom, Time.deltaTime * smoothSpeed);
 
-        fieldContainer.localScale = Vector3.one * currentZoom;
+        Vector3 scale = fieldContainer.localScale;
+        scale.x = currentZoom;
+        scale.y = currentZoom;
+        fieldContainer.localScale = scale;
     }
 
     void HandleMouseMove()

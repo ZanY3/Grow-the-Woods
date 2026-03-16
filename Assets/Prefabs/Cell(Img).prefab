@@ -150,7 +150,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4287401100
-  m_fontColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  m_fontColor: {r: 0.77254903, g: 0.77254903, b: 0.77254903, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -461,6 +461,7 @@ MonoBehaviour:
   spendCoinsTxt: {fileID: 2977882050659648193}
   closedCellSprite: {fileID: -2359145276931795649, guid: bfa78656f1e666e4f9016bfbbaa0edc7, type: 3}
   openedCellSprite: {fileID: 8519599576061841192, guid: a1580bde30a7d834db6800260609d5b1, type: 3}
+  notEnoughColor: {r: 1, g: 0.3, b: 0.3, a: 1}
   currentPlant: {fileID: 0}
   isBuyied: 0
 --- !u!1 &3218264519051745992

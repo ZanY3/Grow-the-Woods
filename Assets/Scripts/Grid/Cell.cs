@@ -6,7 +6,6 @@ using TMPro;
 
 public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [HideInInspector] public bool isOccupied = false;
 
     [SerializeField] private int price;
     [SerializeField] private GameObject closedClue;
@@ -23,7 +22,6 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     [SerializeField] private Color notEnoughColor = new Color(1f, 0.3f, 0.3f); // ДОБАВЛЕНО
 
     private Color startColor;
-    private Color startPriceColor;
     private Vector3 startScale;
     private Image image;
 
@@ -32,6 +30,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     [SerializeField] private GameObject currentPlant;
 
     public bool isBuyied = false;
+    public bool isOccupied = false;
 
     private Tween scaleTween;
 
@@ -45,7 +44,6 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
         image = GetComponent<Image>();
         startColor = image.color;
-        startPriceColor = priceTxt.color;
         startScale = transform.localScale;
 
         if (!isBuyied)
@@ -142,8 +140,6 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         transform.DOKill();
         priceTxt.DOKill();
-
-        priceTxt.color = startPriceColor;
 
         Sequence seq = DOTween.Sequence();
 

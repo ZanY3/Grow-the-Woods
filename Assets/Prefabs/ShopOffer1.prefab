@@ -222,6 +222,7 @@ MonoBehaviour:
   offerType: 1
   offerPrice: 10
   iconObject: {fileID: 2562122840427431943}
+  priceTxt: {fileID: 4163938971139320923}
   shimmer: {fileID: 6201820839870763354}
   shopManager: {fileID: 0}
 --- !u!1 &6674062708675552238

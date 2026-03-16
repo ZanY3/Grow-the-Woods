@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PackManager : MonoBehaviour
 {
     public static PackManager Instance;
-
+    
     public GameObject plantPrefab;
 
     [Header("Random drop")]
@@ -19,7 +19,7 @@ public class PackManager : MonoBehaviour
 
     [SerializeField] private int plantsPerPack = 3;
 
-    [Header("Pack UI slots (drag here)")]
+    [Header("Pack UI slots")]
     [SerializeField] private PlantVisualizer[] packSlots;
 
     [Space]
