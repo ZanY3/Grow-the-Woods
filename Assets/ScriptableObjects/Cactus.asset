@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
-  m_Name: SunFlower
+  m_Name: Cactus
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
-  icon: {fileID: -256329436847572505, guid: 87e4757eb866b9b4399d64ea47c782a5, type: 3}
+  icon: {fileID: 7873444928579934181, guid: 3549f8c11d8214741a692307ca34547c, type: 3}
   coinsAmount: 1
   productionInterval: 1
-  description: '<color=yellow>Gain</color>: 1 coin / sec'
-  rarity: 0
+  description: '<color=yellow>Gain</color>: 2 coins / sec\n Gains 2 coins more if
+    no plants nearby.'
+  rarity: 1

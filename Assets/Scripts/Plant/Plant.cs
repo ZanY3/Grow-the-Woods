@@ -14,7 +14,22 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
         while (timer >= plantData.productionInterval)
         {
-            CoinManager.Instance.AddCoins(plantData.seedsAmount);
+            int coins = plantData.coinsAmount;
+
+            if (plantData.name == "Cactus")
+            {
+                if (!Grid.Instance.HasAdjacentPlants(GetComponentInParent<Cell>()))
+                {
+                    coins += 2;
+                }
+            }
+            if(plantData.name == "Royal Flower")
+            {
+                coins += Grid.Instance.CountAdjacentPlants(GetComponentInParent<Cell>());
+            }
+
+            CoinManager.Instance.AddCoins(coins);
+
             timer -= plantData.productionInterval;
         }
     }

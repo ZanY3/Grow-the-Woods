@@ -2,58 +2,96 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    [SerializeField] private int width = 5;
-    [SerializeField] private int height = 5;
+    public static Grid Instance;
 
-    [SerializeField] private float cellSize = 64f;
+    [Header("Grid size")]
+    [SerializeField] private int gridWidth = 5;
+    [SerializeField] private int gridHeight = 5;
 
-    [SerializeField] private bool drawGizmosForScene = true;
+    [SerializeField] private Cell[] cells;
 
-    [SerializeField] private GameObject cellPrefab;
-
-    void Start()
+    private void Awake()
     {
-        drawGizmosForScene = false;
-        GenerateGrid();
+        if (Instance != null && Instance != this)
+            Destroy(gameObject);
+        else
+            Instance = this;
     }
 
-    void GenerateGrid()
+    public bool IsExistEmptyCell()
     {
-        float startX = -(width - 1) * cellSize / 2f;
-        float startY = (height - 1) * cellSize / 2f;
-
-        for (int y = 0; y < height; y++)
+        for (int i = 0; i < cells.Length; i++)
         {
-            for (int x = 0; x < width; x++)
-            {
-                GameObject cell = Instantiate(cellPrefab, transform);
-
-                RectTransform rect = cell.GetComponent<RectTransform>();
-
-                rect.anchoredPosition = new Vector2(
-                    startX + x * cellSize,
-                    startY - y * cellSize
-                );
-            }
+            if (!cells[i].isOccupied && cells[i].isBuyied)
+                return true;
         }
+
+        return false;
     }
 
-    void OnDrawGizmos()
+    public bool HasAdjacentPlants(Cell cell)
     {
-        if (!drawGizmosForScene) return;
+        int index = System.Array.IndexOf(cells, cell);
 
-        Gizmos.color = Color.green;
+        int x = index % gridWidth;
+        int y = index / gridWidth;
 
-        float startX = -(width - 1) / 2f;
-        float startY = (height - 1) / 2f;
-
-        for (int y = 0; y < height; y++)
+        // LEFT
+        if (x > 0)
         {
-            for (int x = 0; x < width; x++)
-            {
-                Vector3 pos = new Vector3(startX + x, startY - y, 0);
-                Gizmos.DrawWireCube(transform.position + pos, Vector3.one);
-            }
+            if (cells[index - 1].isOccupied)
+                return true;
         }
+
+        // RIGHT
+        if (x < gridWidth - 1)
+        {
+            if (cells[index + 1].isOccupied)
+                return true;
+        }
+
+        // UP
+        if (y > 0)
+        {
+            if (cells[index - gridWidth].isOccupied)
+                return true;
+        }
+
+        // DOWN
+        if (y < gridHeight - 1)
+        {
+            if (cells[index + gridWidth].isOccupied)
+                return true;
+        }
+
+        return false;
+    }
+
+    public int CountAdjacentPlants(Cell cell)
+    {
+        int count = 0;
+
+        int index = System.Array.IndexOf(cells, cell);
+
+        int x = index % gridWidth;
+        int y = index / gridWidth;
+
+        // LEFT
+        if (x > 0 && cells[index - 1].isOccupied)
+            count++;
+
+        // RIGHT
+        if (x < gridWidth - 1 && cells[index + 1].isOccupied)
+            count++;
+
+        // UP
+        if (y > 0 && cells[index - gridWidth].isOccupied)
+            count++;
+
+        // DOWN
+        if (y < gridHeight - 1 && cells[index + gridWidth].isOccupied)
+            count++;
+
+        return count;
     }
 }

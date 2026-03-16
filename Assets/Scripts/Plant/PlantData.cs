@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlantData : ScriptableObject
 {
     public Sprite icon;
-    public int seedsAmount;
+    public int coinsAmount;
     public float productionInterval;
     public string description;
 

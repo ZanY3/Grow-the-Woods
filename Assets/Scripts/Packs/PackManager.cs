@@ -10,7 +10,19 @@ public class PackManager : MonoBehaviour
     public static PackManager Instance;
 
     public GameObject plantPrefab;
-    [SerializeField] private Cell[] cells;
+
+    [Header("Random drop")]
+    [SerializeField] private List<PlantData> allPlants;
+    [SerializeField] private float commonChance = 0.65f;
+    [SerializeField] private float uncommonChance = 0.25f;
+    [SerializeField] private float rareChance = 0.10f;
+
+    [SerializeField] private int plantsPerPack = 3;
+
+    [Header("Pack UI slots (drag here)")]
+    [SerializeField] private PlantVisualizer[] packSlots;
+
+    [Space]
 
     [SerializeField] private GameObject allPanel;
     [SerializeField] private GameObject openPanel;
@@ -20,10 +32,9 @@ public class PackManager : MonoBehaviour
 
     [HideInInspector] public bool waitingForClick = false;
 
-    private PlantData selectedPlant;
+    public PlantData selectedPlant;
     private GameObject selectedPlantObject;
 
-    // сохраняем оригинальный scale каждого растения
     private Dictionary<GameObject, Vector3> originalScales = new Dictionary<GameObject, Vector3>();
 
     private const float selectedMultiplier = 1.15f;
@@ -45,32 +56,15 @@ public class PackManager : MonoBehaviour
         selectedPlant = null;
         selectedPlantObject = null;
 
+        FillPackUI();
+
         CachePlantScales();
         AnimatePlants();
     }
 
-    void CachePlantScales()
-    {
-        originalScales.Clear();
-
-        RectTransform panel = plantChoosePanel.GetComponent<RectTransform>();
-
-        for (int i = 0; i < panel.childCount; i++)
-        {
-            RectTransform card = panel.GetChild(i).GetComponent<RectTransform>();
-            originalScales.Add(card.gameObject, card.localScale);
-        }
-    }
-
     public bool IsExistEmptyCell()
     {
-        for (int i = 0; i < cells.Length; i++)
-        {
-            if (!cells[i].isOccupied && cells[i].isBuyied)
-                return true;
-        }
-
-        return false;
+        return Grid.Instance.IsExistEmptyCell();
     }
 
     public void SelectPlant(GameObject plant)
@@ -129,10 +123,20 @@ public class PackManager : MonoBehaviour
             InteractionManager.Instance.canZoomCam = true;
     }
 
-    void SetScale(GameObject obj)
+    private void CachePlantScales()
+    {
+        originalScales.Clear();
+
+        foreach (var slot in packSlots)
+        {
+            RectTransform rect = slot.GetComponent<RectTransform>();
+            originalScales.Add(slot.gameObject, rect.localScale);
+        }
+    }
+
+    private void SetScale(GameObject obj)
     {
         RectTransform rect = obj.GetComponent<RectTransform>();
-
         Vector3 original = originalScales[obj];
 
         rect.localScale = new Vector3(
@@ -142,10 +146,9 @@ public class PackManager : MonoBehaviour
         );
     }
 
-    void ResetScale(GameObject obj)
+    private void ResetScale(GameObject obj)
     {
         RectTransform rect = obj.GetComponent<RectTransform>();
-
         Vector3 original = originalScales[obj];
 
         rect.localScale = new Vector3(
@@ -155,13 +158,71 @@ public class PackManager : MonoBehaviour
         );
     }
 
-    void AnimatePlants()
+    private PlantData.Rarity GetRandomRarity()
     {
-        RectTransform panel = plantChoosePanel.GetComponent<RectTransform>();
+        float roll = Random.value;
 
-        for (int i = 0; i < panel.childCount; i++)
+        if (roll < rareChance)
+            return PlantData.Rarity.Rare;
+
+        if (roll < rareChance + uncommonChance)
+            return PlantData.Rarity.Uncommon;
+
+        return PlantData.Rarity.Common;
+    }
+
+    private PlantData GetRandomPlant(PlantData.Rarity rarity, List<PlantData> excluded)
+    {
+        List<PlantData> pool = allPlants.FindAll(p => p.rarity == rarity && !excluded.Contains(p));
+
+        if (pool.Count == 0)
+            return null;
+
+        return pool[Random.Range(0, pool.Count)];
+    }
+
+    private List<PlantData> GeneratePack()
+    {
+        List<PlantData> pack = new List<PlantData>();
+
+        for (int i = 0; i < plantsPerPack; i++)
         {
-            RectTransform card = panel.GetChild(i).GetComponent<RectTransform>();
+            PlantData.Rarity rarity = GetRandomRarity();
+            PlantData plant = GetRandomPlant(rarity, pack);
+
+            if (plant == null)
+                plant = allPlants[Random.Range(0, allPlants.Count)];
+
+            pack.Add(plant);
+        }
+
+        return pack;
+    }
+
+    private void FillPackUI()
+    {
+        List<PlantData> pack = GeneratePack();
+
+        for (int i = 0; i < packSlots.Length; i++)
+        {
+            if (i >= pack.Count)
+            {
+                packSlots[i].gameObject.SetActive(false);
+                continue;
+            }
+
+            packSlots[i].gameObject.SetActive(true);
+
+            packSlots[i].SetData(pack[i]);
+            packSlots[i].GetComponent<PlantVisualizer>().VisualizePlant();
+        }
+    }
+
+    private void AnimatePlants()
+    {
+        for (int i = 0; i < packSlots.Length; i++)
+        {
+            RectTransform card = packSlots[i].GetComponent<RectTransform>();
 
             Vector3 originalScale = originalScales[card.gameObject];
             Vector2 targetPos = card.anchoredPosition;

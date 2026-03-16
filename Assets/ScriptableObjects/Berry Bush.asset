@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
-  m_Name: SunFlower
+  m_Name: Berry Bush
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
-  icon: {fileID: -256329436847572505, guid: 87e4757eb866b9b4399d64ea47c782a5, type: 3}
-  coinsAmount: 1
+  icon: {fileID: 5404687227340121073, guid: 7e7bd32b12f448f43874a0d8b482aeb7, type: 3}
+  coinsAmount: 2
   productionInterval: 1
-  description: '<color=yellow>Gain</color>: 1 coin / sec'
-  rarity: 0
+  description: '<color=yellow>Gain</color>: 2 coins / sec'
+  rarity: 1

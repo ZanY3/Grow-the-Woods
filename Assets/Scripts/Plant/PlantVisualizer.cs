@@ -7,28 +7,36 @@ public class PlantVisualizer : MonoBehaviour
     [SerializeField] private PlantData data;
     [SerializeField] private Image iconImg;
 
-    [Space][Header("Tooltip")]
+    [Space]
+    [Header("Tooltip")]
     [SerializeField] private TMP_Text nameTxt;
     [SerializeField] private TMP_Text descriptionTxt;
     [SerializeField] private TMP_Text rarityTxt;
 
     private Plant plant;
+
     public PlantData Data => data;
 
     private void Start()
     {
-        if(data != null)
+        plant = GetComponent<Plant>();
+
+        if (data != null)
         {
             SetData(data);
         }
+
         VisualizePlant();
     }
+
     public void SetData(PlantData dataToSet)
     {
         data = dataToSet;
-        if(plant != null)
+
+        if (plant != null)
             plant.plantData = data;
     }
+
     public void VisualizePlant()
     {
         iconImg.sprite = data.icon;

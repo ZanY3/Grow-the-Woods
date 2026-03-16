@@ -23,6 +23,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     [SerializeField] private Color notEnoughColor = new Color(1f, 0.3f, 0.3f); // ДОБАВЛЕНО
 
     private Color startColor;
+    private Color startPriceColor;
     private Vector3 startScale;
     private Image image;
 
@@ -44,6 +45,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
         image = GetComponent<Image>();
         startColor = image.color;
+        startPriceColor = priceTxt.color;
         startScale = transform.localScale;
 
         if (!isBuyied)
@@ -92,7 +94,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
             if (!isOccupied)
             {
-                Plant(PackManager.Instance.plantPrefab);
+                Plant(PackManager.Instance.plantPrefab, PackManager.Instance.selectedPlant);
                 InteractionManager.Instance.canPressBtns = true;
             }
             else
@@ -102,7 +104,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             }
         }
 
-        if (!isBuyied && !PackManager.Instance.waitingForClick && !ShovelSlot.Instance.waitingForAction)
+        if (!isBuyied && !ShovelSlot.Instance.waitingForAction)
         {
             if (CoinManager.Instance.Coins >= price)
             {
@@ -118,7 +120,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             }
             else
             {
-                PlayCannotBuyAnim(); // ДОБАВЛЕНО
+                PlayCannotBuyAnim();
             }
         }
     }
@@ -136,13 +138,12 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             });
     }
 
-    // ДОБАВЛЕНА АНИМАЦИЯ "НЕ ХВАТАЕТ ДЕНЕГ"
     void PlayCannotBuyAnim()
     {
-        priceTxt.DOKill();
         transform.DOKill();
+        priceTxt.DOKill();
 
-        Color originalColor = priceTxt.color;
+        priceTxt.color = startPriceColor;
 
         Sequence seq = DOTween.Sequence();
 
@@ -158,7 +159,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             )
         );
 
-        seq.Append(priceTxt.DOColor(originalColor, 0.25f));
+        seq.Append(priceTxt.DOColor(startColor, 0.25f));
     }
 
     public void ChangeState(bool state)
@@ -180,12 +181,13 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         isBuyied = state;
     }
 
-    public void Plant(GameObject plantPrefab)
+    public void Plant(GameObject plantPrefab, PlantData plantData)
     {
         if (isOccupied) return;
 
         currentPlant = Instantiate(plantPrefab, transform, false);
-
+        currentPlant.GetComponent<PlantVisualizer>().SetData(plantData);
+        currentPlant.GetComponent<PlantVisualizer>().VisualizePlant();
         RectTransform rect = currentPlant.GetComponent<RectTransform>();
         rect.anchoredPosition = Vector2.zero;
         rect.localRotation = Quaternion.identity;

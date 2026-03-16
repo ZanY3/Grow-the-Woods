@@ -2286,7 +2286,7 @@ PrefabInstance:
     - target: {fileID: 5601318874974229496, guid: 56b2686d3cb56e94f8d2dd7f33fc1534, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 11400000, guid: a8d0f3960a1fed84d885a2da6faaadf1, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8636218831948917355, guid: 56b2686d3cb56e94f8d2dd7f33fc1534, type: 3}
       propertyPath: m_Name
       value: Plant 3
@@ -2382,6 +2382,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FloatIdle
   moveAmount: 10
   duration: 1.8
+--- !u!114 &455126255 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5601318874974229496, guid: 56b2686d3cb56e94f8d2dd7f33fc1534, type: 3}
+  m_PrefabInstance: {fileID: 455126247}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455126249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e199548d85845243aef0aef827b62cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlantVisualizer
 --- !u!1 &488617612 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8636218831948917355, guid: 56b2686d3cb56e94f8d2dd7f33fc1534, type: 3}
@@ -2462,6 +2473,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FloatIdle
   moveAmount: 10
   duration: 1.8
+--- !u!114 &488617619 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5601318874974229496, guid: 56b2686d3cb56e94f8d2dd7f33fc1534, type: 3}
+  m_PrefabInstance: {fileID: 1709187940228010607}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488617612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e199548d85845243aef0aef827b62cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlantVisualizer
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4097,6 +4119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 778151387}
+  - component: {fileID: 778151388}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -4124,6 +4147,56 @@ Transform:
   - {fileID: 1181415864}
   m_Father: {fileID: 1663006646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &778151388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778151386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16c1b7b27c0ea694989e8d7b60938621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Grid
+  gridWidth: 7
+  gridHeight: 5
+  cells:
+  - {fileID: 914105261}
+  - {fileID: 1232667903}
+  - {fileID: 1506057345}
+  - {fileID: 2130227454}
+  - {fileID: 1194963110}
+  - {fileID: 2019364374}
+  - {fileID: 1040468966}
+  - {fileID: 1840941136}
+  - {fileID: 1653888589}
+  - {fileID: 1564359650}
+  - {fileID: 1992465463}
+  - {fileID: 1440330928}
+  - {fileID: 1313745770}
+  - {fileID: 2018599459}
+  - {fileID: 1810175049}
+  - {fileID: 789873166}
+  - {fileID: 997149791}
+  - {fileID: 1189706208}
+  - {fileID: 2032132206}
+  - {fileID: 790737751}
+  - {fileID: 1767908655}
+  - {fileID: 1831673149}
+  - {fileID: 1516540828}
+  - {fileID: 1260792146}
+  - {fileID: 264276094}
+  - {fileID: 1374883261}
+  - {fileID: 1037402335}
+  - {fileID: 2105309088}
+  - {fileID: 1617504869}
+  - {fileID: 2022204151}
+  - {fileID: 1877794682}
+  - {fileID: 880904436}
+  - {fileID: 954350515}
+  - {fileID: 1180991663}
+  - {fileID: 1722153868}
 --- !u!1001 &789873164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5430,7 +5503,7 @@ PrefabInstance:
     - target: {fileID: 5601318874974229496, guid: 56b2686d3cb56e94f8d2dd7f33fc1534, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 11400000, guid: a8d0f3960a1fed84d885a2da6faaadf1, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8636218831948917355, guid: 56b2686d3cb56e94f8d2dd7f33fc1534, type: 3}
       propertyPath: m_Name
       value: Plant 1
@@ -5526,6 +5599,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FloatIdle
   moveAmount: 10
   duration: 1.8
+--- !u!114 &1065822805 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5601318874974229496, guid: 56b2686d3cb56e94f8d2dd7f33fc1534, type: 3}
+  m_PrefabInstance: {fileID: 1065822797}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065822799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e199548d85845243aef0aef827b62cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlantVisualizer
 --- !u!1 &1073875080
 GameObject:
   m_ObjectHideFlags: 0
@@ -6697,6 +6781,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8556305919488060118, guid: d1efa016b02fd08488a8cb9ef5f4c79e, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: a8d0f3960a1fed84d885a2da6faaadf1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8017,42 +8105,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PackManager
   plantPrefab: {fileID: 5683740079072611445, guid: d1efa016b02fd08488a8cb9ef5f4c79e, type: 3}
-  cells:
-  - {fileID: 914105261}
-  - {fileID: 1232667903}
-  - {fileID: 1506057345}
-  - {fileID: 2130227454}
-  - {fileID: 1194963110}
-  - {fileID: 2019364374}
-  - {fileID: 1040468966}
-  - {fileID: 1840941136}
-  - {fileID: 1653888589}
-  - {fileID: 1564359650}
-  - {fileID: 1992465463}
-  - {fileID: 1440330928}
-  - {fileID: 1313745770}
-  - {fileID: 2018599459}
-  - {fileID: 1810175049}
-  - {fileID: 789873166}
-  - {fileID: 997149791}
-  - {fileID: 1189706208}
-  - {fileID: 2032132206}
-  - {fileID: 790737751}
-  - {fileID: 1767908655}
-  - {fileID: 1831673149}
-  - {fileID: 1516540828}
-  - {fileID: 1260792146}
-  - {fileID: 264276094}
-  - {fileID: 1374883261}
-  - {fileID: 1037402335}
-  - {fileID: 2105309088}
-  - {fileID: 1617504869}
-  - {fileID: 2022204151}
-  - {fileID: 1877794682}
-  - {fileID: 880904436}
-  - {fileID: 954350515}
-  - {fileID: 1180991663}
-  - {fileID: 1722153868}
+  allPlants:
+  - {fileID: 11400000, guid: fbfbbe3df4023ce42a1080504b0d1976, type: 2}
+  - {fileID: 11400000, guid: dea383e2a765a9a49bcfdf39ed949359, type: 2}
+  - {fileID: 11400000, guid: f7a461d5c5e935e48ab782aa677e11ff, type: 2}
+  - {fileID: 11400000, guid: 0016461aaae360948953230317b4bdda, type: 2}
+  - {fileID: 11400000, guid: 110170db6f6395546bf8465b4bcc3d53, type: 2}
+  - {fileID: 11400000, guid: a8d0f3960a1fed84d885a2da6faaadf1, type: 2}
+  commonChance: 0.65
+  uncommonChance: 0.25
+  rareChance: 0.1
+  plantsPerPack: 3
+  packSlots:
+  - {fileID: 1065822805}
+  - {fileID: 488617619}
+  - {fileID: 455126255}
   allPanel: {fileID: 554789945}
   openPanel: {fileID: 1427678118}
   plantChoosePanel: {fileID: 800873502}
@@ -9751,7 +9818,7 @@ PrefabInstance:
     - target: {fileID: 5601318874974229496, guid: 56b2686d3cb56e94f8d2dd7f33fc1534, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 11400000, guid: a8d0f3960a1fed84d885a2da6faaadf1, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8636218831948917355, guid: 56b2686d3cb56e94f8d2dd7f33fc1534, type: 3}
       propertyPath: m_Name
       value: Plant 2
