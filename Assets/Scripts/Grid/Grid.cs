@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Grid : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class Grid : MonoBehaviour
         else
             Instance = this;
     }
-
     public bool IsExistEmptyCell()
     {
         for (int i = 0; i < cells.Length; i++)
@@ -66,7 +66,10 @@ public class Grid : MonoBehaviour
 
         return false;
     }
-
+    public Cell[] GetCells()
+    {
+        return cells;
+    }
     public int CountAdjacentPlants(Cell cell)
     {
         int count = 0;
@@ -93,5 +96,32 @@ public class Grid : MonoBehaviour
             count++;
 
         return count;
+    }
+    public List<Cell> GetAdjacentCells(Cell cell)
+    {
+        var result = new System.Collections.Generic.List<Cell>();
+
+        int index = System.Array.IndexOf(cells, cell);
+
+        int x = index % gridWidth;
+        int y = index / gridWidth;
+
+        // LEFT
+        if (x > 0)
+            result.Add(cells[index - 1]);
+
+        // RIGHT
+        if (x < gridWidth - 1)
+            result.Add(cells[index + 1]);
+
+        // UP
+        if (y > 0)
+            result.Add(cells[index - gridWidth]);
+
+        // DOWN
+        if (y < gridHeight - 1)
+            result.Add(cells[index + gridWidth]);
+
+        return result;
     }
 }

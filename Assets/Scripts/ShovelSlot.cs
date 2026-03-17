@@ -55,12 +55,11 @@ public class ShovelSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // ❗ Нельзя брать лопату когда ставим растение
         if (PackManager.Instance.waitingForClick)
             return;
 
         waitingForAction = !waitingForAction;
-
+        EndingManager.Instance.ChangeProgressState(false);
         shovelClueTxt.SetActive(waitingForAction);
 
         if (waitingForAction)
@@ -78,7 +77,7 @@ public class ShovelSlot : MonoBehaviour, IPointerClickHandler
     public void ReturnShowel()
     {
         waitingForAction = false;
-
+        EndingManager.Instance.ChangeProgressState(true);
         shovelClueTxt.SetActive(false);
 
         shovelObj.SetParent(startParent, false);

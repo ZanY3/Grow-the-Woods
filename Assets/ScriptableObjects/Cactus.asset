@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Cactus
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
   icon: {fileID: 7873444928579934181, guid: 3549f8c11d8214741a692307ca34547c, type: 3}
-  coinsAmount: 1
+  coinsAmount: 2
   productionInterval: 1
   description: '<color=yellow>Gain</color>: 2 coins / sec\n Gains 2 coins more if
     no plants nearby.'
+  needToHighlightNearbyCells: 1
   rarity: 1

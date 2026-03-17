@@ -104,6 +104,7 @@ public class PackManager : MonoBehaviour
         plantChoosePanel.SetActive(false);
         allPanel.SetActive(false);
 
+        EndingManager.Instance.ChangeProgressState(false);
         waitingForClick = true;
         InteractionManager.Instance.canZoomCam = true;
         InteractionManager.Instance.canPressBtns = false;

@@ -7,6 +7,7 @@ public class PlantData : ScriptableObject
     public int coinsAmount;
     public float productionInterval;
     public string description;
+    public bool needToHighlightNearbyCells;
 
     public enum Rarity
     {

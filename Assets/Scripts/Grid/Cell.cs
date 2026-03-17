@@ -191,6 +191,21 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         PackManager.Instance.ChangePlaceClueTxt("", false);
 
         isOccupied = true;
+        EndingManager.Instance.UpdateProgress(1);
         PackManager.Instance.waitingForClick = false;
+        EndingManager.Instance.ChangeProgressState(true);
+    }
+    public void SetHighlight(Color color)
+    {
+        if (!isBuyied) return;
+
+        image.color = color;
+    }
+
+    public void ResetHighlight()
+    {
+        if (!isBuyied) return;
+
+        image.color = startColor;
     }
 }

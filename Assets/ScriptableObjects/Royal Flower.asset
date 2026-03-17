@@ -16,4 +16,5 @@ MonoBehaviour:
   coinsAmount: 0
   productionInterval: 1
   description: Gains <color=yellow>1 coin to income</color> for each plant nearby.
+  needToHighlightNearbyCells: 1
   rarity: 2

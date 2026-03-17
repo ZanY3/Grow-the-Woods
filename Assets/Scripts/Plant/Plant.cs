@@ -1,12 +1,38 @@
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [HideInInspector] public PlantData plantData;
+
     [SerializeField] private GameObject tooltip;
 
+    [Header("Income Text")]
+    [SerializeField] private TMP_Text incomeText;
+
+    [Header("Bounce Settings")]
+    [SerializeField] private bool enableBounce = true;
+    [SerializeField] private float bounceScaleMultiplier = 1.08f;
+    [SerializeField] private float bounceDuration = 0.15f;
+
     private float timer;
+
+    private Vector3 originalScale;
+    private bool isBouncing;
+
+    private Coroutine incomeRoutine;
+
+    private List<Cell> highlightedCells = new List<Cell>();
+
+    private void Start()
+    {
+        originalScale = transform.localScale;
+
+        if (incomeText != null)
+            incomeText.gameObject.SetActive(false);
+    }
 
     private void Update()
     {
@@ -23,32 +49,155 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                     coins += 2;
                 }
             }
-            if(plantData.name == "Royal Flower")
+
+            if (plantData.name == "Royal Flower")
             {
                 coins += Grid.Instance.CountAdjacentPlants(GetComponentInParent<Cell>());
             }
 
             CoinManager.Instance.AddCoins(coins);
 
+            if (coins > 0)
+            {
+                ShowIncomeText(coins);
+
+                if (enableBounce && !isBouncing)
+                    StartCoroutine(PlantBounce());
+            }
+
             timer -= plantData.productionInterval;
+        }
+    }
+
+    private void ShowIncomeText(int amount)
+    {
+        if (incomeText == null) return;
+
+        incomeText.text = "+ " + amount + " <color=#FFD700>C</color>";
+
+        if (incomeRoutine != null)
+            StopCoroutine(incomeRoutine);
+
+        incomeRoutine = StartCoroutine(FadeIncomeText());
+    }
+
+    private System.Collections.IEnumerator FadeIncomeText()
+    {
+        float fadeIn = 0.1f;
+        float visibleTime = 0.25f;
+        float fadeOut = 0.2f;
+
+        Color baseColor = incomeText.color;
+
+        incomeText.color = new Color(baseColor.r, baseColor.g, baseColor.b, 0f);
+        incomeText.gameObject.SetActive(true);
+
+        float t = 0f;
+
+        while (t < fadeIn)
+        {
+            float a = t / fadeIn;
+            incomeText.color = new Color(baseColor.r, baseColor.g, baseColor.b, a);
+
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(visibleTime);
+
+        t = 0f;
+
+        while (t < fadeOut)
+        {
+            float a = 1f - (t / fadeOut);
+            incomeText.color = new Color(baseColor.r, baseColor.g, baseColor.b, a);
+
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        incomeText.gameObject.SetActive(false);
+    }
+
+    private System.Collections.IEnumerator PlantBounce()
+    {
+        isBouncing = true;
+
+        float time = 0f;
+        Vector3 targetScale = originalScale * bounceScaleMultiplier;
+
+        while (time < bounceDuration)
+        {
+            float t = time / bounceDuration;
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        time = 0f;
+
+        while (time < bounceDuration)
+        {
+            float t = time / bounceDuration;
+            transform.localScale = Vector3.Lerp(targetScale, originalScale, t);
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localScale = originalScale;
+        isBouncing = false;
+    }
+
+    private void HighlightNeighbors(bool state)
+    {
+        if (!plantData.needToHighlightNearbyCells) return;
+
+        Cell myCell = GetComponentInParent<Cell>();
+        if (myCell == null) return;
+
+        if (!state)
+        {
+            foreach (var c in highlightedCells)
+                c.ResetHighlight();
+
+            highlightedCells.Clear();
+            return;
+        }
+
+        var neighbors = Grid.Instance.GetAdjacentCells(myCell);
+
+        foreach (var c in neighbors)
+        {
+            if (!c.isBuyied) continue;
+
+            c.SetHighlight(new Color(0.6f, 1f, 0.6f, 1f));
+            highlightedCells.Add(c);
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(!PackManager.Instance.waitingForClick)
+        if (!PackManager.Instance.waitingForClick)
             tooltip.SetActive(true);
+
+        if (plantData.needToHighlightNearbyCells)
+            HighlightNeighbors(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (!PackManager.Instance.waitingForClick)
             tooltip.SetActive(false);
+
+        if (plantData.needToHighlightNearbyCells)
+            HighlightNeighbors(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(ShovelSlot.Instance.waitingForAction)
+        if (ShovelSlot.Instance.waitingForAction)
         {
             GetComponentInParent<Cell>().isOccupied = false;
             Destroy(gameObject);
