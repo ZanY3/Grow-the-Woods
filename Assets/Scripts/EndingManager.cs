@@ -50,6 +50,7 @@ public class EndingManager : MonoBehaviour
         UpdateProgress(1);
     }
 
+    /*
     private void Update()
     {
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
@@ -57,6 +58,7 @@ public class EndingManager : MonoBehaviour
             UpdateProgress(47);
         }
     }
+    */
 
     public void UpdateProgress(int amountToAdd)
     {
