@@ -730,6 +730,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Plant
   plantData: {fileID: 11400000, guid: a8d0f3960a1fed84d885a2da6faaadf1, type: 2}
   tooltip: {fileID: 305835923027332711}
+  tooltipSound: {fileID: 8300000, guid: 15633931a18a15349aff8ebf1e385121, type: 3}
+  shovelUsedSound: {fileID: 8300000, guid: 65d453b73b93d25448fb83ee9b36b6e6, type: 3}
   incomeText: {fileID: 9115703750545259382}
   enableBounce: 1
   bounceScaleMultiplier: 1.05

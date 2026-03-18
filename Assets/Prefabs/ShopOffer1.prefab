@@ -225,6 +225,9 @@ MonoBehaviour:
   priceTxt: {fileID: 4163938971139320923}
   shimmer: {fileID: 6201820839870763354}
   shopManager: {fileID: 0}
+  notEnoughMoneyColor: {r: 1, g: 0, b: 0, a: 1}
+  errorSound: {fileID: 8300000, guid: 0805a77f8326ff442b3e2683775c4189, type: 3}
+  offerChooseSound: {fileID: 8300000, guid: cdac06cbce04e01499e48d4a83399c75, type: 3}
 --- !u!1 &6674062708675552238
 GameObject:
   m_ObjectHideFlags: 0

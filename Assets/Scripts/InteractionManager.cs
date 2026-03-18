@@ -5,6 +5,7 @@ public class InteractionManager : MonoBehaviour
 {
     public static InteractionManager Instance;
 
+    [HideInInspector] public bool plantsCanEarn = false;
     [HideInInspector] public bool canPressBtns = true;
     [HideInInspector] public bool canZoomCam = true;
     [SerializeField] private Button[] buttons;
@@ -12,6 +13,7 @@ public class InteractionManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        plantsCanEarn = false;
     }
 
     private void Update()

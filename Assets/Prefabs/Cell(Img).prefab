@@ -453,7 +453,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f6e5043b59c9e14a9dc8e6402132376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cell
-  isOccupied: 0
   price: 10
   closedClue: {fileID: 3218264519051745992}
   priceTxt: {fileID: 70817105563242246}
@@ -462,8 +461,12 @@ MonoBehaviour:
   closedCellSprite: {fileID: -2359145276931795649, guid: bfa78656f1e666e4f9016bfbbaa0edc7, type: 3}
   openedCellSprite: {fileID: 8519599576061841192, guid: a1580bde30a7d834db6800260609d5b1, type: 3}
   notEnoughColor: {r: 1, g: 0.3, b: 0.3, a: 1}
+  plantSound: {fileID: 8300000, guid: 430c60d894b461347809c2a90e017b84, type: 3}
+  notEnoughToBuySound: {fileID: 8300000, guid: 4d2ce4211bc195e49a83f5e2672bfccb, type: 3}
+  cellBuySound: {fileID: 8300000, guid: 3f2d66abba8263948a9ff7cf2fa349f7, type: 3}
   currentPlant: {fileID: 0}
   isBuyied: 0
+  isOccupied: 0
 --- !u!1 &3218264519051745992
 GameObject:
   m_ObjectHideFlags: 0

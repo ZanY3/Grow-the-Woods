@@ -12,8 +12,12 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private GameObject defaultPackPanel;
     [SerializeField] private GameObject buyBtn;
 
+    [SerializeField] private AudioClip buySound;
+    [SerializeField] private AudioClip shopBtnSound;
+
     [Header("Warning")]
     [SerializeField] private GameObject warningObject;
+    [SerializeField] private AudioClip warningSound;
 
     [Space]
     [Range(1, 2)][SerializeField] private float priceMultiplier;
@@ -52,6 +56,7 @@ public class ShopManager : MonoBehaviour
 
     public void ChangeShopVisibility()
     {
+        AudioManager.Instance.PlaySfxSound(shopBtnSound, 0.35f);
         if (!shopPanel.activeSelf)
         {
             OpenShop();
@@ -115,6 +120,7 @@ public class ShopManager : MonoBehaviour
         {
             if (CoinManager.Instance.Coins >= selectedOffer.Price)
             {
+                AudioManager.Instance.PlaySfxSound(buySound, 0.5f, 0.9f, 1.1f);
                 CoinManager.Instance.SpendCoins(selectedOffer.Price);
 
                 CloseShop();
@@ -138,26 +144,34 @@ public class ShopManager : MonoBehaviour
 
     private void PlayNoSpaceFeedback()
     {
+        AudioManager.Instance.PlaySfxSound(warningSound, 0.5f);
+
         if (selectedOffer != null)
         {
-            selectedOffer.transform.DOKill();
+            Transform t = selectedOffer.transform;
 
-            selectedOffer.transform.DOShakeScale(
+            t.DOKill();
+            t.localScale = Vector3.one;
+
+            t.DOShakeScale(
                 0.3f,
                 new Vector3(0.15f, 0.15f, 0),
                 15,
                 90,
                 false
-            );
+            ).OnComplete(() =>
+            {
+                t.localScale = Vector3.one;
+            });
         }
 
+        warningGroup.DOKill();
         warningObject.SetActive(true);
         warningGroup.alpha = 0;
 
-        warningGroup.DOFade(1, 0.2f);
-
         Sequence seq = DOTween.Sequence();
 
+        seq.Append(warningGroup.DOFade(1, 0.2f));
         seq.AppendInterval(1.2f);
         seq.Append(warningGroup.DOFade(0, 0.3f));
 

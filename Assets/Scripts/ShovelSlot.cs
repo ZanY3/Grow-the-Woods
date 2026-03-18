@@ -10,6 +10,7 @@ public class ShovelSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField] private RectTransform shovelObj;
     [SerializeField] private GameObject shovelClueTxt;
     [SerializeField] private Canvas canvas;
+    [SerializeField] private AudioClip shovelPickUpSound;
 
     [HideInInspector] public bool waitingForAction = false;
 
@@ -48,6 +49,7 @@ public class ShovelSlot : MonoBehaviour, IPointerClickHandler
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
+                AudioManager.Instance.PlaySfxSound(shovelPickUpSound, 0.5f, 0.9f, 1.1f);
                 ReturnShowel();
             }
         }
@@ -55,9 +57,10 @@ public class ShovelSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        AudioManager.Instance.PlaySfxSound(shovelPickUpSound, 0.5f, 0.9f, 1.1f);
+
         if (PackManager.Instance.waitingForClick)
             return;
-
         waitingForAction = !waitingForAction;
         EndingManager.Instance.ChangeProgressState(false);
         shovelClueTxt.SetActive(waitingForAction);

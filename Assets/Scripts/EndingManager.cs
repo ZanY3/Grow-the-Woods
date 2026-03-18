@@ -20,6 +20,9 @@ public class EndingManager : MonoBehaviour
     [SerializeField] private GameObject bg;
     [SerializeField] private TMP_Text titleTxt;
     [SerializeField] private Transform restartBtn;
+    [Space]
+    [SerializeField] private AudioClip wavePopSound;
+    [SerializeField] private AudioClip endingMusic;
 
     [SerializeField] private int totalCells = 40;
 
@@ -50,7 +53,7 @@ public class EndingManager : MonoBehaviour
         UpdateProgress(1);
     }
 
-    /*
+    
     private void Update()
     {
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
@@ -58,7 +61,7 @@ public class EndingManager : MonoBehaviour
             UpdateProgress(47);
         }
     }
-    */
+    
 
     public void UpdateProgress(int amountToAdd)
     {
@@ -106,6 +109,7 @@ public class EndingManager : MonoBehaviour
 
         for (int i = 0; i < cells.Length; i++)
         {
+            AudioManager.Instance.PlaySfxSound(wavePopSound, 0.25f, 0.9f, 1.1f);
             var cell = cells[i];
 
             cell.transform
@@ -115,7 +119,7 @@ public class EndingManager : MonoBehaviour
 
             yield return new WaitForSeconds(0.03f);
         }
-
+        AudioManager.Instance.PlayOverrideMusic(endingMusic);
         yield return new WaitForSeconds(0.5f);
 
         // 3. включаем BG и фейдим

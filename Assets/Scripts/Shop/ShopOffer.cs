@@ -22,6 +22,8 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
 
     [Header("Feedback")]
     [SerializeField] private Color notEnoughMoneyColor = Color.red;
+    [SerializeField] private AudioClip errorSound;
+    [SerializeField] private AudioClip offerChooseSound;
 
     private float selectedScale = 1.1f;
 
@@ -71,17 +73,15 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
 
     public void PlayNotEnoughMoneyFeedback()
     {
+        AudioManager.Instance.PlaySfxSound(errorSound, 0.5f);
         Transform icon = iconObject.transform;
 
-        // убиваем старые анимации
         icon.DOKill();
         priceTxt.DOKill();
 
-        // сбрасываем позицию и scale
         icon.localPosition = defaultPosition;
         icon.localScale = GetTargetScale();
 
-        // SHAKE
         icon.DOShakePosition(
             duration: 0.3f,
             strength: 12f,
@@ -91,7 +91,6 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
             fadeOut: true
         );
 
-        // PUNCH SCALE
         icon.DOPunchScale(
             icon.localScale * 0.15f,
             0.25f,
@@ -99,7 +98,6 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
             1
         );
 
-        // FLASH PRICE
         Sequence seq = DOTween.Sequence();
 
         seq.Append(priceTxt.DOColor(notEnoughMoneyColor, 0.08f));
@@ -108,6 +106,7 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        AudioManager.Instance.PlaySfxSound(offerChooseSound, 0.15f, 0.9f, 1.1f);
         if (shopManager.selectedOffer == this)
         {
             ResetScale();

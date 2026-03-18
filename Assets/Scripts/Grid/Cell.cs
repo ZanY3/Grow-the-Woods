@@ -6,7 +6,6 @@ using TMPro;
 
 public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-
     [SerializeField] private int price;
     [SerializeField] private GameObject closedClue;
 
@@ -20,6 +19,9 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     [SerializeField] private Sprite openedCellSprite;
 
     [SerializeField] private Color notEnoughColor = new Color(1f, 0.3f, 0.3f); // ДОБАВЛЕНО
+    [SerializeField] private AudioClip plantSound;
+    [SerializeField] private AudioClip notEnoughToBuySound;
+    [SerializeField] private AudioClip cellBuySound;
 
     private Color startColor;
     private Vector3 startScale;
@@ -125,6 +127,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     void PlaySpendCoinsAnim()
     {
+        AudioManager.Instance.PlaySfxSound(cellBuySound, 0.45f, 0.9f, 1.1f);
         spendCoinsGroup.gameObject.SetActive(true);
         spendCoinsGroup.alpha = 1f;
 
@@ -138,6 +141,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     void PlayCannotBuyAnim()
     {
+        AudioManager.Instance.PlaySfxSound(notEnoughToBuySound, 0.15f, 0.9f, 1.1f);
         transform.DOKill();
         priceTxt.DOKill();
 
@@ -182,6 +186,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         if (isOccupied) return;
 
         currentPlant = Instantiate(plantPrefab, transform, false);
+        AudioManager.Instance.PlaySfxSound(plantSound, 1f);
         currentPlant.GetComponent<PlantVisualizer>().SetData(plantData);
         currentPlant.GetComponent<PlantVisualizer>().VisualizePlant();
         RectTransform rect = currentPlant.GetComponent<RectTransform>();

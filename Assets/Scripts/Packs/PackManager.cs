@@ -29,6 +29,9 @@ public class PackManager : MonoBehaviour
     [SerializeField] private GameObject plantChoosePanel;
     [SerializeField] private Button confirmBtn;
     [SerializeField] private TMP_Text placeClueTxt;
+    [SerializeField] private AudioClip openSound;
+    [SerializeField] private AudioClip chooseSound;
+    [SerializeField] private AudioClip confirmPlantSound; 
 
     [HideInInspector] public bool waitingForClick = false;
 
@@ -49,6 +52,7 @@ public class PackManager : MonoBehaviour
 
     public void OpenPack()
     {
+        AudioManager.Instance.PlaySfxSound(openSound, 0.4f);
         openPanel.SetActive(false);
         plantChoosePanel.SetActive(true);
 
@@ -69,6 +73,7 @@ public class PackManager : MonoBehaviour
 
     public void SelectPlant(GameObject plant)
     {
+        AudioManager.Instance.PlaySfxSound(chooseSound, 0.25f, 0.85f, 1.15f);
         if (selectedPlantObject == plant)
         {
             ResetScale(plant);
@@ -106,9 +111,10 @@ public class PackManager : MonoBehaviour
 
         EndingManager.Instance.ChangeProgressState(false);
         waitingForClick = true;
+        AudioManager.Instance.canPlaySounds = true;
         InteractionManager.Instance.canZoomCam = true;
         InteractionManager.Instance.canPressBtns = false;
-
+        AudioManager.Instance.PlaySfxSound(confirmPlantSound, 0.3f, 0.9f, 1.1f);
         ChangePlaceClueTxt(
             "Click on the <color=yellow>cell</color> where you want to place the <color=green>plant</color>",
             true

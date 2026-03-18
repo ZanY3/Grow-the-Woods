@@ -6,9 +6,11 @@ using UnityEngine.EventSystems;
 public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [HideInInspector] public PlantData plantData;
-
+    
     [SerializeField] private GameObject tooltip;
-
+    [SerializeField] private AudioClip tooltipSound;
+    [SerializeField] private AudioClip shovelUsedSound;
+    //[SerializeField] private AudioClip earnSound;
     [Header("Income Text")]
     [SerializeField] private TMP_Text incomeText;
 
@@ -36,6 +38,12 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     private void Update()
     {
+        if (!InteractionManager.Instance.plantsCanEarn)
+        {
+            timer = 0f;
+            return;
+        }
+
         timer += Time.deltaTime;
 
         while (timer >= plantData.productionInterval)
@@ -45,9 +53,7 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             if (plantData.name == "Cactus")
             {
                 if (!Grid.Instance.HasAdjacentPlants(GetComponentInParent<Cell>()))
-                {
                     coins += 2;
-                }
             }
 
             if (plantData.name == "Royal Flower")
@@ -55,6 +61,7 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 coins += Grid.Instance.CountAdjacentPlants(GetComponentInParent<Cell>());
             }
 
+            //AudioManager.Instance.PlaySfxSound(earnSound, 0.025f, 0.8f, 0.95f);
             CoinManager.Instance.AddCoins(coins);
 
             if (coins > 0)
@@ -179,6 +186,7 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        AudioManager.Instance.PlaySfxSound(tooltipSound, 0.035f, 0.9f, 1.1f);
         if (!PackManager.Instance.waitingForClick)
             tooltip.SetActive(true);
 
@@ -199,6 +207,8 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     {
         if (ShovelSlot.Instance.waitingForAction)
         {
+            EndingManager.Instance.UpdateProgress(-1);
+            AudioManager.Instance.PlaySfxSound(shovelUsedSound, 0.35f);
             GetComponentInParent<Cell>().isOccupied = false;
             Destroy(gameObject);
             ShovelSlot.Instance.ReturnShowel();
