@@ -53,12 +53,19 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             if (plantData.name == "Cactus")
             {
                 if (!Grid.Instance.HasAdjacentPlants(GetComponentInParent<Cell>()))
-                    coins += 2;
+                    coins += 3;
             }
 
             if (plantData.name == "Royal Flower")
             {
                 coins += Grid.Instance.CountAdjacentPlants(GetComponentInParent<Cell>());
+            }
+            if(plantData.name == "Lucky Cap")
+            {
+                if (Random.value <= 0.25f)
+                {
+                    coins += 4;
+                }
             }
 
             //AudioManager.Instance.PlaySfxSound(earnSound, 0.025f, 0.8f, 0.95f);

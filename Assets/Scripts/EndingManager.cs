@@ -2,7 +2,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -23,6 +22,7 @@ public class EndingManager : MonoBehaviour
     [Space]
     [SerializeField] private AudioClip wavePopSound;
     [SerializeField] private AudioClip endingMusic;
+    [SerializeField] private AudioClip endCongratsSound;
 
     [SerializeField] private int totalCells = 40;
 
@@ -51,15 +51,6 @@ public class EndingManager : MonoBehaviour
         restartBtn.localScale = Vector3.zero;
 
         UpdateProgress(1);
-    }
-
-    
-    private void Update()
-    {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            UpdateProgress(47);
-        }
     }
     
 
@@ -124,7 +115,7 @@ public class EndingManager : MonoBehaviour
 
         // 3. включаем BG и фейдим
         bg.SetActive(true);
-
+        AudioManager.Instance.PlaySfxSound(endCongratsSound, 0.5f);
         Image img = bg.GetComponent<Image>();
         if (img != null)
         {
