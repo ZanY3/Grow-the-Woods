@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class Grid : MonoBehaviour
 {
     public static Grid Instance;
-
     [Header("Grid size")]
     [SerializeField] private int gridWidth = 5;
     [SerializeField] private int gridHeight = 5;

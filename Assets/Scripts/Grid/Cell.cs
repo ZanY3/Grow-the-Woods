@@ -8,6 +8,7 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 {
     [SerializeField] private int price;
     [SerializeField] private GameObject closedClue;
+    [SerializeField] private bool isBlockedOnStart;
 
     [SerializeField] private TMP_Text priceTxt;
 
@@ -51,6 +52,13 @@ public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         if (!isBuyied)
         {
             ChangeState(false);
+        }
+        if(isBlockedOnStart)
+        {
+            image.raycastTarget = false;
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 0f);
+
+            if (closedClue != null) closedClue.SetActive(false);
         }
     }
 
