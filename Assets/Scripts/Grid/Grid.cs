@@ -1,9 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public class Grid : MonoBehaviour
 {
     public static Grid Instance;
+
     [Header("Grid size")]
     [SerializeField] private int gridWidth = 5;
     [SerializeField] private int gridHeight = 5;
@@ -12,11 +13,20 @@ public class Grid : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-            Destroy(gameObject);
-        else
+        // Первичная инициализация
+        if (Instance == null)
+        {
             Instance = this;
+        }
     }
+
+    private void OnEnable()
+    {
+        // Самая важная часть: когда регион включается в PrestigeManager,
+        // эта сетка перехватывает Instance на себя.
+        Instance = this;
+    }
+
     public bool IsExistEmptyCell()
     {
         for (int i = 0; i < cells.Length; i++)
@@ -31,96 +41,76 @@ public class Grid : MonoBehaviour
     public bool HasAdjacentPlants(Cell cell)
     {
         int index = System.Array.IndexOf(cells, cell);
+        if (index == -1) return false;
 
         int x = index % gridWidth;
         int y = index / gridWidth;
 
         // LEFT
-        if (x > 0)
-        {
-            if (cells[index - 1].isOccupied)
-                return true;
-        }
+        if (x > 0 && cells[index - 1].isOccupied) return true;
 
         // RIGHT
-        if (x < gridWidth - 1)
-        {
-            if (cells[index + 1].isOccupied)
-                return true;
-        }
+        if (x < gridWidth - 1 && cells[index + 1].isOccupied) return true;
 
         // UP
-        if (y > 0)
-        {
-            if (cells[index - gridWidth].isOccupied)
-                return true;
-        }
+        if (y > 0 && cells[index - gridWidth].isOccupied) return true;
 
         // DOWN
-        if (y < gridHeight - 1)
-        {
-            if (cells[index + gridWidth].isOccupied)
-                return true;
-        }
+        if (y < gridHeight - 1 && cells[index + gridWidth].isOccupied) return true;
 
         return false;
     }
-    public Cell[] GetCells()
-    {
-        return cells;
-    }
+
     public int CountAdjacentPlants(Cell cell)
     {
         int count = 0;
-
         int index = System.Array.IndexOf(cells, cell);
+        if (index == -1) return 0;
 
         int x = index % gridWidth;
         int y = index / gridWidth;
 
         // LEFT
-        if (x > 0 && cells[index - 1].isOccupied)
-            count++;
+        if (x > 0 && cells[index - 1].isOccupied) count++;
 
         // RIGHT
-        if (x < gridWidth - 1 && cells[index + 1].isOccupied)
-            count++;
+        if (x < gridWidth - 1 && cells[index + 1].isOccupied) count++;
 
         // UP
-        if (y > 0 && cells[index - gridWidth].isOccupied)
-            count++;
+        if (y > 0 && cells[index - gridWidth].isOccupied) count++;
 
         // DOWN
-        if (y < gridHeight - 1 && cells[index + gridWidth].isOccupied)
-            count++;
+        if (y < gridHeight - 1 && cells[index + gridWidth].isOccupied) count++;
 
         return count;
     }
+
     public List<Cell> GetAdjacentCells(Cell cell)
     {
-        var result = new System.Collections.Generic.List<Cell>();
-
+        var result = new List<Cell>();
         int index = System.Array.IndexOf(cells, cell);
+        if (index == -1) return result;
 
         int x = index % gridWidth;
         int y = index / gridWidth;
 
         // LEFT
-        if (x > 0)
-            result.Add(cells[index - 1]);
+        if (x > 0) result.Add(cells[index - 1]);
 
         // RIGHT
-        if (x < gridWidth - 1)
-            result.Add(cells[index + 1]);
+        if (x < gridWidth - 1) result.Add(cells[index + 1]);
 
         // UP
-        if (y > 0)
-            result.Add(cells[index - gridWidth]);
+        if (y > 0) result.Add(cells[index - gridWidth]);
 
         // DOWN
-        if (y < gridHeight - 1)
-            result.Add(cells[index + gridWidth]);
+        if (y < gridHeight - 1) result.Add(cells[index + gridWidth]);
 
         return result;
+    }
+
+    public Cell[] GetCells()
+    {
+        return cells;
     }
 }

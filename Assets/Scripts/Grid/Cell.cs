@@ -6,6 +6,7 @@ using TMPro;
 
 public class Cell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    public Grid myGrid;
     [SerializeField] private int price;
     [SerializeField] private GameObject closedClue;
     [SerializeField] private bool isBlockedOnStart;

@@ -31,4 +31,8 @@ public class CoinManager : MonoBehaviour
         coins -= amount;
         UpdateUI();
     }
+    public void ResetCoins()
+    {
+        coins = 0;
+    }
 }
