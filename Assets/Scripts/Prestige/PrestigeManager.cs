@@ -5,39 +5,48 @@ public class PrestigeManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] objectsForRegions;
     [SerializeField] private GameObject nextRegionConfirmPanel;
+    [SerializeField] private GameObject nextRegionBtn;
+    [SerializeField] private AudioClip btnSound;
     [Space]
     [Header("For tweens")]
     [SerializeField] private RectTransform panelRect;
     [SerializeField] private CanvasGroup panelCanvasGroup;
 
     private int currentRegion = 0;
+    private int maxRegion = 1;
     public void UpdateRegion()
     {
-        currentRegion++;
-        CoinManager.Instance.ResetCoins();
-
-        // 1. Сначала деактивируем и удаляем всё старое
-        for (int i = 0; i < objectsForRegions.Length; i++)
+        if(currentRegion < maxRegion)
         {
-            if (i != currentRegion && objectsForRegions[i] != null)
+            currentRegion++;
+            CoinManager.Instance.ResetCoins();
+            EndingManager.Instance.ResetProgress();
+
+            for (int i = 0; i < objectsForRegions.Length; i++)
             {
-                objectsForRegions[i].SetActive(false);
-                Destroy(objectsForRegions[i]);
+                if (i != currentRegion && objectsForRegions[i] != null)
+                {
+                    objectsForRegions[i].SetActive(false);
+                    Destroy(objectsForRegions[i]);
+                }
             }
-        }
 
-        // 2. Включаем новый регион
-        // В этот момент сработает OnEnable() в скрипте Grid на новом объекте
-        // и Grid.Instance обновится автоматически!
-        if (currentRegion < objectsForRegions.Length)
+            if (currentRegion < objectsForRegions.Length)
+            {
+                objectsForRegions[currentRegion].SetActive(true);
+            }
+
+            CloseNextRegionPanel();
+        }
+        else
         {
-            objectsForRegions[currentRegion].SetActive(true);
+            EndingManager.Instance.PlayEnding();
+            Debug.Log("THE END!");
         }
-
-        CloseNextRegionPanel();
     }
     public void OpenNextRegionPanel()
     {
+        AudioManager.Instance.PlaySfxSound(btnSound, 0.35f);
         nextRegionConfirmPanel.SetActive(true);
 
         InteractionManager.Instance.canZoomCam = false;
@@ -53,6 +62,11 @@ public class PrestigeManager : MonoBehaviour
     }
     public void CloseNextRegionPanel()
     {
+        if(currentRegion >= maxRegion)
+        {
+            nextRegionBtn.SetActive(false);
+        }
+        AudioManager.Instance.PlaySfxSound(btnSound, 0.35f);
         InteractionManager.Instance.canZoomCam = true;
 
         panelRect.DOAnchorPosY(-800, 0.4f).SetEase(Ease.InBack);

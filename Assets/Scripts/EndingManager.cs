@@ -67,9 +67,14 @@ public class EndingManager : MonoBehaviour
 
         if (cellsFilled >= totalCells)
         {
-            PlayEnding();
+            //PlayEnding();
         }
     }
+    public void ResetProgress()
+    {
+        cellsFilled = 0;
+        UpdateProgress(0);
+    }    
 
     public void ChangeProgressState(bool state)
     {

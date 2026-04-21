@@ -13,7 +13,6 @@ public class Grid : MonoBehaviour
 
     private void Awake()
     {
-        // Первичная инициализация
         if (Instance == null)
         {
             Instance = this;
@@ -22,8 +21,6 @@ public class Grid : MonoBehaviour
 
     private void OnEnable()
     {
-        // Самая важная часть: когда регион включается в PrestigeManager,
-        // эта сетка перехватывает Instance на себя.
         Instance = this;
     }
 

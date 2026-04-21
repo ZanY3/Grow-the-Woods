@@ -6505,7 +6505,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 472913611}
-  - {fileID: 546077510}
   m_Father: {fileID: 1509054579}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -6637,11 +6636,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 544810889}
+  m_Father: {fileID: 1509054579}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.9000244, y: 49.299953}
+  m_AnchoredPosition: {x: -1058.9001, y: 14.899952}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &546077511
@@ -15790,7 +15789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1172530270
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16963,6 +16962,8 @@ MonoBehaviour:
   - {fileID: 568452586}
   - {fileID: 1054927056}
   nextRegionConfirmPanel: {fileID: 744549082}
+  nextRegionBtn: {fileID: 544810888}
+  btnSound: {fileID: 8300000, guid: 42cb61e3f2468a74f8afed0737fa08e7, type: 3}
   panelRect: {fileID: 744549083}
   panelCanvasGroup: {fileID: 744549084}
 --- !u!1 &1239480691
@@ -20019,6 +20020,7 @@ RectTransform:
   m_Children:
   - {fileID: 1836677990}
   - {fileID: 445036859}
+  - {fileID: 546077510}
   - {fileID: 544810889}
   m_Father: {fileID: 1115587224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
