@@ -1,3 +1,5 @@
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FliesManager : MonoBehaviour
@@ -38,6 +40,24 @@ public class FliesManager : MonoBehaviour
     }
     public void LaunchFlies()
     {
-        Debug.Log("FLIES LAUNCHED!");
+        Cell[] cells = Grid.Instance.GetCells();
+        if(cells.Count() > 0)
+        {
+            List<Cell> cellsWithPlants = new List<Cell>();
+            for(int i = 0; i < cells.Length; i++)
+            {
+                if(cells[i].isOccupied)
+                {
+                    cellsWithPlants.Add(cells[i]);
+                }
+            }
+            Plant plant = cellsWithPlants[Random.Range(0, cellsWithPlants.Count)].GetComponentInChildren<Plant>();
+            plant.fliesAlert.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("No plants to attack(flies)");
+        }
+
     }
 }

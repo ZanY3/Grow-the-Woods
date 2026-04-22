@@ -19,6 +19,9 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     [SerializeField] private float bounceScaleMultiplier = 1.08f;
     [SerializeField] private float bounceDuration = 0.15f;
 
+    [Header("Other")]
+    public GameObject fliesAlert;
+
     private float timer;
 
     private Vector3 originalScale;

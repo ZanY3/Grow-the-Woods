@@ -349,6 +349,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8120522553568607237}
+  - component: {fileID: 1584124000972431229}
   m_Layer: 5
   m_Name: FliesAlert
   m_TagString: Untagged
@@ -378,6 +379,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 9.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1584124000972431229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551743268047821046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1ef89a2f2744b34aa3b668e27a86040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Flies
+  plant: {fileID: 5683740079072611445}
+  timerImg: {fileID: 4099630590262687847}
+  timerToDestroy: 5
 --- !u!1 &3800941342470593110
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,6 +942,7 @@ MonoBehaviour:
   enableBounce: 1
   bounceScaleMultiplier: 1.05
   bounceDuration: 0.15
+  fliesAlert: {fileID: 2551743268047821046}
 --- !u!114 &8556305919488060118
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6791,9 +6791,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f93e8c9bdcebb42b77b91286d4080f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FliesManager
-  spawnChance: 50
-  spawnTimeMinInterval: 10
-  spawnTimeMaxInterval: 20
+  spawnChance: 75
+  spawnTimeMinInterval: 7
+  spawnTimeMaxInterval: 15
 --- !u!1 &554789945
 GameObject:
   m_ObjectHideFlags: 0
