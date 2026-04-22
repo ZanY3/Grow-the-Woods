@@ -40,6 +40,7 @@ public class PrestigeManager : MonoBehaviour
         }
         else
         {
+            CloseNextRegionPanel();
             EndingManager.Instance.PlayEnding();
             Debug.Log("THE END!");
         }
