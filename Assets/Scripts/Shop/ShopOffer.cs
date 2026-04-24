@@ -26,6 +26,7 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     [SerializeField] private AudioClip offerChooseSound;
 
     private float selectedScale = 1.1f;
+    private int startPrice;
 
     private Vector3 defaultScale;
     private Vector3 shimmerDefaultScale;
@@ -34,9 +35,11 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     private Color defaultPriceColor;
 
     public int Price => offerPrice;
+    public int StartPrice => startPrice;
 
     private void Start()
     {
+        startPrice = offerPrice;
         defaultScale = iconObject.transform.localScale;
         defaultPosition = iconObject.transform.localPosition;
 

@@ -11,6 +11,8 @@ public class PrestigeManager : MonoBehaviour
     [Header("For tweens")]
     [SerializeField] private RectTransform panelRect;
     [SerializeField] private CanvasGroup panelCanvasGroup;
+    [Header("Other")]
+    [SerializeField] ShopManager shopManager;
 
     private int currentRegion = 0;
     private int maxRegion = 1;
@@ -20,6 +22,7 @@ public class PrestigeManager : MonoBehaviour
         {
             currentRegion++;
             CoinManager.Instance.ResetCoins();
+            shopManager.ReturnPrices();
             EndingManager.Instance.ResetProgress();
 
             for (int i = 0; i < objectsForRegions.Length; i++)

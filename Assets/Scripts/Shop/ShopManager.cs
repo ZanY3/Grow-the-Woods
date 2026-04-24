@@ -180,4 +180,11 @@ public class ShopManager : MonoBehaviour
             warningObject.SetActive(false);
         });
     }
+    public void ReturnPrices()
+    {
+        for (int i = 0; i < offers.Length; i++)
+        {
+            offers[i].UpdatePrice(offers[i].StartPrice);
+        }
+    }
 }

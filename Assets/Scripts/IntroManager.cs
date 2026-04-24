@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class IntroManager : MonoBehaviour
 {
+    [SerializeField] private GameObject firstRegionObjects;
     [SerializeField] private CanvasGroup panel;
     [SerializeField] private TMP_Text text;
     [SerializeField] private AudioClip nextTextSound;
@@ -76,6 +77,7 @@ public class IntroManager : MonoBehaviour
             panel.gameObject.SetActive(false);
             InteractionManager.Instance.plantsCanEarn = true;
         });
+        firstRegionObjects.SetActive(true);
         ended = true;
     }
 }
