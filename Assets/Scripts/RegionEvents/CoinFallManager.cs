@@ -6,7 +6,7 @@ public class CoinFallManager : MonoBehaviour
 {
     [SerializeField] private RectTransform[] spawnPlaces;
     [SerializeField] private GameObject coinPrefab;
-    [SerializeField] private RectTransform canvasTransform;
+    [SerializeField] private RectTransform parentTransform;
 
     [Header("Clue Settings")]
     [SerializeField] private CanvasGroup coinFallStartClue;
@@ -19,6 +19,7 @@ public class CoinFallManager : MonoBehaviour
     [SerializeField][Range(0, 100)] private float chanceToStart;
     [SerializeField] private float checkInterval;
 
+    [HideInInspector] public bool canLaunchEvent = true;
     private float _currentSpawnTimer;
     private float _currentDurationTimer;
     private bool _isActive;
@@ -41,7 +42,7 @@ public class CoinFallManager : MonoBehaviour
             yield return new WaitForSeconds(checkInterval);
             if (_isActive) continue;
 
-            if (Random.Range(0f, 100f) <= chanceToStart)
+            if (Random.Range(0f, 100f) <= chanceToStart && canLaunchEvent)
             {
                 StartCoroutine(ShowClueAndStartSequence());
             }
@@ -100,7 +101,7 @@ public class CoinFallManager : MonoBehaviour
     {
         if (spawnPlaces.Length == 0) return;
         Transform spawnPoint = spawnPlaces[Random.Range(0, spawnPlaces.Length)];
-        GameObject coin = Instantiate(coinPrefab, canvasTransform);
+        GameObject coin = Instantiate(coinPrefab, parentTransform);
         coin.transform.position = spawnPoint.position;
 
         coin.transform.localScale = Vector3.zero;

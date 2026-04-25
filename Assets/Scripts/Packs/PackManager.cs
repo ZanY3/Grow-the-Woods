@@ -35,8 +35,10 @@ public class PackManager : MonoBehaviour
 
     [HideInInspector] public bool waitingForClick = false;
 
-    public PlantData selectedPlant;
+    [HideInInspector] public PlantData selectedPlant;
     private GameObject selectedPlantObject;
+    [SerializeField] private FliesManager fliesManager;
+    [SerializeField] private CoinFallManager coinFallManager;
 
     private Dictionary<GameObject, Vector3> originalScales = new Dictionary<GameObject, Vector3>();
 
@@ -52,6 +54,11 @@ public class PackManager : MonoBehaviour
 
     public void OpenPack()
     {
+        //Events disabling
+        fliesManager.canLaunchFlies = false;
+        coinFallManager.canLaunchEvent = false;
+        
+
         AudioManager.Instance.PlaySfxSound(openSound, 0.4f);
         openPanel.SetActive(false);
         plantChoosePanel.SetActive(true);
@@ -119,6 +126,10 @@ public class PackManager : MonoBehaviour
             "Click on the <color=yellow>cell</color> where you want to place the <color=green>plant</color>",
             true
         );
+
+        //Events enable
+        fliesManager.canLaunchFlies = true;
+        coinFallManager.canLaunchEvent = true;
     }
 
     public void ChangePlaceClueTxt(string text, bool state)

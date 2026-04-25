@@ -10,6 +10,8 @@ public class FliesManager : MonoBehaviour
     [SerializeField] private int spawnTimeMinInterval;
     [SerializeField] private int spawnTimeMaxInterval;
 
+    [HideInInspector] public bool canLaunchFlies = true;
+
     private float tempInterval;
     public void GenerateRandomInterval()
     {
@@ -24,7 +26,7 @@ public class FliesManager : MonoBehaviour
         if(tempInterval <= 0)
         {
             int randChance = Random.Range(0, 100);
-            if (randChance >= spawnChance)
+            if (randChance >= spawnChance && canLaunchFlies)
             {
                 LaunchFlies();
             }
