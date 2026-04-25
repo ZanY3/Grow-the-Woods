@@ -5009,6 +5009,7 @@ MonoBehaviour:
   duration: 10
   chanceToStart: 50
   checkInterval: 25
+  fallDuration: 3
   canLaunchEvent: 1
 --- !u!1 &469479587
 GameObject:
@@ -6896,6 +6897,8 @@ MonoBehaviour:
   spawnChance: 75
   spawnTimeMinInterval: 7
   spawnTimeMaxInterval: 15
+  minPlantsToAttackCount: 1
+  maxPlantsToAttackCount: 3
   canLaunchFlies: 1
 --- !u!1 &554789945
 GameObject:

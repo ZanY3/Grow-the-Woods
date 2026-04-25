@@ -18,6 +18,7 @@ public class CoinFallManager : MonoBehaviour
     [SerializeField] private float duration = 5.0f;
     [SerializeField][Range(0, 100)] private float chanceToStart;
     [SerializeField] private float checkInterval;
+    [SerializeField] private float fallDuration = 0;
 
     [HideInInspector] public bool canLaunchEvent = true;
     private float _currentSpawnTimer;
@@ -100,12 +101,19 @@ public class CoinFallManager : MonoBehaviour
     private void SpawnCoin()
     {
         if (spawnPlaces.Length == 0) return;
-        Transform spawnPoint = spawnPlaces[Random.Range(0, spawnPlaces.Length)];
+        RectTransform spawnPoint = spawnPlaces[Random.Range(0, spawnPlaces.Length)];
         GameObject coin = Instantiate(coinPrefab, parentTransform);
-        coin.transform.position = spawnPoint.position;
-
-        coin.transform.localScale = Vector3.zero;
-        coin.transform.DOScale(1f, 0.3f).SetEase(Ease.OutBounce);
+        RectTransform coinRect = coin.GetComponent<RectTransform>();
+        coinRect.position = spawnPoint.position;
+        coinRect.anchoredPosition += new Vector2(Random.Range(-40f, 40f), 0f);
+        float distanceToBottom = coinRect.anchoredPosition.y + parentTransform.rect.height * 0.5f + 150f;
+        float spin = Random.Range(-270f, 270f);
+        coinRect.localScale = Vector3.zero;
+        coinRect.DOScale(1f, 0.2f).SetEase(Ease.OutBack);
+        coinRect.DOAnchorPosY(coinRect.anchoredPosition.y - distanceToBottom, fallDuration)
+                .SetEase(Ease.InQuad);
+        coinRect.DORotate(new Vector3(0f, 0f, spin), fallDuration)
+                .SetEase(Ease.Linear);
     }
 
     private void StopCoinFall()

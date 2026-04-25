@@ -24,7 +24,7 @@ public class Flies : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, 
         {
             DestroyPlant();
         }
-        if (timerToDestroy >= startTimeToDestroy + 0.5f)
+        if (timerToDestroy >= startTimeToDestroy)
         {
             timerToDestroy = startTimeToDestroy;
             gameObject.SetActive(false);
