@@ -1,18 +1,26 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New_Artefact", menuName = "Scriptable Objects/Artefact")]
+[CreateAssetMenu(fileName = "New_Artefact", menuName = "Artefact")]
 public class ArtefactData : ScriptableObject
 {
     public Sprite icon;
     [TextArea]
     public string description;
-
     public enum Type
     {
-        CoinMultiplier,      // Умножает всё золото
-        UpgradeDiscount,     // Скидка на покупку
-        PrestigeBonus,       // Бонус к валюте перерождения
-        ChanceToDouble       // Шансы выпадения норм предметов увеличиваются
+        CoinMultiplier,   // Умножает всё золото
+        ShopDiscount,     // Скидка на покупку
+        ChanceUpgrader    // Шансы выпадения норм предметов увеличиваются
     }
+    /*
+    public enum UniqueEffect
+    {
+        None,
+        DoubleDrop,
+        FreeReroll,
+    }
+    public UniqueEffect uniqueEffect; // only matters when type == Unique
+    */
     public Type type;
+
 }

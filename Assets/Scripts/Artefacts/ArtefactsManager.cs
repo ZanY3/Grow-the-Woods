@@ -2,15 +2,19 @@ using UnityEngine;
 
 public class ArtefactsManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private ArtefactSlot[] slots;
+    [SerializeField] private ArtefactData[] allArtefacts;
+
+    private void Start()
     {
-        
+        int randNum = Random.Range(0, allArtefacts.Length);
+        for (int i = 0; i < randNum; i++)
+        {
+            if (!slots[i].isOccupied)
+            {
+                slots[i].SetArtefact(allArtefacts[randNum]);
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
