@@ -35,10 +35,16 @@ public class ArtefactSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        artefactTooltip.SetActive(true);
+        if(isOccupied)
+        {
+            artefactTooltip.SetActive(true);
+        }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        artefactTooltip.SetActive(false);
+        if (isOccupied)
+        {
+            artefactTooltip.SetActive(false);
+        }
     }
 }

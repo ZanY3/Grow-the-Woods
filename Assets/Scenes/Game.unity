@@ -3865,8 +3865,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1638215401}
-        m_TargetAssemblyTypeName: PackManager, Assembly-CSharp
+      - m_Target: {fileID: 729509609}
+        m_TargetAssemblyTypeName: ArtefactPackManager, Assembly-CSharp
         m_MethodName: SelectCard
         m_Mode: 3
         m_Arguments:
@@ -8444,8 +8444,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1638215401}
-        m_TargetAssemblyTypeName: PackManager, Assembly-CSharp
+      - m_Target: {fileID: 729509609}
+        m_TargetAssemblyTypeName: ArtefactPackManager, Assembly-CSharp
         m_MethodName: SelectCard
         m_Mode: 3
         m_Arguments:
@@ -23273,7 +23273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1530374493
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26094,8 +26094,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1638215401}
-        m_TargetAssemblyTypeName: PackManager, Assembly-CSharp
+      - m_Target: {fileID: 729509609}
+        m_TargetAssemblyTypeName: ArtefactPackManager, Assembly-CSharp
         m_MethodName: SelectCard
         m_Mode: 3
         m_Arguments:
@@ -27577,7 +27577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1858705420
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30583,9 +30583,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1638215401}
-        m_TargetAssemblyTypeName: PackManager, Assembly-CSharp
-        m_MethodName: OpenPack
+      - m_Target: {fileID: 729509609}
+        m_TargetAssemblyTypeName: ArtefactPackManager, Assembly-CSharp
+        m_MethodName: OpenPicker
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
