@@ -8,7 +8,8 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     public enum OfferType
     {
         Empty,
-        DefaultPack
+        PlantPack,
+        ArtefactPack
     };
 
     [SerializeField] private OfferType offerType;

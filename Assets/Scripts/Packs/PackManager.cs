@@ -1,133 +1,79 @@
-﻿using DG.Tweening;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PackManager : MonoBehaviour
+public class PackManager : ItemPickerBase
 {
     public static PackManager Instance;
-    
-    public GameObject plantPrefab;
 
-    [Header("Random drop")]
+    [Header("Random Drop")]
     [SerializeField] private List<PlantData> allPlants;
     [SerializeField] private float commonChance = 0.65f;
     [SerializeField] private float uncommonChance = 0.25f;
     [SerializeField] private float rareChance = 0.10f;
-
     [SerializeField] private int plantsPerPack = 3;
 
-    [Header("Pack UI slots")]
+    [Header("Pack Slots")]
     [SerializeField] private PlantVisualizer[] packSlots;
-
-    [Space]
-
-    [SerializeField] private GameObject allPanel;
-    [SerializeField] private GameObject openPanel;
-    [SerializeField] private GameObject plantChoosePanel;
-    [SerializeField] private Button confirmBtn;
     [SerializeField] private TMP_Text placeClueTxt;
-    [SerializeField] private AudioClip openSound;
-    [SerializeField] private AudioClip chooseSound;
-    [SerializeField] private AudioClip confirmPlantSound; 
-
-    [HideInInspector] public bool waitingForClick = false;
-
-    [HideInInspector] public PlantData selectedPlant;
-    private GameObject selectedPlantObject;
     [SerializeField] private FliesManager fliesManager;
     [SerializeField] private CoinFallManager coinFallManager;
 
-    private Dictionary<GameObject, Vector3> originalScales = new Dictionary<GameObject, Vector3>();
-
-    private const float selectedMultiplier = 1.15f;
+    [HideInInspector] public bool waitingForClick = false;
+    [HideInInspector] public PlantData selectedPlant;
+    public GameObject plantPrefab;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-            Destroy(gameObject);
-        else
-            Instance = this;
+        if (Instance != null && Instance != this) Destroy(gameObject);
+        else Instance = this;
+
+        cardRects = new RectTransform[packSlots.Length];
+        for (int i = 0; i < packSlots.Length; i++)
+            cardRects[i] = packSlots[i].GetComponent<RectTransform>();
     }
 
     public void OpenPack()
     {
-        //Events disabling
         fliesManager.canLaunchFlies = false;
         coinFallManager.canLaunchEvent = false;
-        
-
-        AudioManager.Instance.PlaySfxSound(openSound, 0.4f);
-        openPanel.SetActive(false);
-        plantChoosePanel.SetActive(true);
-
-        confirmBtn.interactable = false;
         selectedPlant = null;
-        selectedPlantObject = null;
-
-        FillPackUI();
-
-        CachePlantScales();
-        AnimatePlants();
+        OpenPicker();
     }
 
-    public bool IsExistEmptyCell()
+    protected override void FillCards()
     {
-        return Grid.Instance.IsExistEmptyCell();
+        var pack = GeneratePack();
+        for (int i = 0; i < packSlots.Length; i++)
+        {
+            bool active = i < pack.Count;
+            packSlots[i].gameObject.SetActive(active);
+            if (active)
+            {
+                packSlots[i].SetData(pack[i]);
+                packSlots[i].VisualizePlant();
+            }
+        }
     }
 
-    public void SelectPlant(GameObject plant)
+    protected override void OnSelected(int index)
     {
-        AudioManager.Instance.PlaySfxSound(chooseSound, 0.25f, 0.85f, 1.15f);
-        if (selectedPlantObject == plant)
-        {
-            ResetScale(plant);
-
-            selectedPlantObject = null;
-            selectedPlant = null;
-            confirmBtn.interactable = false;
-
-            return;
-        }
-
-        if (selectedPlantObject != null)
-        {
-            ResetScale(selectedPlantObject);
-        }
-
-        selectedPlantObject = plant;
-        selectedPlant = plant.GetComponent<PlantVisualizer>().Data;
-
-        SetScale(plant);
-
-        confirmBtn.interactable = true;
+        selectedPlant = packSlots[index].Data;
     }
 
-    public void ConfirmChoice()
+    protected override void OnDeselected()
     {
-        if (selectedPlantObject != null)
-        {
-            ResetScale(selectedPlantObject);
-        }
+        selectedPlant = null;
+    }
 
-        openPanel.SetActive(true);
-        plantChoosePanel.SetActive(false);
-        allPanel.SetActive(false);
-
+    protected override void OnConfirmed(int index)
+    {
         EndingManager.Instance.ChangeProgressState(false);
         waitingForClick = true;
         AudioManager.Instance.canPlaySounds = true;
         InteractionManager.Instance.canZoomCam = true;
         InteractionManager.Instance.canPressBtns = false;
-        AudioManager.Instance.PlaySfxSound(confirmPlantSound, 0.3f, 0.9f, 1.1f);
-        ChangePlaceClueTxt(
-            "Click on the <color=yellow>cell</color> where you want to place the <color=green>plant</color>",
-            true
-        );
-
-        //Events enable
+        ChangePlaceClueTxt("Click on the <color=yellow>cell</color> where you want to place the <color=green>plant</color>", true);
         fliesManager.canLaunchFlies = true;
         coinFallManager.canLaunchEvent = true;
     }
@@ -136,124 +82,33 @@ public class PackManager : MonoBehaviour
     {
         placeClueTxt.text = text;
         placeClueTxt.gameObject.SetActive(state);
-
-        if (state)
-            InteractionManager.Instance.canZoomCam = true;
+        if (state) InteractionManager.Instance.canZoomCam = true;
     }
 
-    private void CachePlantScales()
-    {
-        originalScales.Clear();
-
-        foreach (var slot in packSlots)
-        {
-            RectTransform rect = slot.GetComponent<RectTransform>();
-            originalScales.Add(slot.gameObject, rect.localScale);
-        }
-    }
-
-    private void SetScale(GameObject obj)
-    {
-        RectTransform rect = obj.GetComponent<RectTransform>();
-        Vector3 original = originalScales[obj];
-
-        rect.localScale = new Vector3(
-            original.x * selectedMultiplier,
-            original.y * selectedMultiplier,
-            1f
-        );
-    }
-
-    private void ResetScale(GameObject obj)
-    {
-        RectTransform rect = obj.GetComponent<RectTransform>();
-        Vector3 original = originalScales[obj];
-
-        rect.localScale = new Vector3(
-            original.x,
-            original.y,
-            1f
-        );
-    }
-
+    //Rarity logic stays here, only PackManager needs it
     private PlantData.Rarity GetRandomRarity()
     {
         float roll = Random.value;
-
-        if (roll < rareChance)
-            return PlantData.Rarity.Rare;
-
-        if (roll < rareChance + uncommonChance)
-            return PlantData.Rarity.Uncommon;
-
+        if (roll < rareChance) return PlantData.Rarity.Rare;
+        if (roll < rareChance + uncommonChance) return PlantData.Rarity.Uncommon;
         return PlantData.Rarity.Common;
     }
 
     private PlantData GetRandomPlant(PlantData.Rarity rarity, List<PlantData> excluded)
     {
-        List<PlantData> pool = allPlants.FindAll(p => p.rarity == rarity && !excluded.Contains(p));
-
-        if (pool.Count == 0)
-            return null;
-
-        return pool[Random.Range(0, pool.Count)];
+        var pool = allPlants.FindAll(p => p.rarity == rarity && !excluded.Contains(p));
+        return pool.Count == 0 ? null : pool[Random.Range(0, pool.Count)];
     }
 
     private List<PlantData> GeneratePack()
     {
-        List<PlantData> pack = new List<PlantData>();
-
+        var pack = new List<PlantData>();
         for (int i = 0; i < plantsPerPack; i++)
         {
-            PlantData.Rarity rarity = GetRandomRarity();
-            PlantData plant = GetRandomPlant(rarity, pack);
-
-            if (plant == null)
-                plant = allPlants[Random.Range(0, allPlants.Count)];
-
+            var rarity = GetRandomRarity();
+            var plant = GetRandomPlant(rarity, pack) ?? allPlants[Random.Range(0, allPlants.Count)];
             pack.Add(plant);
         }
-
         return pack;
-    }
-
-    private void FillPackUI()
-    {
-        List<PlantData> pack = GeneratePack();
-
-        for (int i = 0; i < packSlots.Length; i++)
-        {
-            if (i >= pack.Count)
-            {
-                packSlots[i].gameObject.SetActive(false);
-                continue;
-            }
-
-            packSlots[i].gameObject.SetActive(true);
-
-            packSlots[i].SetData(pack[i]);
-            packSlots[i].GetComponent<PlantVisualizer>().VisualizePlant();
-        }
-    }
-
-    private void AnimatePlants()
-    {
-        for (int i = 0; i < packSlots.Length; i++)
-        {
-            RectTransform card = packSlots[i].GetComponent<RectTransform>();
-
-            Vector3 originalScale = originalScales[card.gameObject];
-            Vector2 targetPos = card.anchoredPosition;
-
-            card.localScale = new Vector3(0f, 0f, 1f);
-            card.anchoredPosition = targetPos + Vector2.up * 20f;
-
-            DG.Tweening.Sequence seq = DOTween.Sequence();
-
-            seq.Append(card.DOScale(originalScale, 0.35f).SetEase(Ease.OutBack));
-            seq.Join(card.DOAnchorPos(targetPos, 0.35f).SetEase(Ease.OutCubic));
-
-            seq.SetDelay(i * 0.05f);
-        }
     }
 }

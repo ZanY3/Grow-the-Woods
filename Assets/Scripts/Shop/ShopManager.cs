@@ -9,7 +9,8 @@ public class ShopManager : MonoBehaviour
 {
     [SerializeField] private ShopOffer[] offers;
     [SerializeField] private GameObject shopPanel;
-    [SerializeField] private GameObject defaultPackPanel;
+    [SerializeField] private GameObject plantPackPanel;
+    [SerializeField] private GameObject artefactPackPanel;
     [SerializeField] private GameObject buyBtn;
 
     [SerializeField] private AudioClip buySound;
@@ -21,6 +22,8 @@ public class ShopManager : MonoBehaviour
 
     [Space]
     [Range(1, 2)][SerializeField] private float priceMultiplier;
+    [Space]
+    [SerializeField] private ArtefactsManager artefactsManager;
 
     [HideInInspector] public ShopOffer.OfferType selectedOfferType;
     [HideInInspector] public ShopOffer selectedOffer;
@@ -110,13 +113,14 @@ public class ShopManager : MonoBehaviour
 
     public void BuyOffer()
     {
-        if (!PackManager.Instance.IsExistEmptyCell())
+        if ((selectedOfferType == ShopOffer.OfferType.PlantPack && !Grid.Instance.IsExistEmptyCell()) ||
+            selectedOfferType == ShopOffer.OfferType.ArtefactPack && !artefactsManager.ExistEmptySlots())
         {
             PlayNoSpaceFeedback();
             return;
         }
 
-        if (selectedOfferType == ShopOffer.OfferType.DefaultPack)
+        if (selectedOfferType == ShopOffer.OfferType.PlantPack)
         {
             if (CoinManager.Instance.Coins >= selectedOffer.Price)
             {
@@ -127,13 +131,20 @@ public class ShopManager : MonoBehaviour
                 ChangeBuyBtnVisibility(false);
 
                 InteractionManager.Instance.canZoomCam = false;
-                defaultPackPanel.SetActive(true);
-
-                for (int i = 0; i < offers.Length; i++)
+                if (selectedOfferType == ShopOffer.OfferType.PlantPack)
                 {
-                    int newPrice = Mathf.RoundToInt(offers[i].Price * priceMultiplier);
-                    offers[i].UpdatePrice(newPrice);
+                    plantPackPanel.SetActive(true);
                 }
+                else if(selectedOfferType == ShopOffer.OfferType.ArtefactPack)
+                {
+                    artefactPackPanel.SetActive(true);
+                }
+
+                    for (int i = 0; i < offers.Length; i++)
+                    {
+                        int newPrice = Mathf.RoundToInt(offers[i].Price * priceMultiplier);
+                        offers[i].UpdatePrice(newPrice);
+                    }
             }
             else
             {
