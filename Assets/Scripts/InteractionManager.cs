@@ -8,6 +8,7 @@ public class InteractionManager : MonoBehaviour
     [HideInInspector] public bool plantsCanEarn = false;
     [HideInInspector] public bool canPressBtns = true;
     [HideInInspector] public bool canZoomCam = true;
+    [HideInInspector] public bool canStartEvents = true; //Region events, like coinfall
     [SerializeField] private Button[] buttons;
 
     private void Awake()

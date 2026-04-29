@@ -28,7 +28,7 @@ public class FliesManager : MonoBehaviour
     }
     private void Update()
     {
-        if(tempInterval <= 0)
+        if(tempInterval <= 0 && InteractionManager.Instance.canStartEvents)
         {
             int randChance = Random.Range(0, 100);
             if (randChance < spawnChance && canLaunchFlies)

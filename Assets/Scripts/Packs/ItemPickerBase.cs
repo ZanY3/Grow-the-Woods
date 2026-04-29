@@ -19,6 +19,10 @@ public abstract class ItemPickerBase : MonoBehaviour
     protected Dictionary<GameObject, Vector3> originalScales = new();
     private const float selectedMultiplier = 1.15f;
 
+    private void Start()
+    {
+        InteractionManager.Instance.canStartEvents = false;
+    }
     public void OpenPicker()
     {
         AudioManager.Instance.PlaySfxSound(openSound, 0.4f);
@@ -62,6 +66,7 @@ public abstract class ItemPickerBase : MonoBehaviour
         openPanel.SetActive(true);
         choosePanel.SetActive(false);
         allPanel.SetActive(false);
+        InteractionManager.Instance.canStartEvents = true;
 
         AudioManager.Instance.PlaySfxSound(confirmSound, 0.3f, 0.9f, 1.1f);
         OnConfirmed(selectedIndex);

@@ -81,6 +81,7 @@ public class CoinFallManager : MonoBehaviour
 
     private void Update()
     {
+        _isActive = InteractionManager.Instance.canStartEvents;
         if (!_isActive || _currentDurationTimer <= 0) return;
 
         _currentDurationTimer -= Time.deltaTime;
