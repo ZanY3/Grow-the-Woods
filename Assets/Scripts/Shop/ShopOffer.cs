@@ -111,26 +111,27 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         AudioManager.Instance.PlaySfxSound(offerChooseSound, 0.15f, 0.9f, 1.1f);
+
         if (shopManager.selectedOffer == this)
         {
             ResetScale();
-
             shopManager.selectedOffer = null;
             shopManager.selectedOfferType = OfferType.Empty;
             shopManager.ChangeBuyBtnVisibility(false);
-
             return;
         }
 
+        // Reset the previously selected offer before selecting the new one
+        if (shopManager.selectedOffer != null)
+            shopManager.selectedOffer.ResetScale();
+
         iconObject.transform.localScale = defaultScale * selectedScale;
         iconObject.transform.localPosition = defaultPosition;
-
         if (shimmer != null)
             shimmer.localScale = shimmerDefaultScale * selectedScale;
 
         shopManager.selectedOfferType = offerType;
         shopManager.selectedOffer = this;
-
         shopManager.ChangeBuyBtnVisibility(true);
     }
 }

@@ -12,7 +12,8 @@ public class PrestigeManager : MonoBehaviour
     [SerializeField] private RectTransform panelRect;
     [SerializeField] private CanvasGroup panelCanvasGroup;
     [Header("Other")]
-    [SerializeField] ShopManager shopManager;
+    [SerializeField] private ShopManager shopManager;
+    [SerializeField] private GameObject artefactOpenPanel;
 
     private int currentRegion = 0;
     private int maxRegion = 1;
@@ -24,6 +25,7 @@ public class PrestigeManager : MonoBehaviour
             CoinManager.Instance.ResetCoins();
             shopManager.ReturnPrices();
             EndingManager.Instance.ResetProgress();
+            artefactOpenPanel.SetActive(true);
 
             for (int i = 0; i < objectsForRegions.Length; i++)
             {

@@ -26,7 +26,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private ArtefactsManager artefactsManager;
 
     [HideInInspector] public ShopOffer.OfferType selectedOfferType;
-    [HideInInspector] public ShopOffer selectedOffer;
+    public ShopOffer selectedOffer;
 
     private RectTransform shopRect;
     private CanvasGroup shopCanvas;
@@ -119,6 +119,11 @@ public class ShopManager : MonoBehaviour
             PlayNoSpaceFeedback();
             return;
         }
+        if(CoinManager.Instance.Coins <= selectedOffer.Price)
+        {
+            selectedOffer.PlayNotEnoughMoneyFeedback();
+            return;
+        }
 
         if (selectedOfferType == ShopOffer.OfferType.PlantPack)
         {
@@ -131,24 +136,34 @@ public class ShopManager : MonoBehaviour
                 ChangeBuyBtnVisibility(false);
 
                 InteractionManager.Instance.canZoomCam = false;
-                if (selectedOfferType == ShopOffer.OfferType.PlantPack)
-                {
-                    plantPackPanel.SetActive(true);
-                }
-                else if(selectedOfferType == ShopOffer.OfferType.ArtefactPack)
-                {
-                    artefactPackPanel.SetActive(true);
-                }
+                plantPackPanel.SetActive(true);
 
-                    for (int i = 0; i < offers.Length; i++)
-                    {
-                        int newPrice = Mathf.RoundToInt(offers[i].Price * priceMultiplier);
-                        offers[i].UpdatePrice(newPrice);
-                    }
+                for (int i = 0; i < offers.Length; i++)
+                {
+                    int newPrice = Mathf.RoundToInt(offers[i].Price * priceMultiplier);
+                    offers[i].UpdatePrice(newPrice);
+                }
             }
-            else
+        }
+        else if (selectedOfferType == ShopOffer.OfferType.ArtefactPack)
+        {
+            if (CoinManager.Instance.Coins >= selectedOffer.Price)
             {
-                selectedOffer.PlayNotEnoughMoneyFeedback();
+                AudioManager.Instance.PlaySfxSound(buySound, 0.5f, 0.9f, 1.1f);
+                CoinManager.Instance.SpendCoins(selectedOffer.Price);
+
+                CloseShop();
+                ChangeBuyBtnVisibility(false);
+
+                InteractionManager.Instance.canZoomCam = false;
+
+                artefactPackPanel.SetActive(true);
+
+                for (int i = 0; i < offers.Length; i++)
+                {
+                    int newPrice = Mathf.RoundToInt(offers[i].Price * priceMultiplier);
+                    offers[i].UpdatePrice(newPrice);
+                }
             }
         }
     }
