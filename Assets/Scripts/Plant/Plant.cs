@@ -51,7 +51,8 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
         while (timer >= plantData.productionInterval)
         {
-            int coins = plantData.coinsAmount;
+            int coins = Mathf.RoundToInt(plantData.coinsAmount * StatsManager.Instance.coinMultiplier);
+            coins += StatsManager.Instance.coinAdder;
 
             if (plantData.name == "Cactus")
             {

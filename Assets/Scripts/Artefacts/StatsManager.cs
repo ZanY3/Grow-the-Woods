@@ -5,9 +5,11 @@ public class StatsManager : MonoBehaviour
     public static StatsManager Instance { get; private set; }
 
     [Header("Stats")]
-    [HideInInspector] public float coinMultiplier = 1;
-    [HideInInspector] public float shopDiscount = 0;  //Like +67%
-    [HideInInspector] public int chanceAdder = 0;     //Like +40%
+    public float coinMultiplier = 1;
+    public int coinAdder = 0;                     //+some coins to income
+    public int chanceAdder = 0;                   //Like +40%
+    [Range(0, 1)] public float shopDiscount = 0;
+    //[HideInInspector]
 
     private void Awake()
     {

@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4f76d5cd0e3de34781a7c62ac368732, type: 3}
-  m_Name: Test 2
+  m_Name: Lucky Horseshoe
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
-  icon: {fileID: 57591053551863209, guid: 1496ae56e6277cd4ca956f543cc89bea, type: 3}
-  description: Dig the woods.
-  type: 0
+  icon: {fileID: -533066796832136796, guid: 9c86d12f23664054fac6e77f059a4201, type: 3}
+  description: '+10% chance
+
+    for packs'
+  value: 10
+  type: 3

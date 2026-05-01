@@ -5157,8 +5157,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatsManager
   coinMultiplier: 1
-  shopDiscount: 0
+  coinAdder: 0
   chanceAdder: 0
+  shopDiscount: 0
 --- !u!1001 &455126247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10137,10 +10138,14 @@ MonoBehaviour:
   confirmSound: {fileID: 8300000, guid: e883f50b369102a4885772651bb01371, type: 3}
   artefactsManager: {fileID: 683458545}
   allArtifacts:
-  - {fileID: 11400000, guid: 01d6ed0946923a34c823259b26a33a56, type: 2}
+  - {fileID: 11400000, guid: b4f990521fd80c14190f7c4a88489b6e, type: 2}
+  - {fileID: 11400000, guid: cc60beeb18a21d54f9a19820e0c0220c, type: 2}
   - {fileID: 11400000, guid: 4cf17c33b92041f40879319cb0550e82, type: 2}
-  - {fileID: 11400000, guid: 4cf17c33b92041f40879319cb0550e82, type: 2}
+  - {fileID: 11400000, guid: e96df32fdbbda62498e99a79717771b1, type: 2}
+  - {fileID: 11400000, guid: c100ca14eb23354489da6edfc2f9a3f0, type: 2}
   - {fileID: 11400000, guid: 01d6ed0946923a34c823259b26a33a56, type: 2}
+  - {fileID: 11400000, guid: 4279d2cd67737264ca8477fe28ad3688, type: 2}
+  - {fileID: 11400000, guid: 97ba7dc6a749c0945a8fe3ed77d4f1b8, type: 2}
   artifactsPerPack: 3
   artifactSlots:
   - {fileID: 1755571295}
@@ -10434,6 +10439,7 @@ MonoBehaviour:
   plantsCanEarn: 1
   canPressBtns: 1
   canZoomCam: 1
+  canStartEvents: 1
   buttons:
   - {fileID: 9036296}
 --- !u!1001 &756846568

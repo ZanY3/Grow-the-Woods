@@ -140,7 +140,7 @@ public class ShopManager : MonoBehaviour
 
                 for (int i = 0; i < offers.Length; i++)
                 {
-                    int newPrice = Mathf.RoundToInt(offers[i].Price * priceMultiplier);
+                    int newPrice = Mathf.RoundToInt(offers[i].Price * priceMultiplier * (1f - StatsManager.Instance.shopDiscount));
                     offers[i].UpdatePrice(newPrice);
                 }
             }

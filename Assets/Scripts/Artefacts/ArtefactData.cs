@@ -6,12 +6,15 @@ public class ArtefactData : ScriptableObject
     public Sprite icon;
     [TextArea]
     public string description;
+    public float value;
     public enum Type
     {
         CoinMultiplier,   // Умножает всё золото
+        CoinAdder,        // Добавляет золото
         ShopDiscount,     // Скидка на покупку
         ChanceUpgrader    // Шансы выпадения норм предметов увеличиваются
     }
+
     /*
     public enum UniqueEffect
     {

@@ -25,6 +25,22 @@ public class ArtefactsManager : MonoBehaviour
             }
         }
         Debug.Log($"Artifact added: {artefact.name}");
+        if(artefact.type == ArtefactData.Type.CoinMultiplier)
+        {
+            StatsManager.Instance.coinMultiplier += artefact.value;
+        }
+        else if (artefact.type == ArtefactData.Type.CoinAdder)
+        {
+            StatsManager.Instance.coinAdder += (int)artefact.value;
+        }
+        else if (artefact.type == ArtefactData.Type.ShopDiscount)
+        {
+            StatsManager.Instance.shopDiscount += artefact.value;
+        }
+        else if(artefact.type == ArtefactData.Type.ChanceUpgrader)
+        {
+            StatsManager.Instance.chanceAdder += (int)artefact.value;
+        }
     }
     public bool ExistEmptySlots()
     {
