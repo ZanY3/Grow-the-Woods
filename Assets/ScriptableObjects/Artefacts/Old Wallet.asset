@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Old Wallet
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
   icon: {fileID: 5681451883639770241, guid: ae87f0beaa59d0145b9bfb4b936046d4, type: 3}
-  description: '+1 coin
+  description: '<color=yellow>+1 coin</color>
 
-    (for each plant)'
+    to each plant'
   value: 1
   type: 1

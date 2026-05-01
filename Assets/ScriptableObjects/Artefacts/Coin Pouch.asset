@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Coin Pouch
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
   icon: {fileID: 8173820238237476267, guid: bcbbb9063c1a27c419d058e6ae1e4c76, type: 3}
-  description: '+2 coins
+  description: '<color=yellow>+2 coins</color>
 
-    (for each plant)'
+    to each plant'
   value: 1
   type: 1

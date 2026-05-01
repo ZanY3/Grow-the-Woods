@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Trader's Badge
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
   icon: {fileID: -1583929983154325370, guid: 484920500bcd6284d9b69cd7d94863e2, type: 3}
-  description: '25% discount
+  description: '<color=green>+25% discount</color>
 
     for shop'
   value: 0.25

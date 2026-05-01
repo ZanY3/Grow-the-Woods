@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Piggy
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
   icon: {fileID: -9121031631517529658, guid: 7f076628f9efbf94ca7fea455a63ed49, type: 3}
-  description: "x1.5 coins \nfrom harvesting."
+  description: '<color=yellow>x1.5 coins</color>
+
+    from harvesting.'
   value: 0.5
   type: 0

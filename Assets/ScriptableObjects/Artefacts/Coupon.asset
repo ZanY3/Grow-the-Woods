@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Coupon
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
   icon: {fileID: -5762381921468457377, guid: 20da092804d40144fba342bde5163057, type: 3}
-  description: '10% discount
+  description: '<color=green>+10% discount</color>
 
     for shop'
   value: 0.1

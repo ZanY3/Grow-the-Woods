@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lucky Horseshoe
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
   icon: {fileID: -4780358495976067875, guid: 01330f384ff80ee4dadab80f7dc12f43, type: 3}
-  description: '+10% chance
+  description: '<color=#00FFFF>+10% chance</color>
 
     for packs'
   value: 10
