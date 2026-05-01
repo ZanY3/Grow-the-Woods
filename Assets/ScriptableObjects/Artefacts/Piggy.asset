@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4f76d5cd0e3de34781a7c62ac368732, type: 3}
-  m_Name: Piggy Bank
+  m_Name: Piggy
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
-  icon: {fileID: -2482701078373581643, guid: 586847dceb5d8514092218327276f372, type: 3}
+  icon: {fileID: -9121031631517529658, guid: 7f076628f9efbf94ca7fea455a63ed49, type: 3}
   description: "x1.5 coins \nfrom harvesting."
   value: 0.5
   type: 0

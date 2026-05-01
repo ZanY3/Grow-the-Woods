@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f76d5cd0e3de34781a7c62ac368732, type: 3}
   m_Name: Four-Leaf Clover
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
-  icon: {fileID: -533066796832136796, guid: 9c86d12f23664054fac6e77f059a4201, type: 3}
+  icon: {fileID: -5039842846620040014, guid: c261f74231ea20e48a4cdfdd2cd86011, type: 3}
   description: '+20% chance
 
     for packs'

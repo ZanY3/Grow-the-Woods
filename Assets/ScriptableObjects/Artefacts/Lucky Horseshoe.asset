@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f76d5cd0e3de34781a7c62ac368732, type: 3}
   m_Name: Lucky Horseshoe
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
-  icon: {fileID: -533066796832136796, guid: 9c86d12f23664054fac6e77f059a4201, type: 3}
+  icon: {fileID: -4780358495976067875, guid: 01330f384ff80ee4dadab80f7dc12f43, type: 3}
   description: '+10% chance
 
     for packs'

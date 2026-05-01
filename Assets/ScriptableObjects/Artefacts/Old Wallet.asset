@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f76d5cd0e3de34781a7c62ac368732, type: 3}
   m_Name: Old Wallet
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
-  icon: {fileID: -533066796832136796, guid: 9c86d12f23664054fac6e77f059a4201, type: 3}
+  icon: {fileID: 5681451883639770241, guid: ae87f0beaa59d0145b9bfb4b936046d4, type: 3}
   description: '+1 coin
 
     (for each plant)'
