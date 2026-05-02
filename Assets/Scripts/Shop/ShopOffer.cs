@@ -14,11 +14,9 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
 
     [SerializeField] private OfferType offerType;
     [SerializeField] private int offerPrice;
-
     [SerializeField] private GameObject iconObject;
     [SerializeField] private TMP_Text priceTxt;
     [SerializeField] private RectTransform shimmer;
-
     [SerializeField] private ShopManager shopManager;
 
     [Header("Feedback")]
@@ -27,20 +25,33 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     [SerializeField] private AudioClip offerChooseSound;
 
     private float selectedScale = 1.1f;
+
+    // startPrice never changes — it's the original serialized value
     private int startPrice;
+
+    // currentBasePrice compounds with priceMultiplier each purchase, NO discount applied
+    // discount is only applied on top when displaying or buying
+    private int currentBasePrice;
 
     private Vector3 defaultScale;
     private Vector3 shimmerDefaultScale;
     private Vector3 defaultPosition;
-
     private Color defaultPriceColor;
 
-    public int Price => offerPrice;
     public int StartPrice => startPrice;
+    public int CurrentBasePrice => currentBasePrice;
+
+    // Price shown/used for buying = currentBasePrice with discount applied
+    public int Price => Mathf.Max(
+        Mathf.RoundToInt(currentBasePrice * (1f - Mathf.Clamp(StatsManager.Instance.shopDiscount, 0f, 0.9f))),
+        1
+    );
 
     private void Start()
     {
         startPrice = offerPrice;
+        currentBasePrice = offerPrice;
+
         defaultScale = iconObject.transform.localScale;
         defaultPosition = iconObject.transform.localPosition;
 
@@ -48,21 +59,40 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
             shimmerDefaultScale = shimmer.localScale;
 
         defaultPriceColor = priceTxt.color;
-
-        priceTxt.text = offerPrice.ToString();
+        RefreshPriceDisplay();
     }
 
+    // Called after each purchase to compound the base price
+    public void CompoundPrice(float multiplier)
+    {
+        currentBasePrice = Mathf.RoundToInt(currentBasePrice * multiplier);
+        RefreshPriceDisplay();
+    }
+
+    // Called when discount artefact is equipped or removed — recalculates display only
+    public void RefreshPriceDisplay()
+    {
+        priceTxt.text = Price.ToString();
+    }
+
+    // Called by ReturnPrices() to fully reset
+    public void ResetToStartPrice()
+    {
+        currentBasePrice = startPrice;
+        RefreshPriceDisplay();
+    }
+
+    // Legacy — kept for any other callers
     public void UpdatePrice(int newPrice)
     {
-        offerPrice = newPrice;
-        priceTxt.text = offerPrice.ToString();
+        currentBasePrice = newPrice;
+        RefreshPriceDisplay();
     }
 
     public void ResetScale()
     {
         iconObject.transform.localScale = defaultScale;
         iconObject.transform.localPosition = defaultPosition;
-
         if (shimmer != null)
             shimmer.localScale = shimmerDefaultScale;
     }
@@ -71,18 +101,16 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     {
         if (shopManager.selectedOffer == this)
             return defaultScale * selectedScale;
-
         return defaultScale;
     }
 
     public void PlayNotEnoughMoneyFeedback()
     {
         AudioManager.Instance.PlaySfxSound(errorSound, 0.5f);
-        Transform icon = iconObject.transform;
 
+        Transform icon = iconObject.transform;
         icon.DOKill();
         priceTxt.DOKill();
-
         icon.localPosition = defaultPosition;
         icon.localScale = GetTargetScale();
 
@@ -103,7 +131,6 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
         );
 
         Sequence seq = DOTween.Sequence();
-
         seq.Append(priceTxt.DOColor(notEnoughMoneyColor, 0.08f));
         seq.Append(priceTxt.DOColor(defaultPriceColor, 0.25f));
     }
@@ -121,12 +148,12 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        // Reset the previously selected offer before selecting the new one
         if (shopManager.selectedOffer != null)
             shopManager.selectedOffer.ResetScale();
 
         iconObject.transform.localScale = defaultScale * selectedScale;
         iconObject.transform.localPosition = defaultPosition;
+
         if (shimmer != null)
             shimmer.localScale = shimmerDefaultScale * selectedScale;
 

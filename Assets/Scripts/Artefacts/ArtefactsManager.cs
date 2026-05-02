@@ -5,6 +5,7 @@ public class ArtefactsManager : MonoBehaviour
 {
     [SerializeField] private ArtefactSlot[] slots;
     [SerializeField] private GameObject artefactPackPanel;
+    [SerializeField] private ShopManager shopManager;
 
     private void Update()
     {
@@ -24,34 +25,30 @@ public class ArtefactsManager : MonoBehaviour
                 break;
             }
         }
+
         Debug.Log($"Artifact added: {artefact.name}");
-        if(artefact.type == ArtefactData.Type.CoinMultiplier)
-        {
-            StatsManager.Instance.coinMultiplier += artefact.value;
-        }
-        else if (artefact.type == ArtefactData.Type.CoinAdder)
-        {
-            StatsManager.Instance.coinAdder += (int)artefact.value;
-        }
-        else if (artefact.type == ArtefactData.Type.ShopDiscount)
-        {
-            StatsManager.Instance.shopDiscount += artefact.value;
-        }
-        else if(artefact.type == ArtefactData.Type.ChanceUpgrader)
-        {
-            StatsManager.Instance.chanceAdder += (int)artefact.value;
-        }
+
+        StatsManager.Instance.ApplyArtefact(artefact);
+
+        // Refresh displayed prices immediately if it's a discount artefact
+        if (artefact.type == ArtefactData.Type.ShopDiscount)
+            shopManager.RefreshAllPrices();
     }
+
+    // Called from ArtefactSlot when player deletes an artefact
+    public void OnArtefactRemoved(ArtefactData artefact)
+    {
+        if (artefact.type == ArtefactData.Type.ShopDiscount)
+            shopManager.RefreshAllPrices();
+    }
+
     public bool ExistEmptySlots()
     {
         for (int i = 0; i < slots.Length; i++)
         {
             if (!slots[i].isOccupied)
-            {
                 return true;
-            }
         }
         return false;
     }
-
 }

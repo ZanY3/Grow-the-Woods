@@ -30,7 +30,6 @@ public class ShopManager : MonoBehaviour
 
     private RectTransform shopRect;
     private CanvasGroup shopCanvas;
-
     private CanvasGroup warningGroup;
 
     private void Awake()
@@ -61,13 +60,9 @@ public class ShopManager : MonoBehaviour
     {
         AudioManager.Instance.PlaySfxSound(shopBtnSound, 0.35f);
         if (!shopPanel.activeSelf)
-        {
             OpenShop();
-        }
         else
-        {
             CloseShop();
-        }
     }
 
     private void OpenShop()
@@ -97,9 +92,7 @@ public class ShopManager : MonoBehaviour
             shopPanel.SetActive(false);
 
             for (int i = 0; i < offers.Length; i++)
-            {
                 offers[i].ResetScale();
-            }
 
             selectedOffer = null;
             ChangeBuyBtnVisibility(false);
@@ -114,58 +107,44 @@ public class ShopManager : MonoBehaviour
     public void BuyOffer()
     {
         if ((selectedOfferType == ShopOffer.OfferType.PlantPack && !Grid.Instance.IsExistEmptyCell()) ||
-            selectedOfferType == ShopOffer.OfferType.ArtefactPack && !artefactsManager.ExistEmptySlots())
+            (selectedOfferType == ShopOffer.OfferType.ArtefactPack && !artefactsManager.ExistEmptySlots()))
         {
             PlayNoSpaceFeedback();
             return;
         }
-        if(CoinManager.Instance.Coins <= selectedOffer.Price)
+
+        if (CoinManager.Instance.Coins <= selectedOffer.Price)
         {
             selectedOffer.PlayNotEnoughMoneyFeedback();
             return;
         }
 
-        if (selectedOfferType == ShopOffer.OfferType.PlantPack)
+        if (selectedOfferType == ShopOffer.OfferType.PlantPack ||
+            selectedOfferType == ShopOffer.OfferType.ArtefactPack)
         {
-            if (CoinManager.Instance.Coins >= selectedOffer.Price)
-            {
-                AudioManager.Instance.PlaySfxSound(buySound, 0.5f, 0.9f, 1.1f);
-                CoinManager.Instance.SpendCoins(selectedOffer.Price);
+            AudioManager.Instance.PlaySfxSound(buySound, 0.5f, 0.9f, 1.1f);
+            CoinManager.Instance.SpendCoins(selectedOffer.Price);
 
-                CloseShop();
-                ChangeBuyBtnVisibility(false);
+            CloseShop();
+            ChangeBuyBtnVisibility(false);
+            InteractionManager.Instance.canZoomCam = false;
 
-                InteractionManager.Instance.canZoomCam = false;
+            if (selectedOfferType == ShopOffer.OfferType.PlantPack)
                 plantPackPanel.SetActive(true);
-
-                for (int i = 0; i < offers.Length; i++)
-                {
-                    int newPrice = Mathf.RoundToInt(offers[i].Price * priceMultiplier * (1f - StatsManager.Instance.shopDiscount));
-                    offers[i].UpdatePrice(newPrice);
-                }
-            }
-        }
-        else if (selectedOfferType == ShopOffer.OfferType.ArtefactPack)
-        {
-            if (CoinManager.Instance.Coins >= selectedOffer.Price)
-            {
-                AudioManager.Instance.PlaySfxSound(buySound, 0.5f, 0.9f, 1.1f);
-                CoinManager.Instance.SpendCoins(selectedOffer.Price);
-
-                CloseShop();
-                ChangeBuyBtnVisibility(false);
-
-                InteractionManager.Instance.canZoomCam = false;
-
+            else
                 artefactPackPanel.SetActive(true);
 
-                for (int i = 0; i < offers.Length; i++)
-                {
-                    int newPrice = Mathf.RoundToInt(offers[i].Price * priceMultiplier);
-                    offers[i].UpdatePrice(newPrice);
-                }
-            }
+            // Compound the base price — discount is applied separately inside ShopOffer.Price
+            for (int i = 0; i < offers.Length; i++)
+                offers[i].CompoundPrice(priceMultiplier);
         }
+    }
+
+    // Call this from ArtefactsManager after equipping or removing a discount artefact
+    public void RefreshAllPrices()
+    {
+        for (int i = 0; i < offers.Length; i++)
+            offers[i].RefreshPriceDisplay();
     }
 
     private void PlayNoSpaceFeedback()
@@ -196,21 +175,15 @@ public class ShopManager : MonoBehaviour
         warningGroup.alpha = 0;
 
         Sequence seq = DOTween.Sequence();
-
         seq.Append(warningGroup.DOFade(1, 0.2f));
         seq.AppendInterval(1.2f);
         seq.Append(warningGroup.DOFade(0, 0.3f));
-
-        seq.OnComplete(() =>
-        {
-            warningObject.SetActive(false);
-        });
+        seq.OnComplete(() => warningObject.SetActive(false));
     }
+
     public void ReturnPrices()
     {
         for (int i = 0; i < offers.Length; i++)
-        {
-            offers[i].UpdatePrice(offers[i].StartPrice);
-        }
+            offers[i].ResetToStartPrice();
     }
 }
