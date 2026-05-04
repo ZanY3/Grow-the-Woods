@@ -7545,7 +7545,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &544810889
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13471,6 +13471,9 @@ MonoBehaviour:
   endingMusic: {fileID: 8300000, guid: c9e1a7c3b5709834198ed626ed58f979, type: 3}
   endCongratsSound: {fileID: 8300000, guid: 0945743e5f07b97468504ef3dfc5846f, type: 3}
   totalCells: 48
+  cellsForNextRegion: 36
+  prestigeManager: {fileID: 1230780012}
+  nextRegionBtn: {fileID: 544810888}
 --- !u!1 &882375754
 GameObject:
   m_ObjectHideFlags: 0
@@ -19685,6 +19688,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 744549084}
   shopManager: {fileID: 1029673085}
   artefactOpenPanel: {fileID: 164608854}
+  currentRegion: 0
+  maxRegion: 1
 --- !u!1 &1239480691
 GameObject:
   m_ObjectHideFlags: 0

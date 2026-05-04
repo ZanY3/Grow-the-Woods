@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,6 +26,12 @@ public class EndingManager : MonoBehaviour
     [SerializeField] private AudioClip endCongratsSound;
 
     [SerializeField] private int totalCells = 40;
+    [SerializeField] private int cellsForNextRegion;
+
+    [Space]
+    [Header("Prestige")]
+    [SerializeField] private PrestigeManager prestigeManager;
+    [SerializeField] private GameObject nextRegionBtn;
 
     private int cellsFilled = 0;
     private bool endingStarted = false;
@@ -65,14 +72,18 @@ public class EndingManager : MonoBehaviour
         float progress = (float)cellsFilled / totalCells;
         progressFill.fillAmount = progress;
 
-        if (cellsFilled >= totalCells)
+        if (cellsFilled >= cellsForNextRegion && prestigeManager.currentRegion != prestigeManager.maxRegion)
         {
-            //PlayEnding();
+            nextRegionBtn.SetActive(true);
+        }
+        if(prestigeManager.currentRegion == prestigeManager.maxRegion && cellsFilled >= totalCells)
+        {
+            PlayEnding();
         }
     }
     public void ResetProgress()
     {
-        cellsFilled = 0;
+        cellsFilled = 1;
         UpdateProgress(0);
     }    
 

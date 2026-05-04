@@ -15,10 +15,11 @@ public class PrestigeManager : MonoBehaviour
     [SerializeField] private ShopManager shopManager;
     [SerializeField] private GameObject artefactOpenPanel;
 
-    private int currentRegion = 0;
-    private int maxRegion = 1;
+    [HideInInspector] public int currentRegion = 0;
+    [HideInInspector] public int maxRegion = 1;
     public void UpdateRegion()
     {
+        nextRegionBtn.SetActive(false);
         if(currentRegion < maxRegion)
         {
             currentRegion++;
