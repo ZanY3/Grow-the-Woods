@@ -394,6 +394,9 @@ MonoBehaviour:
   plant: {fileID: 5683740079072611445}
   timerImg: {fileID: 4099630590262687847}
   timerToDestroy: 5
+  fliesClickSound: {fileID: 8300000, guid: 0d7254c1624a89d439e055ac4fbe8f5c, type: 3}
+  fliesEndSound: {fileID: 8300000, guid: 77678063aff4cfc438beb203df738c85, type: 3}
+  fliesFailSound: {fileID: 8300000, guid: 2b4241651a82b024dbc6a51885772b61, type: 3}
 --- !u!1 &3800941342470593110
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FliesManager : MonoBehaviour
 {
+    [SerializeField] private AudioClip fliesLaunchSound;
+
     [Header("Chances to spawn parameters")]
     [SerializeField][Range(0, 100)] private int spawnChance;
 
@@ -62,6 +64,7 @@ public class FliesManager : MonoBehaviour
             for (int i = 0; i < plantsToAttack; i++)
             {
                 Plant plant = shuffled[i].GetComponentInChildren<Plant>();
+                AudioManager.Instance.PlaySfxSound(fliesLaunchSound, 0.2f, 0.95f, 1.05f);
                 plant.fliesAlert.SetActive(true);
             }
         }

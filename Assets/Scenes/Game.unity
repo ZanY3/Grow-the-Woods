@@ -7845,6 +7845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f93e8c9bdcebb42b77b91286d4080f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FliesManager
+  fliesLaunchSound: {fileID: 8300000, guid: 0fe4216ae6b9c1f448dae23b36a65a36, type: 3}
   spawnChance: 75
   spawnTimeMinInterval: 7
   spawnTimeMaxInterval: 15
