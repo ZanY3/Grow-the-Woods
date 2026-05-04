@@ -8,7 +8,6 @@ public class PackManager : ItemPickerBase
 
     [Header("Random Drop")]
     [SerializeField] private List<PlantData> allPlants;
-    [SerializeField] private float commonChance = 0.65f;
     [SerializeField] private float uncommonChance = 0.25f;
     [SerializeField] private float rareChance = 0.10f;
     [SerializeField] private int plantsPerPack = 3;
@@ -35,8 +34,7 @@ public class PackManager : ItemPickerBase
 
     public void OpenPack()
     {
-        fliesManager.canLaunchFlies = false;
-        coinFallManager.canLaunchEvent = false;
+        InteractionManager.Instance.canStartEvents = false;
         selectedPlant = null;
         OpenPicker();
     }
@@ -73,9 +71,8 @@ public class PackManager : ItemPickerBase
         AudioManager.Instance.canPlaySounds = true;
         InteractionManager.Instance.canZoomCam = true;
         InteractionManager.Instance.canPressBtns = false;
+        InteractionManager.Instance.canStartEvents = true;
         ChangePlaceClueTxt("Click on the <color=yellow>cell</color> where you want to place the <color=green>plant</color>", true);
-        fliesManager.canLaunchFlies = true;
-        coinFallManager.canLaunchEvent = true;
     }
 
     public void ChangePlaceClueTxt(string text, bool state)

@@ -5853,6 +5853,7 @@ MonoBehaviour:
   - {fileID: 1809242880}
   coinPrefab: {fileID: 8045930208338301902, guid: 4c90321b5e3f20a409c1082b5a8464e3, type: 3}
   parentTransform: {fileID: 1921660201}
+  coinFallStartSound: {fileID: 8300000, guid: 5fa548c075a8e9b418c21706482ef332, type: 3}
   coinFallStartClue: {fileID: 1771664005}
   clueFadeTime: 0.5
   clueDisplayTime: 1.5
@@ -7903,7 +7904,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &568452587
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25709,7 +25710,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 110170db6f6395546bf8465b4bcc3d53, type: 2}
   - {fileID: 11400000, guid: a8d0f3960a1fed84d885a2da6faaadf1, type: 2}
   - {fileID: 11400000, guid: 3f35a6229247f2e43a4fc64ca01f3fb3, type: 2}
-  commonChance: 0.65
   uncommonChance: 0.25
   rareChance: 0.1
   plantsPerPack: 3

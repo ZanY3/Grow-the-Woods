@@ -7,6 +7,7 @@ public class CoinFallManager : MonoBehaviour
     [SerializeField] private RectTransform[] spawnPlaces;
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private RectTransform parentTransform;
+    [SerializeField] private AudioClip coinFallStartSound;
 
     [Header("Clue Settings")]
     [SerializeField] private CanvasGroup coinFallStartClue;
@@ -21,9 +22,10 @@ public class CoinFallManager : MonoBehaviour
     [SerializeField] private float fallDuration = 0;
 
     [HideInInspector] public bool canLaunchEvent = true;
+
     private float _currentSpawnTimer;
     private float _currentDurationTimer;
-    private bool _isActive;
+    private bool _isSpawning;
 
     private void Start()
     {
@@ -41,9 +43,10 @@ public class CoinFallManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(checkInterval);
-            if (_isActive) continue;
 
-            if (Random.Range(0f, 100f) <= chanceToStart && canLaunchEvent)
+            if (_isSpawning) continue;
+
+            if (Random.Range(0f, 100f) <= chanceToStart && canLaunchEvent && InteractionManager.Instance.canStartEvents)
             {
                 StartCoroutine(ShowClueAndStartSequence());
             }
@@ -52,12 +55,13 @@ public class CoinFallManager : MonoBehaviour
 
     private IEnumerator ShowClueAndStartSequence()
     {
-        _isActive = true;
+        _isSpawning = true;
 
         if (coinFallStartClue != null)
         {
-            coinFallStartClue.gameObject.SetActive(true);
+            AudioManager.Instance.PlaySfxSound(coinFallStartSound, 0.75f, 0.95f, 1.05f);
 
+            coinFallStartClue.gameObject.SetActive(true);
             coinFallStartClue.transform.localScale = Vector3.zero;
             coinFallStartClue.DOFade(1, clueFadeTime);
             coinFallStartClue.transform.DOScale(1.2f, clueFadeTime).SetEase(Ease.OutBack);
@@ -69,6 +73,7 @@ public class CoinFallManager : MonoBehaviour
 
             coinFallStartClue.gameObject.SetActive(false);
         }
+
         StartCoinFall();
     }
 
@@ -76,13 +81,12 @@ public class CoinFallManager : MonoBehaviour
     {
         _currentDurationTimer = duration;
         _currentSpawnTimer = 0;
-        _isActive = true;
+        _isSpawning = true;
     }
 
     private void Update()
     {
-        _isActive = InteractionManager.Instance.canStartEvents;
-        if (!_isActive || _currentDurationTimer <= 0) return;
+        if (!_isSpawning || _currentDurationTimer <= 0) return;
 
         _currentDurationTimer -= Time.deltaTime;
         _currentSpawnTimer -= Time.deltaTime;
@@ -102,23 +106,25 @@ public class CoinFallManager : MonoBehaviour
     private void SpawnCoin()
     {
         if (spawnPlaces.Length == 0) return;
+
         RectTransform spawnPoint = spawnPlaces[Random.Range(0, spawnPlaces.Length)];
         GameObject coin = Instantiate(coinPrefab, parentTransform);
         RectTransform coinRect = coin.GetComponent<RectTransform>();
+
         coinRect.position = spawnPoint.position;
         coinRect.anchoredPosition += new Vector2(Random.Range(-40f, 40f), 0f);
+
         float distanceToBottom = coinRect.anchoredPosition.y + parentTransform.rect.height * 0.5f + 150f;
         float spin = Random.Range(-270f, 270f);
+
         coinRect.localScale = Vector3.zero;
         coinRect.DOScale(1f, 0.2f).SetEase(Ease.OutBack);
-        coinRect.DOAnchorPosY(coinRect.anchoredPosition.y - distanceToBottom, fallDuration)
-                .SetEase(Ease.InQuad);
-        coinRect.DORotate(new Vector3(0f, 0f, spin), fallDuration)
-                .SetEase(Ease.Linear);
+        coinRect.DOAnchorPosY(coinRect.anchoredPosition.y - distanceToBottom, fallDuration).SetEase(Ease.InQuad);
+        coinRect.DORotate(new Vector3(0f, 0f, spin), fallDuration).SetEase(Ease.Linear);
     }
 
     private void StopCoinFall()
     {
-        _isActive = false;
+        _isSpawning = false;
     }
 }

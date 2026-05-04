@@ -9,6 +9,10 @@ public class Coin : MonoBehaviour, IPointerClickHandler
     [SerializeField] private float fadeWarningAt = 2.5f;
     [SerializeField] private TMP_Text incomeText;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip pickSound;
+    [SerializeField] private float pickSoundVolume;
+
     private CanvasGroup canvasGroup;
     private RectTransform incomeTextRect;
     private bool clicked = false;
@@ -35,6 +39,7 @@ public class Coin : MonoBehaviour, IPointerClickHandler
         {
             clicked = true;
             DOTween.Kill(transform);
+            AudioManager.Instance.PlaySfxSound(pickSound, pickSoundVolume, 0.9f, 1.1f);
 
             ShowIncomeText();
 

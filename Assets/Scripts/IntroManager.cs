@@ -76,6 +76,7 @@ public class IntroManager : MonoBehaviour
         {
             panel.gameObject.SetActive(false);
             InteractionManager.Instance.plantsCanEarn = true;
+            InteractionManager.Instance.canStartEvents = true;
         });
         firstRegionObjects.SetActive(true);
         ended = true;

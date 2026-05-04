@@ -91,6 +91,8 @@ MonoBehaviour:
   lifetime: 4
   fadeWarningAt: 2.5
   incomeText: {fileID: 1253412271748567242}
+  pickSound: {fileID: 8300000, guid: 4012580e2fe4c524191cdcf1fd26d11c, type: 3}
+  pickSoundVolume: 0.2
 --- !u!1 &8045930208338301902
 GameObject:
   m_ObjectHideFlags: 0
