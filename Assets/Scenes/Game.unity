@@ -29380,11 +29380,20 @@ MonoBehaviour:
   nextTextSound: {fileID: 8300000, guid: c9f5a3e87295571458b2d0c8fa91ac41, type: 3}
   introEndSound: {fileID: 8300000, guid: ec433637ed4b89f459e9bbdf13382214, type: 3}
   lines:
-  - "The <color=#B7E4B0>forest</color> has faded\u2026  \nbut <color=#B7E4B0>life</color>
+  - "The <color=#B7E4B0>forest</color> has faded\u2026\nbut <color=#B7E4B0>life</color>
     can return."
-  - "Place <color=#B7E4B0>plants</color>, grow your <color=#B7E4B0>woods</color>, 
-    \nand discover <color=#B7E4B0>powerful combinations</color>."
-  - "Fill <color=#B7E4B0>every cell</color> and  \n<color=#B7E4B0>restore the forest</color>."
+  - 'Place <color=#B7E4B0>plants</color>, grow your <color=#B7E4B0>woods</color>,
+
+    and
+    discover <color=#B7E4B0>powerful combinations</color>.'
+  - 'The land is divided into <color=#B7E4B0>regions</color> -
+
+    fill <color=#B7E4B0>every
+    cell</color> to breathe life into each one.'
+  - 'Restore <color=#B7E4B0>all regions</color> and
+
+    <color=#B7E4B0>the forest
+    will live again</color>.'
 --- !u!1 &2006596686
 GameObject:
   m_ObjectHideFlags: 0
@@ -31619,7 +31628,7 @@ PrefabInstance:
       objectReference: {fileID: 1029673085}
     - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: priceMultiplier
-      value: 1.15
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 6447012649197593380, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: m_Name

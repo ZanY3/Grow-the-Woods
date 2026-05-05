@@ -113,7 +113,7 @@ public class ShopManager : MonoBehaviour
             return;
         }
 
-        if (CoinManager.Instance.Coins <= selectedOffer.Price)
+        if (CoinManager.Instance.Coins < selectedOffer.Price)
         {
             selectedOffer.PlayNotEnoughMoneyFeedback();
             return;
