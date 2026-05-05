@@ -29071,12 +29071,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: offerPrice
-      value: 100
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: shopManager
       value: 
       objectReference: {fileID: 1029673085}
+    - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
+      propertyPath: priceMultiplier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6447012649197593380, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: m_Name
       value: ShopOffer1(Artefact)
@@ -31613,6 +31617,10 @@ PrefabInstance:
       propertyPath: shopManager
       value: 
       objectReference: {fileID: 1029673085}
+    - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
+      propertyPath: priceMultiplier
+      value: 1.15
+      objectReference: {fileID: 0}
     - target: {fileID: 6447012649197593380, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: m_Name
       value: ShopOffer1(Plant)

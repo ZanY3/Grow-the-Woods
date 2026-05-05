@@ -135,8 +135,7 @@ public class ShopManager : MonoBehaviour
                 artefactPackPanel.SetActive(true);
 
             // Compound the base price — discount is applied separately inside ShopOffer.Price
-            for (int i = 0; i < offers.Length; i++)
-                offers[i].CompoundPrice(priceMultiplier);
+            selectedOffer.CompoundPrice();
         }
     }
 

@@ -18,6 +18,7 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text priceTxt;
     [SerializeField] private RectTransform shimmer;
     [SerializeField] private ShopManager shopManager;
+    [SerializeField] private float priceMultiplier;
 
     [Header("Feedback")]
     [SerializeField] private Color notEnoughMoneyColor = Color.red;
@@ -63,9 +64,9 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     }
 
     // Called after each purchase to compound the base price
-    public void CompoundPrice(float multiplier)
+    public void CompoundPrice()
     {
-        currentBasePrice = Mathf.RoundToInt(currentBasePrice * multiplier);
+        currentBasePrice = Mathf.RoundToInt(currentBasePrice * priceMultiplier);
         RefreshPriceDisplay();
     }
 
