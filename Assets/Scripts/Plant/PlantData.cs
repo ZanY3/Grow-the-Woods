@@ -9,6 +9,7 @@ public class PlantData : ScriptableObject
     [TextArea]
     public string description;
     public bool needToHighlightNearbyCells;
+    public bool needToHighlightColumn;
 
     public enum Rarity
     {

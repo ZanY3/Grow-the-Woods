@@ -105,6 +105,25 @@ public class Grid : MonoBehaviour
 
         return result;
     }
+    public List<Cell> GetColumnCells(Cell cell)
+    {
+        var result = new List<Cell>();
+        int index = System.Array.IndexOf(cells, cell);
+        if (index == -1) return result;
+
+        // Вычисляем индекс колонки (X)
+        int targetX = index % gridWidth;
+
+        for (int i = 0; i < cells.Length; i++)
+        {
+            int currentX = i % gridWidth;
+            if (currentX == targetX)
+            {
+                result.Add(cells[i]);
+            }
+        }
+        return result;
+    }
 
     public Cell[] GetCells()
     {

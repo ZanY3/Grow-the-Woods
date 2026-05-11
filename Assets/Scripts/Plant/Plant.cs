@@ -71,6 +71,21 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                     coins += 4;
                 }
             }
+            if(plantData.name == "Bamboo")
+            {
+                var columnCells = Grid.Instance.GetColumnCells(GetComponentInParent<Cell>());
+                int emptyCellsCount = 0;
+
+                foreach (var c in columnCells)
+                {
+                    if (c.isBuyied && !c.isOccupied)
+                    {
+                        emptyCellsCount++;
+                    }
+                }
+
+                coins += emptyCellsCount;
+            }
 
             //AudioManager.Instance.PlaySfxSound(earnSound, 0.025f, 0.8f, 0.95f);
             CoinManager.Instance.AddCoins(coins);
@@ -189,20 +204,61 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         foreach (var c in neighbors)
         {
             if (!c.isBuyied) continue;
+            if(!c.isOccupied)
+            {
+                c.SetHighlight(new Color(0.6f, 1f, 0.6f, 1f));
+                highlightedCells.Add(c);
+            }
+        }
+    }
+    private void HighlightСolumn(bool state)
+    {
+        // Проверяем имя, чтобы столбец светился ТОЛЬКО у бамбука
+        if (!plantData.needToHighlightNearbyCells || plantData.name != "Bamboo") return;
 
-            c.SetHighlight(new Color(0.6f, 1f, 0.6f, 1f));
-            highlightedCells.Add(c);
+        Cell myCell = GetComponentInParent<Cell>();
+        if (myCell == null) return;
+
+        if (!state)
+        {
+            foreach (var c in highlightedCells)
+                c.ResetHighlight();
+
+            highlightedCells.Clear();
+            return;
+        }
+
+        var columnCells = Grid.Instance.GetColumnCells(myCell);
+
+        foreach (var c in columnCells)
+        {
+            if (c == myCell) continue;
+            if (!c.isBuyied) continue;
+
+            // Подсвечиваем только ПУСТЫЕ клетки, так как за них идет бонус
+            if (!c.isOccupied)
+            {
+                c.SetHighlight(new Color(0.6f, 1f, 0.6f, 1f));
+                highlightedCells.Add(c);
+            }
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         AudioManager.Instance.PlaySfxSound(tooltipSound, 0.035f, 0.9f, 1.1f);
+
         if (!PackManager.Instance.waitingForClick)
             tooltip.SetActive(true);
 
         if (plantData.needToHighlightNearbyCells)
+        {
             HighlightNeighbors(true);
+        }
+        if(plantData.needToHighlightColumn)
+        {
+            HighlightСolumn(true);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -210,8 +266,8 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         if (!PackManager.Instance.waitingForClick)
             tooltip.SetActive(false);
 
-        if (plantData.needToHighlightNearbyCells)
-            HighlightNeighbors(false);
+        HighlightNeighbors(false);
+        HighlightСolumn(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)

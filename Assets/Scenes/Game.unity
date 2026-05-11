@@ -26282,6 +26282,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 110170db6f6395546bf8465b4bcc3d53, type: 2}
   - {fileID: 11400000, guid: a8d0f3960a1fed84d885a2da6faaadf1, type: 2}
   - {fileID: 11400000, guid: 3f35a6229247f2e43a4fc64ca01f3fb3, type: 2}
+  - {fileID: 11400000, guid: 1ce0a6b4aa603a14f99d834980661ca7, type: 2}
+  - {fileID: 11400000, guid: 1ce0a6b4aa603a14f99d834980661ca7, type: 2}
+  - {fileID: 11400000, guid: 1ce0a6b4aa603a14f99d834980661ca7, type: 2}
+  - {fileID: 11400000, guid: 1ce0a6b4aa603a14f99d834980661ca7, type: 2}
   uncommonChance: 0.25
   rareChance: 0.1
   plantsPerPack: 3
