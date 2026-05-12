@@ -213,8 +213,7 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     }
     private void HighlightСolumn(bool state)
     {
-        // Проверяем имя, чтобы столбец светился ТОЛЬКО у бамбука
-        if (!plantData.needToHighlightNearbyCells || plantData.name != "Bamboo") return;
+        if (!plantData.needToHighlightColumn || plantData.name != "Bamboo") return;
 
         Cell myCell = GetComponentInParent<Cell>();
         if (myCell == null) return;
@@ -235,7 +234,6 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             if (c == myCell) continue;
             if (!c.isBuyied) continue;
 
-            // Подсвечиваем только ПУСТЫЕ клетки, так как за них идет бонус
             if (!c.isOccupied)
             {
                 c.SetHighlight(new Color(0.6f, 1f, 0.6f, 1f));
