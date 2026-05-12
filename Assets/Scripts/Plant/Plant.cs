@@ -21,6 +21,8 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     [Header("Other")]
     public GameObject fliesAlert;
     [HideInInspector] public bool podConnected = false;
+    // Ссылка на текущего партнера для Twin Pod
+    [HideInInspector] public Plant currentPartner;
 
     private static HashSet<Plant> pairedPlants = new HashSet<Plant>();
 
@@ -40,6 +42,11 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     private void OnDestroy()
     {
+        // Если это Twin Pod, при уничтожении (любым способом) разрываем связь
+        if (plantData.name == "Twin Pod")
+        {
+            BreakConnection();
+        }
         pairedPlants.Remove(this);
     }
 
@@ -104,10 +111,10 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         }
         else if (plantData.name == "Twin Pod")
         {
+            // Если растение еще не в паре, пытаемся найти соседа
             if (!pairedPlants.Contains(this))
             {
                 podConnected = false;
-
                 List<Cell> adjacentCells = Grid.Instance.GetAdjacentCells(GetComponentInParent<Cell>());
 
                 for (int i = 0; i < adjacentCells.Count; i++)
@@ -118,10 +125,15 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
                     if (neighborPlant != null && neighborPlant.plantData.name == "Twin Pod" && !pairedPlants.Contains(neighborPlant))
                     {
+                        // Устанавливаем связь в обе стороны
                         pairedPlants.Add(this);
                         pairedPlants.Add(neighborPlant);
-                        podConnected = true;
+
+                        this.podConnected = true;
                         neighborPlant.podConnected = true;
+
+                        this.currentPartner = neighborPlant;
+                        neighborPlant.currentPartner = this;
                         break;
                     }
                 }
@@ -134,15 +146,47 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         return bonus;
     }
 
+    // Метод для корректного разрыва связи
+    public void BreakConnection()
+    {
+        if (currentPartner != null)
+        {
+            currentPartner.podConnected = false;
+            pairedPlants.Remove(currentPartner);
+            currentPartner.currentPartner = null;
+        }
+
+        podConnected = false;
+        pairedPlants.Remove(this);
+        currentPartner = null;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (ShovelSlot.Instance.waitingForAction)
+        {
+            // Перед уничтожением разрываем связь с партнером
+            if (plantData.name == "Twin Pod")
+            {
+                BreakConnection();
+            }
+
+            EndingManager.Instance.UpdateProgress(-1);
+            AudioManager.Instance.PlaySfxSound(shovelUsedSound, 0.35f);
+            GetComponentInParent<Cell>().isOccupied = false;
+
+            Destroy(gameObject);
+            ShovelSlot.Instance.ReturnShowel();
+        }
+    }
+
+    // --- Остальные методы (ShowIncomeText, Coroutines, Highlighting) без изменений ---
+
     private void ShowIncomeText(int amount)
     {
         if (incomeText == null) return;
-
         incomeText.text = "+ " + amount + " <color=#FFD700>C</color>";
-
-        if (incomeRoutine != null)
-            StopCoroutine(incomeRoutine);
-
+        if (incomeRoutine != null) StopCoroutine(incomeRoutine);
         incomeRoutine = StartCoroutine(FadeIncomeText());
     }
 
@@ -151,14 +195,10 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         float fadeIn = 0.1f;
         float visibleTime = 0.25f;
         float fadeOut = 0.2f;
-
         Color baseColor = incomeText.color;
-
         incomeText.color = new Color(baseColor.r, baseColor.g, baseColor.b, 0f);
         incomeText.gameObject.SetActive(true);
-
         float t = 0f;
-
         while (t < fadeIn)
         {
             float a = t / fadeIn;
@@ -166,11 +206,8 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             t += Time.deltaTime;
             yield return null;
         }
-
         yield return new WaitForSeconds(visibleTime);
-
         t = 0f;
-
         while (t < fadeOut)
         {
             float a = 1f - (t / fadeOut);
@@ -178,17 +215,14 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             t += Time.deltaTime;
             yield return null;
         }
-
         incomeText.gameObject.SetActive(false);
     }
 
     private System.Collections.IEnumerator PlantBounce()
     {
         isBouncing = true;
-
         float time = 0f;
         Vector3 targetScale = originalScale * bounceScaleMultiplier;
-
         while (time < bounceDuration)
         {
             float t = time / bounceDuration;
@@ -196,9 +230,7 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             time += Time.deltaTime;
             yield return null;
         }
-
         time = 0f;
-
         while (time < bounceDuration)
         {
             float t = time / bounceDuration;
@@ -206,7 +238,6 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             time += Time.deltaTime;
             yield return null;
         }
-
         transform.localScale = originalScale;
         isBouncing = false;
     }
@@ -214,25 +245,18 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     private void HighlightNeighbors(bool state)
     {
         if (!plantData.needToHighlightNearbyCells) return;
-
         Cell myCell = GetComponentInParent<Cell>();
         if (myCell == null) return;
-
         if (!state)
         {
-            foreach (var c in highlightedCells)
-                c.ResetHighlight();
-
+            foreach (var c in highlightedCells) c.ResetHighlight();
             highlightedCells.Clear();
             return;
         }
-
         var neighbors = Grid.Instance.GetAdjacentCells(myCell);
-
         foreach (var c in neighbors)
         {
             if (!c.isBuyied) continue;
-
             if (!c.isOccupied)
             {
                 c.SetHighlight(new Color(0.6f, 1f, 0.6f, 1f));
@@ -244,26 +268,19 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     private void HighlightColumn(bool state)
     {
         if (!plantData.needToHighlightColumn) return;
-
         Cell myCell = GetComponentInParent<Cell>();
         if (myCell == null) return;
-
         if (!state)
         {
-            foreach (var c in highlightedCells)
-                c.ResetHighlight();
-
+            foreach (var c in highlightedCells) c.ResetHighlight();
             highlightedCells.Clear();
             return;
         }
-
         var columnCells = Grid.Instance.GetColumnCells(myCell);
-
         foreach (var c in columnCells)
         {
             if (c == myCell) continue;
             if (!c.isBuyied) continue;
-
             if (!c.isOccupied)
             {
                 c.SetHighlight(new Color(0.6f, 1f, 0.6f, 1f));
@@ -275,36 +292,15 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     public void OnPointerEnter(PointerEventData eventData)
     {
         AudioManager.Instance.PlaySfxSound(tooltipSound, 0.035f, 0.9f, 1.1f);
-
-        if (!PackManager.Instance.waitingForClick)
-            tooltip.SetActive(true);
-
-        if (plantData.needToHighlightNearbyCells)
-            HighlightNeighbors(true);
-
-        if (plantData.needToHighlightColumn)
-            HighlightColumn(true);
+        if (!PackManager.Instance.waitingForClick) tooltip.SetActive(true);
+        if (plantData.needToHighlightNearbyCells) HighlightNeighbors(true);
+        if (plantData.needToHighlightColumn) HighlightColumn(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!PackManager.Instance.waitingForClick)
-            tooltip.SetActive(false);
-
+        if (!PackManager.Instance.waitingForClick) tooltip.SetActive(false);
         HighlightNeighbors(false);
         HighlightColumn(false);
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (ShovelSlot.Instance.waitingForAction)
-        {
-            pairedPlants.Remove(this);
-            EndingManager.Instance.UpdateProgress(-1);
-            AudioManager.Instance.PlaySfxSound(shovelUsedSound, 0.35f);
-            GetComponentInParent<Cell>().isOccupied = false;
-            Destroy(gameObject);
-            ShovelSlot.Instance.ReturnShowel();
-        }
     }
 }
