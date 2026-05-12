@@ -6,11 +6,10 @@ using UnityEngine.EventSystems;
 public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [HideInInspector] public PlantData plantData;
-    
+
     [SerializeField] private GameObject tooltip;
     [SerializeField] private AudioClip tooltipSound;
     [SerializeField] private AudioClip shovelUsedSound;
-    //[SerializeField] private AudioClip earnSound;
     [Header("Income Text")]
     [SerializeField] private TMP_Text incomeText;
 
@@ -21,14 +20,14 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     [Header("Other")]
     public GameObject fliesAlert;
+    [HideInInspector] public bool podConnected = false;
+
+    private static HashSet<Plant> pairedPlants = new HashSet<Plant>();
 
     private float timer;
-
     private Vector3 originalScale;
     private bool isBouncing;
-
     private Coroutine incomeRoutine;
-
     private List<Cell> highlightedCells = new List<Cell>();
 
     private void Start()
@@ -37,6 +36,11 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
         if (incomeText != null)
             incomeText.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        pairedPlants.Remove(this);
     }
 
     private void Update()
@@ -54,40 +58,8 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             int coins = Mathf.RoundToInt(plantData.coinsAmount * StatsManager.Instance.coinMultiplier);
             coins += StatsManager.Instance.coinAdder;
 
-            if (plantData.name == "Cactus")
-            {
-                if (!Grid.Instance.HasAdjacentPlants(GetComponentInParent<Cell>()))
-                    coins += 3;
-            }
+            coins += GetPlantBonus(coins);
 
-            if (plantData.name == "Royal Flower")
-            {
-                coins += Grid.Instance.CountAdjacentPlants(GetComponentInParent<Cell>());
-            }
-            if(plantData.name == "Lucky Cap")
-            {
-                if (Random.value <= 0.25f)
-                {
-                    coins += 4;
-                }
-            }
-            if(plantData.name == "Bamboo")
-            {
-                var columnCells = Grid.Instance.GetColumnCells(GetComponentInParent<Cell>());
-                int emptyCellsCount = 0;
-
-                foreach (var c in columnCells)
-                {
-                    if (c.isBuyied && !c.isOccupied)
-                    {
-                        emptyCellsCount++;
-                    }
-                }
-
-                coins += emptyCellsCount;
-            }
-
-            //AudioManager.Instance.PlaySfxSound(earnSound, 0.025f, 0.8f, 0.95f);
             CoinManager.Instance.AddCoins(coins);
 
             if (coins > 0)
@@ -100,6 +72,66 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
             timer -= plantData.productionInterval;
         }
+    }
+
+    private int GetPlantBonus(int currentCoins)
+    {
+        int bonus = 0;
+
+        if (plantData.name == "Cactus")
+        {
+            if (!Grid.Instance.HasAdjacentPlants(GetComponentInParent<Cell>()))
+                bonus += 3;
+        }
+        else if (plantData.name == "Royal Flower")
+        {
+            bonus += Grid.Instance.CountAdjacentPlants(GetComponentInParent<Cell>());
+        }
+        else if (plantData.name == "Lucky Cap")
+        {
+            if (Random.value <= 0.25f)
+                bonus += 4;
+        }
+        else if (plantData.name == "Bamboo")
+        {
+            var columnCells = Grid.Instance.GetColumnCells(GetComponentInParent<Cell>());
+
+            foreach (var c in columnCells)
+            {
+                if (c.isBuyied && !c.isOccupied)
+                    bonus++;
+            }
+        }
+        else if (plantData.name == "Twin Pod")
+        {
+            if (!pairedPlants.Contains(this))
+            {
+                podConnected = false;
+
+                List<Cell> adjacentCells = Grid.Instance.GetAdjacentCells(GetComponentInParent<Cell>());
+
+                for (int i = 0; i < adjacentCells.Count; i++)
+                {
+                    if (!adjacentCells[i].isOccupied) continue;
+
+                    Plant neighborPlant = adjacentCells[i].GetComponentInChildren<Plant>();
+
+                    if (neighborPlant != null && neighborPlant.plantData.name == "Twin Pod" && !pairedPlants.Contains(neighborPlant))
+                    {
+                        pairedPlants.Add(this);
+                        pairedPlants.Add(neighborPlant);
+                        podConnected = true;
+                        neighborPlant.podConnected = true;
+                        break;
+                    }
+                }
+            }
+
+            if (podConnected)
+                bonus += currentCoins;
+        }
+
+        return bonus;
     }
 
     private void ShowIncomeText(int amount)
@@ -131,7 +163,6 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         {
             float a = t / fadeIn;
             incomeText.color = new Color(baseColor.r, baseColor.g, baseColor.b, a);
-
             t += Time.deltaTime;
             yield return null;
         }
@@ -144,7 +175,6 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         {
             float a = 1f - (t / fadeOut);
             incomeText.color = new Color(baseColor.r, baseColor.g, baseColor.b, a);
-
             t += Time.deltaTime;
             yield return null;
         }
@@ -163,7 +193,6 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         {
             float t = time / bounceDuration;
             transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
-
             time += Time.deltaTime;
             yield return null;
         }
@@ -174,7 +203,6 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         {
             float t = time / bounceDuration;
             transform.localScale = Vector3.Lerp(targetScale, originalScale, t);
-
             time += Time.deltaTime;
             yield return null;
         }
@@ -204,16 +232,18 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         foreach (var c in neighbors)
         {
             if (!c.isBuyied) continue;
-            if(!c.isOccupied)
+
+            if (!c.isOccupied)
             {
                 c.SetHighlight(new Color(0.6f, 1f, 0.6f, 1f));
                 highlightedCells.Add(c);
             }
         }
     }
-    private void HighlightСolumn(bool state)
+
+    private void HighlightColumn(bool state)
     {
-        if (!plantData.needToHighlightColumn || plantData.name != "Bamboo") return;
+        if (!plantData.needToHighlightColumn) return;
 
         Cell myCell = GetComponentInParent<Cell>();
         if (myCell == null) return;
@@ -250,13 +280,10 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             tooltip.SetActive(true);
 
         if (plantData.needToHighlightNearbyCells)
-        {
             HighlightNeighbors(true);
-        }
-        if(plantData.needToHighlightColumn)
-        {
-            HighlightСolumn(true);
-        }
+
+        if (plantData.needToHighlightColumn)
+            HighlightColumn(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -265,13 +292,14 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             tooltip.SetActive(false);
 
         HighlightNeighbors(false);
-        HighlightСolumn(false);
+        HighlightColumn(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (ShovelSlot.Instance.waitingForAction)
         {
+            pairedPlants.Remove(this);
             EndingManager.Instance.UpdateProgress(-1);
             AudioManager.Instance.PlaySfxSound(shovelUsedSound, 0.35f);
             GetComponentInParent<Cell>().isOccupied = false;

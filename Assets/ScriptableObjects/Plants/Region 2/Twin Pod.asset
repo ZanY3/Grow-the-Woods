@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
+  m_Name: Twin Pod
+  m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  icon: {fileID: 5605378432408372108, guid: bb7b0030dee82b34c86fae766f6403b2, type: 3}
+  coinsAmount: 2
+  productionInterval: 1
+  description: "<color=yellow>Gain</color>: 1 coins / sec\nx2 coins if adjacent to
+    another Twin Pod \n(one pair only)"
+  needToHighlightNearbyCells: 1
+  needToHighlightColumn: 0
+  rarity: 1
