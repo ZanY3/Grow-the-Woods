@@ -111,7 +111,6 @@ public class Grid : MonoBehaviour
         int index = System.Array.IndexOf(cells, cell);
         if (index == -1) return result;
 
-        // Вычисляем индекс колонки (X)
         int targetX = index % gridWidth;
 
         for (int i = 0; i < cells.Length; i++)

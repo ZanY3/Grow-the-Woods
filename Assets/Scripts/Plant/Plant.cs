@@ -21,7 +21,6 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     [Header("Other")]
     public GameObject fliesAlert;
     [HideInInspector] public bool podConnected = false;
-    // Ссылка на текущего партнера для Twin Pod
     [HideInInspector] public Plant currentPartner;
 
     private static HashSet<Plant> pairedPlants = new HashSet<Plant>();
@@ -42,7 +41,6 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
 
     private void OnDestroy()
     {
-        // Если это Twin Pod, при уничтожении (любым способом) разрываем связь
         if (plantData.name == "Twin Pod")
         {
             BreakConnection();
@@ -58,41 +56,79 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             return;
         }
 
-        timer += Time.deltaTime;
+        // --- ЛОГИКА GROW SHROOM (Ускорение) ---
+        float speedMultiplier = 1f;
+
+        // Обычные растения проверяют, нет ли рядом Grow Shroom
+        if (plantData.name != "Grow Shroom")
+        {
+            speedMultiplier = GetGrowthSpeedMultiplier();
+        }
+
+        // Таймер идет быстрее, если speedMultiplier > 1
+        timer += Time.deltaTime * speedMultiplier;
 
         while (timer >= plantData.productionInterval)
         {
-            int coins = Mathf.RoundToInt(plantData.coinsAmount * StatsManager.Instance.coinMultiplier);
-            coins += StatsManager.Instance.coinAdder;
-
-            coins += GetPlantBonus(coins);
-
-            CoinManager.Instance.AddCoins(coins);
-
-            if (coins > 0)
-            {
-                ShowIncomeText(coins);
-
-                if (enableBounce && !isBouncing)
-                    StartCoroutine(PlantBounce());
-            }
-
+            ExecuteProduction();
             timer -= plantData.productionInterval;
+        }
+    }
+
+    private float GetGrowthSpeedMultiplier()
+    {
+        float multiplier = 1f;
+        Cell myCell = GetComponentInParent<Cell>();
+        if (myCell == null) return multiplier;
+
+        List<Cell> adjacentCells = Grid.Instance.GetAdjacentCells(myCell);
+
+        foreach (var cell in adjacentCells)
+        {
+            if (cell.isOccupied)
+            {
+                Plant neighbor = cell.GetComponentInChildren<Plant>();
+                // Если сосед — Grow Shroom, даем +50% к скорости (0.5f)
+                if (neighbor != null && neighbor.plantData.name == "Grow Shroom")
+                {
+                    multiplier += 0.5f;
+                }
+            }
+        }
+        return multiplier;
+    }
+
+    private void ExecuteProduction()
+    {
+        int coins = Mathf.RoundToInt(plantData.coinsAmount * StatsManager.Instance.coinMultiplier);
+        coins += StatsManager.Instance.coinAdder;
+        coins += GetPlantBonus(coins);
+
+        CoinManager.Instance.AddCoins(coins);
+
+        if (coins > 0)
+        {
+            ShowIncomeText(coins);
+
+            if (enableBounce && !isBouncing)
+                StartCoroutine(PlantBounce());
         }
     }
 
     private int GetPlantBonus(int currentCoins)
     {
         int bonus = 0;
+        Cell myCell = GetComponentInParent<Cell>();
+        if (myCell == null) return 0;
 
         if (plantData.name == "Cactus")
         {
-            if (!Grid.Instance.HasAdjacentPlants(GetComponentInParent<Cell>()))
+            if (!Grid.Instance.HasAdjacentPlants(myCell))
                 bonus += 3;
         }
         else if (plantData.name == "Royal Flower")
         {
-            bonus += Grid.Instance.CountAdjacentPlants(GetComponentInParent<Cell>());
+            bonus += Grid.Instance.CountAdjacentPlants(myCell);
         }
         else if (plantData.name == "Lucky Cap")
         {
@@ -101,8 +137,7 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         }
         else if (plantData.name == "Bamboo")
         {
-            var columnCells = Grid.Instance.GetColumnCells(GetComponentInParent<Cell>());
-
+            var columnCells = Grid.Instance.GetColumnCells(myCell);
             foreach (var c in columnCells)
             {
                 if (c.isBuyied && !c.isOccupied)
@@ -111,27 +146,22 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
         }
         else if (plantData.name == "Twin Pod")
         {
-            // Если растение еще не в паре, пытаемся найти соседа
             if (!pairedPlants.Contains(this))
             {
                 podConnected = false;
-                List<Cell> adjacentCells = Grid.Instance.GetAdjacentCells(GetComponentInParent<Cell>());
+                List<Cell> adjacentCells = Grid.Instance.GetAdjacentCells(myCell);
 
                 for (int i = 0; i < adjacentCells.Count; i++)
                 {
                     if (!adjacentCells[i].isOccupied) continue;
-
                     Plant neighborPlant = adjacentCells[i].GetComponentInChildren<Plant>();
 
                     if (neighborPlant != null && neighborPlant.plantData.name == "Twin Pod" && !pairedPlants.Contains(neighborPlant))
                     {
-                        // Устанавливаем связь в обе стороны
                         pairedPlants.Add(this);
                         pairedPlants.Add(neighborPlant);
-
                         this.podConnected = true;
                         neighborPlant.podConnected = true;
-
                         this.currentPartner = neighborPlant;
                         neighborPlant.currentPartner = this;
                         break;
@@ -143,10 +173,14 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
                 bonus += currentCoins;
         }
 
+        // Grow Shroom сам по себе может не давать бонусов, 
+        // так как его главная фишка в Update() выше.
+
         return bonus;
     }
 
-    // Метод для корректного разрыва связи
+    // --- ОСТАЛЬНЫЕ МЕТОДЫ (BreakConnection, UI, Highlight и т.д.) БЕЗ ИЗМЕНЕНИЙ ---
+
     public void BreakConnection()
     {
         if (currentPartner != null)
@@ -155,7 +189,6 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
             pairedPlants.Remove(currentPartner);
             currentPartner.currentPartner = null;
         }
-
         podConnected = false;
         pairedPlants.Remove(this);
         currentPartner = null;
@@ -165,22 +198,14 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     {
         if (ShovelSlot.Instance.waitingForAction)
         {
-            // Перед уничтожением разрываем связь с партнером
-            if (plantData.name == "Twin Pod")
-            {
-                BreakConnection();
-            }
-
+            if (plantData.name == "Twin Pod") BreakConnection();
             EndingManager.Instance.UpdateProgress(-1);
             AudioManager.Instance.PlaySfxSound(shovelUsedSound, 0.35f);
             GetComponentInParent<Cell>().isOccupied = false;
-
             Destroy(gameObject);
             ShovelSlot.Instance.ReturnShowel();
         }
     }
-
-    // --- Остальные методы (ShowIncomeText, Coroutines, Highlighting) без изменений ---
 
     private void ShowIncomeText(int amount)
     {
