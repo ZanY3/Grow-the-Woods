@@ -15,8 +15,10 @@ MonoBehaviour:
   icon: {fileID: 5605378432408372108, guid: bb7b0030dee82b34c86fae766f6403b2, type: 3}
   coinsAmount: 2
   productionInterval: 1
-  description: "<color=yellow>Gain</color>: 1 coins / sec\nx2 coins if adjacent to
-    another Twin Pod \n(one pair only)"
+  description: '<color=yellow>Gain</color>: 1 coins / sec
+
+    x2 coins if adjacent
+    to another Twin Pod(only 1 pair) '
   needToHighlightNearbyCells: 1
   needToHighlightColumn: 0
   rarity: 1

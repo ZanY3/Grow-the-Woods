@@ -17,8 +17,8 @@ MonoBehaviour:
   productionInterval: 2
   description: '<color=yellow>Gain</color>: 5 coins / 2 sec
 
-    Increases productivity
-    of all adjacent plants within its aura.'
+    Boosts adjacent
+    plants speed by 50%'
   needToHighlightNearbyCells: 1
   needToHighlightColumn: 0
   rarity: 2
