@@ -5,9 +5,11 @@ using UnityEngine;
 public class PackManager : ItemPickerBase
 {
     public static PackManager Instance;
+    [SerializeField] private PrestigeManager prestigeManager;
 
     [Header("Random Drop")]
-    [SerializeField] private List<PlantData> allPlants;
+    [SerializeField] private List<PlantData> region1Plants;
+    [SerializeField] private List<PlantData> region2Plants;
     [SerializeField] private float uncommonChance = 0.25f;
     [SerializeField] private float rareChance = 0.10f;
     [SerializeField] private int plantsPerPack = 3;
@@ -82,7 +84,17 @@ public class PackManager : ItemPickerBase
         if (state) InteractionManager.Instance.canZoomCam = true;
     }
 
-    //Rarity logic stays here, only PackManager needs it
+    private List<PlantData> GetCurrentPlants()
+    {
+        int region = prestigeManager.currentRegion;
+        return region switch
+        {
+            0 => region1Plants,
+            1 => region2Plants,
+            _ => region2Plants
+        };
+    }
+
     private PlantData.Rarity GetRandomRarity()
     {
         float roll = Random.value;
@@ -91,21 +103,25 @@ public class PackManager : ItemPickerBase
         return PlantData.Rarity.Common;
     }
 
-    private PlantData GetRandomPlant(PlantData.Rarity rarity, List<PlantData> excluded)
+    private PlantData GetRandomPlant(PlantData.Rarity rarity, List<PlantData> pool, List<PlantData> excluded)
     {
-        var pool = allPlants.FindAll(p => p.rarity == rarity && !excluded.Contains(p));
-        return pool.Count == 0 ? null : pool[Random.Range(0, pool.Count)];
+        var filtered = pool.FindAll(p => p.rarity == rarity && !excluded.Contains(p));
+        return filtered.Count == 0 ? null : filtered[Random.Range(0, filtered.Count)];
     }
 
     private List<PlantData> GeneratePack()
     {
+        var currentPool = GetCurrentPlants();
         var pack = new List<PlantData>();
+
         for (int i = 0; i < plantsPerPack; i++)
         {
             var rarity = GetRandomRarity();
-            var plant = GetRandomPlant(rarity, pack) ?? allPlants[Random.Range(0, allPlants.Count)];
+            var plant = GetRandomPlant(rarity, currentPool, pack)
+                        ?? currentPool[Random.Range(0, currentPool.Count)];
             pack.Add(plant);
         }
+
         return pack;
     }
 }

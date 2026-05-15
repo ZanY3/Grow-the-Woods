@@ -8236,7 +8236,6 @@ MonoBehaviour:
   descriptionTxt: {fileID: 1348758152}
   deleteBtn: {fileID: 409492199}
   deleteConfirmPanel: {fileID: 12240726}
-  confirmMessageTxt: {fileID: 32775378}
   confirmCanvasGroup: {fileID: 12240730}
   panelRect: {fileID: 12240727}
   iconImg: {fileID: 1530374495}
@@ -21910,7 +21909,6 @@ MonoBehaviour:
   descriptionTxt: {fileID: 1476469644}
   deleteBtn: {fileID: 1270107291}
   deleteConfirmPanel: {fileID: 268316958}
-  confirmMessageTxt: {fileID: 425004744}
   confirmCanvasGroup: {fileID: 268316962}
   panelRect: {fileID: 268316959}
   iconImg: {fileID: 1858705422}
@@ -27820,21 +27818,22 @@ MonoBehaviour:
   openSound: {fileID: 8300000, guid: d2542781c65ae3041be4808d4da2d78d, type: 3}
   chooseSound: {fileID: 8300000, guid: cdac06cbce04e01499e48d4a83399c75, type: 3}
   confirmSound: {fileID: 8300000, guid: e883f50b369102a4885772651bb01371, type: 3}
-  allPlants:
+  prestigeManager: {fileID: 1230780012}
+  region1Plants:
   - {fileID: 11400000, guid: fbfbbe3df4023ce42a1080504b0d1976, type: 2}
   - {fileID: 11400000, guid: dea383e2a765a9a49bcfdf39ed949359, type: 2}
   - {fileID: 11400000, guid: f7a461d5c5e935e48ab782aa677e11ff, type: 2}
+  - {fileID: 11400000, guid: 3f35a6229247f2e43a4fc64ca01f3fb3, type: 2}
   - {fileID: 11400000, guid: 0016461aaae360948953230317b4bdda, type: 2}
   - {fileID: 11400000, guid: 110170db6f6395546bf8465b4bcc3d53, type: 2}
   - {fileID: 11400000, guid: a8d0f3960a1fed84d885a2da6faaadf1, type: 2}
-  - {fileID: 11400000, guid: 3f35a6229247f2e43a4fc64ca01f3fb3, type: 2}
+  region2Plants:
+  - {fileID: 11400000, guid: 1ce0a6b4aa603a14f99d834980661ca7, type: 2}
   - {fileID: 11400000, guid: dfb2e5d7df7806a4ea86e2e857e276b5, type: 2}
-  - {fileID: 11400000, guid: dfb2e5d7df7806a4ea86e2e857e276b5, type: 2}
-  - {fileID: 11400000, guid: dfb2e5d7df7806a4ea86e2e857e276b5, type: 2}
-  - {fileID: 11400000, guid: dfb2e5d7df7806a4ea86e2e857e276b5, type: 2}
-  - {fileID: 11400000, guid: dfb2e5d7df7806a4ea86e2e857e276b5, type: 2}
-  - {fileID: 11400000, guid: dfb2e5d7df7806a4ea86e2e857e276b5, type: 2}
-  - {fileID: 11400000, guid: dfb2e5d7df7806a4ea86e2e857e276b5, type: 2}
+  - {fileID: 11400000, guid: eb92f1d2e2f00ab40a67f2861b9a6f13, type: 2}
+  - {fileID: 11400000, guid: 2e7c57060413e4c48a6d4a427ae93946, type: 2}
+  - {fileID: 11400000, guid: 110170db6f6395546bf8465b4bcc3d53, type: 2}
+  - {fileID: 11400000, guid: dea383e2a765a9a49bcfdf39ed949359, type: 2}
   uncommonChance: 0.25
   rareChance: 0.1
   plantsPerPack: 3
