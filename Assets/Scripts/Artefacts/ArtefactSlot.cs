@@ -20,18 +20,25 @@ public class ArtefactSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Space]
     [SerializeField] private Image iconImg;
     [SerializeField] private ArtefactsManager artefactsManager;
+    [Space]
+    [SerializeField] private AudioClip clickSound;
+    [SerializeField] private AudioClip deleteSound;
 
     [HideInInspector] public bool isOccupied = false;
     [HideInInspector] public ArtefactData equipedData;
+    private bool canShowTooltip = true;
 
     public void ChangeConfirmPanelState(bool state)
     {
+        AudioManager.Instance.PlaySfxSound(clickSound, 0.65f, 0.9f, 1.1f);
         // Останавливаем старые анимации перед началом новых
         confirmCanvasGroup.DOKill();
         panelRect.DOKill();
 
         if (state)
         {
+            canShowTooltip = false;
+            artefactTooltip.SetActive(false);
             deleteConfirmPanel.SetActive(true);
 
             // Начальное состояние для появления
@@ -47,6 +54,7 @@ public class ArtefactSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         else
         {
             // Анимация исчезновения
+            canShowTooltip = true;
             confirmCanvasGroup.DOFade(0, 0.2f).SetUpdate(true);
             panelRect.DOScale(0.8f, 0.2f).SetUpdate(true).OnComplete(() => {
                 deleteConfirmPanel.SetActive(false);
@@ -62,10 +70,10 @@ public class ArtefactSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             artefactsManager.OnArtefactRemoved(equipedData);
         }
 
-        // Закрываем панель с анимацией
         ChangeConfirmPanelState(false);
 
         // Очищаем слот
+        AudioManager.Instance.PlaySfxSound(deleteSound, 1f, 0.9f, 1.1f);
         artefactTooltip.SetActive(false);
         deleteBtn.SetActive(false);
         isOccupied = false;
@@ -88,13 +96,13 @@ public class ArtefactSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isOccupied)
+        if (isOccupied && canShowTooltip)
             artefactTooltip.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (isOccupied)
+        if (isOccupied && canShowTooltip)
             artefactTooltip.SetActive(false);
     }
 }

@@ -8240,6 +8240,8 @@ MonoBehaviour:
   panelRect: {fileID: 12240727}
   iconImg: {fileID: 1530374495}
   artefactsManager: {fileID: 683458545}
+  clickSound: {fileID: 8300000, guid: 0d7254c1624a89d439e055ac4fbe8f5c, type: 3}
+  deleteSound: {fileID: 8300000, guid: 37a1327da4124d34cbeda67899da7437, type: 3}
   isOccupied: 0
   equipedData: {fileID: 0}
 --- !u!1001 &499606090
@@ -21913,6 +21915,8 @@ MonoBehaviour:
   panelRect: {fileID: 268316959}
   iconImg: {fileID: 1858705422}
   artefactsManager: {fileID: 683458545}
+  clickSound: {fileID: 8300000, guid: 0d7254c1624a89d439e055ac4fbe8f5c, type: 3}
+  deleteSound: {fileID: 8300000, guid: 37a1327da4124d34cbeda67899da7437, type: 3}
   isOccupied: 0
   equipedData: {fileID: 0}
 --- !u!1 &1243738781
