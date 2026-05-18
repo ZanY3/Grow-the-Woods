@@ -14,6 +14,8 @@ public class EndingManager : MonoBehaviour
     [SerializeField] private GameObject progressUI;
     [SerializeField] private TMP_Text progressTxt;
     [SerializeField] private Image progressFill;
+    // --- НОВАЯ ПЕРЕМЕННАЯ ТУТ ---
+    [SerializeField] private TMP_Text regionTargetTitleTxt;
 
     [Header("Ending UI")]
     [SerializeField] private CanvasGroup endingPanel;
@@ -57,9 +59,22 @@ public class EndingManager : MonoBehaviour
         titleTxt.alpha = 0;
         restartBtn.localScale = Vector3.zero;
 
+        // Настраиваем начальный текст заголовка в зависимости от региона
+        SetRegionTitle();
+
         UpdateProgress(1);
     }
-    
+
+    // Метод для настройки текста заголовка
+    private void SetRegionTitle()
+    {
+        if (regionTargetTitleTxt == null) return;
+
+        if (prestigeManager.currentRegion == prestigeManager.maxRegion)
+        {
+            regionTargetTitleTxt.text = "Fill all cells to finish the game:";
+        }
+    }
 
     public void UpdateProgress(int amountToAdd)
     {
@@ -67,6 +82,7 @@ public class EndingManager : MonoBehaviour
 
         cellsFilled += amountToAdd;
 
+        // Теперь здесь просто чистые цифры, они не смешиваются с текстом цели
         progressTxt.text = cellsFilled + " / " + totalCells;
 
         float progress = (float)cellsFilled / totalCells;
@@ -76,16 +92,18 @@ public class EndingManager : MonoBehaviour
         {
             nextRegionBtn.SetActive(true);
         }
-        if(prestigeManager.currentRegion == prestigeManager.maxRegion && cellsFilled >= totalCells)
+        if (prestigeManager.currentRegion == prestigeManager.maxRegion && cellsFilled >= totalCells)
         {
             PlayEnding();
         }
     }
+
     public void ResetProgress()
     {
         cellsFilled = 1;
         UpdateProgress(0);
-    }    
+        SetRegionTitle(); // На всякий случай обновляем при сбросе
+    }
 
     public void ChangeProgressState(bool state)
     {

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CoinFallManager : MonoBehaviour
 {
+    // Глобальная точка доступа (Синглтон)
+    public static CoinFallManager Instance { get; private set; }
+
     [SerializeField] private RectTransform[] spawnPlaces;
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private RectTransform parentTransform;
@@ -22,10 +25,27 @@ public class CoinFallManager : MonoBehaviour
     [SerializeField] private float fallDuration = 0;
 
     [HideInInspector] public bool canLaunchEvent = true;
+    [HideInInspector] public int coinsAdder = 0;
 
     private float _currentSpawnTimer;
     private float _currentDurationTimer;
     private bool _isSpawning;
+
+    private void Awake()
+    {
+        // Инициализация синглтона и проверка на дубликаты
+        if (Instance == null)
+        {
+            Instance = this;
+            // Если менеджер должен жить между сценами, можно раскомментировать строчку ниже:
+            // DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     private void Start()
     {
@@ -125,6 +145,7 @@ public class CoinFallManager : MonoBehaviour
 
     private void StopCoinFall()
     {
+        coinsAdder++;
         _isSpawning = false;
     }
 }

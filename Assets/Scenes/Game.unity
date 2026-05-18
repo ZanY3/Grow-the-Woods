@@ -8194,6 +8194,7 @@ MonoBehaviour:
   checkInterval: 25
   fallDuration: 3
   canLaunchEvent: 1
+  coinsAdder: 0
 --- !u!1 &469479587
 GameObject:
   m_ObjectHideFlags: 0
@@ -16619,6 +16620,7 @@ MonoBehaviour:
   progressUI: {fileID: 1509054578}
   progressTxt: {fileID: 546077511}
   progressFill: {fileID: 445036857}
+  regionTargetTitleTxt: {fileID: 1509054581}
   endingPanel: {fileID: 160543088}
   bg: {fileID: 1605764144}
   titleTxt: {fileID: 947560249}
@@ -16627,7 +16629,7 @@ MonoBehaviour:
   endingMusic: {fileID: 8300000, guid: c9e1a7c3b5709834198ed626ed58f979, type: 3}
   endCongratsSound: {fileID: 8300000, guid: 0945743e5f07b97468504ef3dfc5846f, type: 3}
   totalCells: 48
-  cellsForNextRegion: 30
+  cellsForNextRegion: 3
   prestigeManager: {fileID: 1230780012}
   nextRegionBtn: {fileID: 544810888}
 --- !u!1 &881044699
@@ -33945,7 +33947,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: offerPrice
-      value: 750
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: shopManager

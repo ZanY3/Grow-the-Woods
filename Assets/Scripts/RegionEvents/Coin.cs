@@ -47,7 +47,7 @@ public class Coin : MonoBehaviour, IPointerClickHandler
                      .OnComplete(() => transform.DOScale(0f, 0.15f).SetEase(Ease.InBack)
                      .OnComplete(() =>
                      {
-                         CoinManager.Instance.AddCoins(1);
+                         CoinManager.Instance.AddCoins(1+CoinFallManager.Instance.coinsAdder);
                          Destroy(transform.parent.gameObject);
                      }));
         }
