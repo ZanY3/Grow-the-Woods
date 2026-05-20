@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: Berry Bush
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 7
   icon: {fileID: 5404687227340121073, guid: 7e7bd32b12f448f43874a0d8b482aeb7, type: 3}
   coinsAmount: 2
   productionInterval: 1
   description: '<color=yellow>Gain</color>: 2 coins / sec'
+  needToHighlightNearbyCells: 0
+  needToHighlightColumn: 0
   rarity: 1

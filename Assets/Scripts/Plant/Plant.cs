@@ -24,7 +24,7 @@ public class Plant : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, I
     [HideInInspector] public Plant currentPartner;
 
     private static HashSet<Plant> pairedPlants = new HashSet<Plant>();
-
+    
     private float timer;
     private Vector3 originalScale;
     private bool isBouncing;

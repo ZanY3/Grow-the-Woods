@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: Grow Shroom
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 9
   icon: {fileID: 6187264991742459886, guid: 5371f8a5b72e91e458779a6daa527cbf, type: 3}
   coinsAmount: 5
   productionInterval: 2

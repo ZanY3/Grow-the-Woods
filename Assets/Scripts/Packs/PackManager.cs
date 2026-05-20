@@ -68,6 +68,8 @@ public class PackManager : ItemPickerBase
 
     protected override void OnConfirmed(int index)
     {
+        CollectionManager.Instance.UnlockPlant(selectedPlant.id);
+
         EndingManager.Instance.ChangeProgressState(false);
         waitingForClick = true;
         AudioManager.Instance.canPlaySounds = true;

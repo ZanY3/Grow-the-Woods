@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: Penny Bush
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 10
   icon: {fileID: -7521967435901373805, guid: 9458e022b557f554ab0c029e65a009ab, type: 3}
   coinsAmount: 6
   productionInterval: 4

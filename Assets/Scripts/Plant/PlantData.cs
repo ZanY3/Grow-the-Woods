@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New_Plant", menuName = "Plant")]
 public class PlantData : ScriptableObject
 {
+    public int id;
     public Sprite icon;
     public int coinsAmount;
     public float productionInterval;

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: Twin Pod
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 11
   icon: {fileID: 5605378432408372108, guid: bb7b0030dee82b34c86fae766f6403b2, type: 3}
   coinsAmount: 2
   productionInterval: 1

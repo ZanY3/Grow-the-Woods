@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: Clover
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 5
   icon: {fileID: -3890951754223521745, guid: 22988b4da1a17f44b8b31466a0aa6f38, type: 3}
   coinsAmount: 3
   productionInterval: 2
   description: '<color=yellow>Gain</color>: 3 coins / 2 sec'
+  needToHighlightNearbyCells: 0
+  needToHighlightColumn: 0
   rarity: 0

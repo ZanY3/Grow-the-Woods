@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: Bamboo
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 8
   icon: {fileID: 6929814024863328386, guid: 8d1e08144755d884ebaf3bf9bbd5ad26, type: 3}
   coinsAmount: 1
   productionInterval: 1

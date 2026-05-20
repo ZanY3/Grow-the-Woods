@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: SunFlower
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 1
   icon: {fileID: -256329436847572505, guid: 87e4757eb866b9b4399d64ea47c782a5, type: 3}
   coinsAmount: 1
   productionInterval: 1
   description: '<color=yellow>Gain</color>: 1 coin / sec'
+  needToHighlightNearbyCells: 0
+  needToHighlightColumn: 0
   rarity: 0

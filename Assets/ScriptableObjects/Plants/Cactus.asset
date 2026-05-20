@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: Cactus
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 6
   icon: {fileID: 7873444928579934181, guid: 3549f8c11d8214741a692307ca34547c, type: 3}
   coinsAmount: 1
   productionInterval: 1
   description: '<color=yellow>Gain</color>: 1 coins / sec\n Gains 3 coins more if
     no plants nearby.'
   needToHighlightNearbyCells: 1
+  needToHighlightColumn: 0
   rarity: 1

@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: Money Tree
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 3
   icon: {fileID: 7184120008735121875, guid: e792b6c7c1380674eb165e98360cfb5f, type: 3}
   coinsAmount: 4
   productionInterval: 1
   description: '<color=yellow>Gain</color>: 4 coins / sec'
+  needToHighlightNearbyCells: 0
+  needToHighlightColumn: 0
   rarity: 2

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: Lucky Cap
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 4
   icon: {fileID: -7413517864687611643, guid: 96ef15fab57356c43a8122edbddba3cb, type: 3}
   coinsAmount: 1
   productionInterval: 1
@@ -20,4 +21,5 @@ MonoBehaviour:
     May add 3 coins to
     income (25% chance)'
   needToHighlightNearbyCells: 0
+  needToHighlightColumn: 0
   rarity: 1

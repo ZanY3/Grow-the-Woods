@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27b5633975a89a49a2b929633a03923, type: 3}
   m_Name: Royal Flower
   m_EditorClassIdentifier: Assembly-CSharp::PlantData
+  id: 2
   icon: {fileID: -2482701078373581643, guid: 586847dceb5d8514092218327276f372, type: 3}
   coinsAmount: 0
   productionInterval: 1
   description: Gains <color=yellow>1 coin to income</color> for each plant nearby.
   needToHighlightNearbyCells: 1
+  needToHighlightColumn: 0
   rarity: 2
