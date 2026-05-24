@@ -1,55 +1,121 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CollectionUI : MonoBehaviour
 {
-    [Header("UI Элементы")]
+    [Header("Panel")]
     [SerializeField] private CanvasGroup collectionWindowPanel;
-    [SerializeField] private GameObject slotPrefab;
-    [SerializeField] private Transform gridParent;
-
-    [Header("Настройки анимации")]
     [SerializeField] private float fadeDuration = 0.25f;
 
-    private List<CollectionSlot> spawnedSlots = new List<CollectionSlot>();
+    [Header("Tab Buttons")]
+    [SerializeField] private Button plantsTabButton;
+    [SerializeField] private Button artefactsTabButton;
+    [SerializeField] private CanvasGroup plantsUnderline;
+    [SerializeField] private CanvasGroup artefactsUnderline;
+
+    [Header("Progress Counter")]
+    [SerializeField] private TMP_Text counterText;
+
+    [Header("Grids")]
+    [SerializeField] private GameObject slotPrefab;
+    [SerializeField] private Transform plantsGridParent;
+    [SerializeField] private Transform artefactsGridParent;
+
+    private List<CollectionSlot> plantSlots = new List<CollectionSlot>();
+    private List<CollectionSlot> artefactSlots = new List<CollectionSlot>();
     private Tween fadeTween;
+
+    // ── Unity lifecycle ───────────────────────────────────────────────────────
 
     private void Start()
     {
-        InitGrid();
+        InitPlantGrid();
+        InitArtefactGrid();
+
+        plantsTabButton.onClick.AddListener(() => ShowTab(isPlants: true));
+        artefactsTabButton.onClick.AddListener(() => ShowTab(isPlants: false));
+
+        ShowTab(isPlants: true, animate: false);
 
         collectionWindowPanel.alpha = 0f;
         collectionWindowPanel.gameObject.SetActive(false);
     }
 
-    private void InitGrid()
-    {
-        List<PlantData> plants = CollectionManager.Instance.GetAllPlants();
-        if (plants == null) return;
+    // ── Grid init ─────────────────────────────────────────────────────────────
 
+    private void InitPlantGrid()
+    {
+        var plants = CollectionManager.Instance.GetAllPlants();
+        if (plants == null) return;
         foreach (var plant in plants)
         {
             if (plant == null) continue;
-
-            GameObject newSlot = Instantiate(slotPrefab, gridParent);
-            CollectionSlot slotScript = newSlot.GetComponent<CollectionSlot>();
-
-            if (slotScript != null)
-            {
-                spawnedSlots.Add(slotScript);
-                slotScript.Setup(plant, false);
-            }
+            var slot = SpawnSlot(plantsGridParent);
+            if (slot == null) continue;
+            plantSlots.Add(slot);
+            slot.Setup(plant, false);
         }
     }
+
+    private void InitArtefactGrid()
+    {
+        var artefacts = CollectionManager.Instance.GetAllArtefacts();
+        if (artefacts == null) return;
+        foreach (var artefact in artefacts)
+        {
+            if (artefact == null) continue;
+            int runtimeId = CollectionManager.Instance.GetArtefactRuntimeId(artefact);
+            var slot = SpawnSlot(artefactsGridParent);
+            if (slot == null) continue;
+            artefactSlots.Add(slot);
+            slot.Setup(artefact, runtimeId, false);
+        }
+    }
+
+    private CollectionSlot SpawnSlot(Transform parent)
+    {
+        var go = Instantiate(slotPrefab, parent);
+        return go.GetComponent<CollectionSlot>();
+    }
+
+    // ── Tab switching ─────────────────────────────────────────────────────────
+
+    private void ShowTab(bool isPlants, bool animate = true)
+    {
+        plantsGridParent.gameObject.SetActive(isPlants);
+        artefactsGridParent.gameObject.SetActive(!isPlants);
+
+        SetUnderline(plantsUnderline, isPlants, animate);
+        SetUnderline(artefactsUnderline, !isPlants, animate);
+
+        if (isPlants) RefreshPlantSlots();
+        else RefreshArtefactSlots();
+    }
+
+    private void SetUnderline(CanvasGroup underline, bool visible, bool animate)
+    {
+        if (underline == null) return;
+        underline.gameObject.SetActive(true);
+        underline.DOKill();
+        float target = visible ? 1f : 0f;
+        if (animate)
+            underline.DOFade(target, 0.2f).SetUpdate(true);
+        else
+            underline.alpha = target;
+    }
+
+    // ── Panel open/close ──────────────────────────────────────────────────────
 
     public void ChangeBookState(bool state)
     {
         fadeTween?.Kill();
-
         if (state)
         {
-            UpdateSlotsData();
+            if (plantsGridParent.gameObject.activeSelf) RefreshPlantSlots();
+            else RefreshArtefactSlots();
 
             collectionWindowPanel.gameObject.SetActive(true);
             fadeTween = collectionWindowPanel.DOFade(1f, fadeDuration).SetUpdate(true);
@@ -62,14 +128,37 @@ public class CollectionUI : MonoBehaviour
         }
     }
 
-    private void UpdateSlotsData()
+    // ── Slot refresh ──────────────────────────────────────────────────────────
+
+    private void RefreshPlantSlots()
     {
-        foreach (var slot in spawnedSlots)
+        int unlockedCount = 0;
+        foreach (var slot in plantSlots)
         {
             if (slot == null) continue;
-
-            bool isUnlocked = CollectionManager.Instance.IsPlantUnlocked(slot.CurrentPlantId);
+            bool isUnlocked = CollectionManager.Instance.IsPlantUnlocked(slot.CurrentItemId);
             slot.RefreshUI(isUnlocked);
+            if (isUnlocked) unlockedCount++;
         }
+        UpdateCounter(unlockedCount, plantSlots.Count);
+    }
+
+    private void RefreshArtefactSlots()
+    {
+        int unlockedCount = 0;
+        foreach (var slot in artefactSlots)
+        {
+            if (slot == null) continue;
+            bool isUnlocked = CollectionManager.Instance.IsArtefactUnlocked(slot.CurrentItemId);
+            slot.RefreshUI(isUnlocked);
+            if (isUnlocked) unlockedCount++;
+        }
+        UpdateCounter(unlockedCount, artefactSlots.Count);
+    }
+
+    private void UpdateCounter(int unlocked, int total)
+    {
+        if (counterText != null)
+            counterText.text = $"{unlocked}/{total}";
     }
 }
