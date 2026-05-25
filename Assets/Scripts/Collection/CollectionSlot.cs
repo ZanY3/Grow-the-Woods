@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class CollectionSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private AudioClip tooltipSound;
     [Header("UI Elements")]
     [SerializeField] private Image plantIcon;
     [SerializeField] private TMP_Text closedSlotQuestionTxt;
@@ -105,6 +106,9 @@ public class CollectionSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData _)
     {
         if (!isUnlocked || tooltipObject == null) return;
+
+        AudioManager.Instance.PlaySfxSound(tooltipSound, 0.125f, 0.95f, 1.05f);
+
         tooltipObject.gameObject.SetActive(true);
         tooltipObject.DOKill();
         tooltipObject.DOFade(1f, 0.2f).SetUpdate(true);

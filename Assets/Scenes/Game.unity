@@ -9925,6 +9925,8 @@ MonoBehaviour:
   slotPrefab: {fileID: 3097631542173133743, guid: 5261154c87a1a9a49aa09625a306b1e0, type: 3}
   plantsGridParent: {fileID: 990461536}
   artefactsGridParent: {fileID: 2101508291}
+  panelOpenSound: {fileID: 8300000, guid: f11049b0218062e429ccd7b697df29cd, type: 3}
+  clickSound: {fileID: 8300000, guid: 42cb61e3f2468a74f8afed0737fa08e7, type: 3}
 --- !u!1 &512925798
 GameObject:
   m_ObjectHideFlags: 0

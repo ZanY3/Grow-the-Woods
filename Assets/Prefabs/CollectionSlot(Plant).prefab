@@ -355,6 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f267a18d5da679648b69e40e14d64b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectionSlot
+  tooltipSound: {fileID: 8300000, guid: 3b58c5da6ba7fcb4394fbf4d3dd400ac, type: 3}
   plantIcon: {fileID: 7911276640179574650}
   closedSlotQuestionTxt: {fileID: 239237247299849362}
   tooltipObject: {fileID: 1707177887453988248}

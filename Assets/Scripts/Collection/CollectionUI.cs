@@ -23,6 +23,10 @@ public class CollectionUI : MonoBehaviour
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private Transform plantsGridParent;
     [SerializeField] private Transform artefactsGridParent;
+    
+    [Header("Sounds")]
+    [SerializeField] private AudioClip panelOpenSound;
+    [SerializeField] private AudioClip clickSound;
 
     private List<CollectionSlot> plantSlots = new List<CollectionSlot>();
     private List<CollectionSlot> artefactSlots = new List<CollectionSlot>();
@@ -85,6 +89,8 @@ public class CollectionUI : MonoBehaviour
 
     private void ShowTab(bool isPlants, bool animate = true)
     {
+        AudioManager.Instance.PlaySfxSound(panelOpenSound, 0.65f, 0.95f, 1.05f);
+
         plantsGridParent.gameObject.SetActive(isPlants);
         artefactsGridParent.gameObject.SetActive(!isPlants);
 
@@ -112,6 +118,7 @@ public class CollectionUI : MonoBehaviour
     public void ChangeBookState(bool state)
     {
         fadeTween?.Kill();
+        AudioManager.Instance.PlaySfxSound(clickSound, 0.15f, 0.9f, 1.1f);
         if (state)
         {
             if (plantsGridParent.gameObject.activeSelf) RefreshPlantSlots();

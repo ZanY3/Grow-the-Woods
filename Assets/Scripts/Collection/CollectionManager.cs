@@ -33,7 +33,7 @@ public class CollectionManager : MonoBehaviour
         UnlockPlant(1);
     }
 
-    // ── Plants ────────────────────────────────────────────────────────────────
+    //-----Plants-----------------------------------------------
 
     public void UnlockPlant(int id)
     {
@@ -45,7 +45,7 @@ public class CollectionManager : MonoBehaviour
     public bool IsPlantUnlocked(int id) => unlockedPlantsID.Contains(id);
     public List<PlantData> GetAllPlants() => allPlants;
 
-    // ── Artefacts ─────────────────────────────────────────────────────────────
+    //-------------Artefacts--------------------------------------------------
 
     public void UnlockArtefact(int runtimeId)
     {
@@ -63,7 +63,7 @@ public class CollectionManager : MonoBehaviour
         return index >= 0 ? index + 1 : -1;
     }
 
-    // ── Save & Load ───────────────────────────────────────────────────────────
+    //-------Save & Load---------------------------------------------------------------------
 
     public void SaveData()
     {
