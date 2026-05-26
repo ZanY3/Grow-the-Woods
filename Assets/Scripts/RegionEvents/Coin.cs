@@ -58,6 +58,7 @@ public class Coin : MonoBehaviour, IPointerClickHandler
         if (incomeText == null) return;
 
         incomeTextRect.position = transform.position;
+        incomeText.text = "+" + (1 + CoinFallManager.Instance.coinsAdder).ToString();
         incomeText.gameObject.SetActive(true);
 
         Color baseColor = incomeText.color;
