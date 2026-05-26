@@ -11,6 +11,10 @@ public class CollectionManager : MonoBehaviour
     [SerializeField] private List<int> unlockedPlantsID = new List<int>();
     [SerializeField] private List<int> unlockedArtefactsID = new List<int>();
 
+    [Header("Achievement")]
+    [SerializeField] private Sprite plantCollectionIcon;
+    [SerializeField] private Sprite artefactCollectionIcon;
+
     private const string PlantSaveKey = "UnlockedPlantsData";
     private const string ArtefactSaveKey = "UnlockedArtefactsData";
 
@@ -38,8 +42,15 @@ public class CollectionManager : MonoBehaviour
     public void UnlockPlant(int id)
     {
         if (id <= 0 || unlockedPlantsID.Contains(id)) return;
+
+        bool alreadyAllCollection = unlockedPlantsID.Count >= allPlants.Count;
         unlockedPlantsID.Add(id);
         SaveData();
+
+        if (!alreadyAllCollection && unlockedPlantsID.Count >= allPlants.Count)
+        {
+            AchievementManager.Instance.ShowAchievement("You have unlocked every artefact in the game!", artefactCollectionIcon);
+        }
     }
 
     public bool IsPlantUnlocked(int id) => unlockedPlantsID.Contains(id);
@@ -50,7 +61,16 @@ public class CollectionManager : MonoBehaviour
     public void UnlockArtefact(int runtimeId)
     {
         if (runtimeId <= 0 || unlockedArtefactsID.Contains(runtimeId)) return;
+
+        bool alreadyAllCollection = unlockedArtefactsID.Count >= allArtefacts.Count;
+
         unlockedArtefactsID.Add(runtimeId);
+
+        if (!alreadyAllCollection && unlockedArtefactsID.Count >= allArtefacts.Count)
+        {
+            AchievementManager.Instance.ShowAchievement("You have unlocked every plant in the game!", plantCollectionIcon);
+        }
+
         SaveData();
     }
 
