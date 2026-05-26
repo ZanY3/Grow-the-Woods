@@ -32,6 +32,7 @@ public class AchievementManager : MonoBehaviour
     {
         descriptionText.text = description;
         iconImage.sprite = icon;
+        panelCanvasGroup.blocksRaycasts = true;
 
         if (animSequence != null && animSequence.IsActive()) animSequence.Kill();
 
@@ -51,5 +52,7 @@ public class AchievementManager : MonoBehaviour
             .Append(panelRect.DOAnchorPosY(originalPosition.y + 300f, 0.4f).SetEase(Ease.InBack))
             .Join(panelRect.DOScale(0.8f, 0.4f).SetEase(Ease.InBack))
             .Join(panelCanvasGroup.DOFade(0f, 0.3f));
+
+        panelCanvasGroup.blocksRaycasts = false;
     }
 }

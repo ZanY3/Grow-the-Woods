@@ -7,6 +7,7 @@ public class ArtefactData : ScriptableObject
     [TextArea]
     public string description;
     public float value;
+    public int ID;
     public enum Type
     {
         CoinMultiplier,   // Умножает всё золото

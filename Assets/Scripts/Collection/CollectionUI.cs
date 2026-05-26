@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +24,7 @@ public class CollectionUI : MonoBehaviour
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private Transform plantsGridParent;
     [SerializeField] private Transform artefactsGridParent;
-    
+
     [Header("Sounds")]
     [SerializeField] private AudioClip panelOpenSound;
     [SerializeField] private AudioClip clickSound;
@@ -60,7 +61,10 @@ public class CollectionUI : MonoBehaviour
             var slot = SpawnSlot(plantsGridParent);
             if (slot == null) continue;
             plantSlots.Add(slot);
-            slot.Setup(plant, false);
+
+            // ИСПРАВЛЕНО: Сразу подгружаем реальный статус из сохранений менеджера
+            bool isUnlocked = CollectionManager.Instance.IsPlantUnlocked(plant.id);
+            slot.Setup(plant, isUnlocked);
         }
     }
 
@@ -75,7 +79,10 @@ public class CollectionUI : MonoBehaviour
             var slot = SpawnSlot(artefactsGridParent);
             if (slot == null) continue;
             artefactSlots.Add(slot);
-            slot.Setup(artefact, runtimeId, false);
+
+            // ИСПРАВЛЕНО: Сразу подгружаем статус и передаем верный runtimeId
+            bool isUnlocked = CollectionManager.Instance.IsArtefactUnlocked(runtimeId);
+            slot.Setup(artefact, runtimeId, isUnlocked);
         }
     }
 

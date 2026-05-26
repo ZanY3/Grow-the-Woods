@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -41,7 +40,7 @@ public class CollectionSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         currentArtefact = data;
         currentPlant = null;
-        CurrentItemId = runtimeId;
+        CurrentItemId = runtimeId; // ИСПРАВЛЕНО: ID теперь железно присваивается при старте
 
         if (plantIcon != null && data != null) plantIcon.sprite = data.icon;
         ResetTooltip();
@@ -56,7 +55,7 @@ public class CollectionSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         if (isUnlocked)
         {
-            closedSlotQuestionTxt.gameObject.SetActive(false);
+            if (closedSlotQuestionTxt != null) closedSlotQuestionTxt.gameObject.SetActive(false);
             if (plantIcon != null) plantIcon.color = Color.white;
 
             if (currentPlant != null) ApplyPlantTooltip(currentPlant);
@@ -64,15 +63,11 @@ public class CollectionSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
         else
         {
-            closedSlotQuestionTxt.gameObject.SetActive(true);
+            if (closedSlotQuestionTxt != null) closedSlotQuestionTxt.gameObject.SetActive(true);
             if (plantIcon != null) plantIcon.color = Color.black;
-            if (nameText != null) nameText.text = "";
-            if (descriptionText != null) descriptionText.text = "";
-            if (rarityText != null)
-            {
-                rarityText.text = "";
-                rarityText.gameObject.SetActive(true);
-            }
+            if (nameText != null) nameText.text = "???";
+            if (descriptionText != null) descriptionText.text = "???";
+            if (rarityText != null) rarityText.text = "";
         }
     }
 

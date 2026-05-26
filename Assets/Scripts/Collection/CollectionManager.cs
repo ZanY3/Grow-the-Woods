@@ -11,7 +11,7 @@ public class CollectionManager : MonoBehaviour
     [SerializeField] private List<int> unlockedPlantsID = new List<int>();
     [SerializeField] private List<int> unlockedArtefactsID = new List<int>();
 
-    [Header("Achievement")]
+    [Header("Achievement Icons")]
     [SerializeField] private Sprite plantCollectionIcon;
     [SerializeField] private Sprite artefactCollectionIcon;
 
@@ -32,11 +32,6 @@ public class CollectionManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        UnlockPlant(1);
-    }
-
     //-----Plants-----------------------------------------------
 
     public void UnlockPlant(int id)
@@ -47,9 +42,13 @@ public class CollectionManager : MonoBehaviour
         unlockedPlantsID.Add(id);
         SaveData();
 
+        // ИСПРАВЛЕНО: Вызываем ПЛАНТ ачивку для растений
         if (!alreadyAllCollection && unlockedPlantsID.Count >= allPlants.Count)
         {
-            AchievementManager.Instance.ShowAchievement("You have unlocked every artefact in the game!", artefactCollectionIcon);
+            AchievementManager.Instance.ShowAchievement(
+                "You have unlocked every plant in the game!",
+                plantCollectionIcon
+            );
         }
     }
 
@@ -63,15 +62,17 @@ public class CollectionManager : MonoBehaviour
         if (runtimeId <= 0 || unlockedArtefactsID.Contains(runtimeId)) return;
 
         bool alreadyAllCollection = unlockedArtefactsID.Count >= allArtefacts.Count;
-
         unlockedArtefactsID.Add(runtimeId);
+        SaveData();
 
+        // ИСПРАВЛЕНО: Вызываем АРТЕФАКТ ачивку для артефактов
         if (!alreadyAllCollection && unlockedArtefactsID.Count >= allArtefacts.Count)
         {
-            AchievementManager.Instance.ShowAchievement("You have unlocked every plant in the game!", plantCollectionIcon);
+            AchievementManager.Instance.ShowAchievement(
+                "You have unlocked every artefact in the game!",
+                artefactCollectionIcon
+            );
         }
-
-        SaveData();
     }
 
     public bool IsArtefactUnlocked(int runtimeId) => unlockedArtefactsID.Contains(runtimeId);

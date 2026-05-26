@@ -50,6 +50,7 @@ public class ArtefactPackManager : ItemPickerBase
     protected override void OnConfirmed(int index)
     {
         artefactsManager.AddArtefact(selectedArtifact);
+        CollectionManager.Instance.UnlockArtefact(selectedArtifact.ID);
     }
 
     private List<ArtefactData> GenerateArtifactPack()
