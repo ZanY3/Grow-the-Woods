@@ -28,24 +28,35 @@ public class ArtefactSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [HideInInspector] public ArtefactData equipedData;
     private bool canShowTooltip = true;
 
+    // Cached references to avoid repeated singleton lookups
+    private AudioManager _audioManager;
+    private StatsManager _statsManager;
+    // Cached gameObject reference from iconImg to avoid repeated property access
+    private GameObject _iconImgGO;
+
+    private void Awake()
+    {
+        _audioManager = AudioManager.Instance;
+        _statsManager = StatsManager.Instance;
+        _iconImgGO = iconImg.gameObject;
+    }
+
     public void ChangeConfirmPanelState(bool state)
     {
-        AudioManager.Instance.PlaySfxSound(clickSound, 0.65f, 0.9f, 1.1f);
-        // Останавливаем старые анимации перед началом новых
+        _audioManager.PlaySfxSound(clickSound, 0.65f, 0.9f, 1.1f);
         confirmCanvasGroup.DOKill();
         panelRect.DOKill();
 
         if (state)
         {
             canShowTooltip = false;
-            artefactTooltip.SetActive(false);
+            // Only deactivate tooltip if it's actually active
+            if (artefactTooltip.activeSelf) artefactTooltip.SetActive(false);
             deleteConfirmPanel.SetActive(true);
 
-            // Начальное состояние для появления
             confirmCanvasGroup.alpha = 0;
             panelRect.localScale = Vector3.one * 0.7f;
 
-            // Анимация появления
             confirmCanvasGroup.DOFade(1, 0.3f).SetUpdate(true);
             panelRect.DOScale(1, 0.3f)
                 .SetEase(Ease.OutBack)
@@ -53,7 +64,6 @@ public class ArtefactSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
         else
         {
-            // Анимация исчезновения
             canShowTooltip = true;
             confirmCanvasGroup.DOFade(0, 0.2f).SetUpdate(true);
             panelRect.DOScale(0.8f, 0.2f).SetUpdate(true).OnComplete(() => {
@@ -66,21 +76,23 @@ public class ArtefactSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (equipedData != null)
         {
-            StatsManager.Instance.RemoveArtefact(equipedData);
+            _statsManager.RemoveArtefact(equipedData);
             artefactsManager.OnArtefactRemoved(equipedData);
         }
 
         ChangeConfirmPanelState(false);
 
-        // Очищаем слот
-        AudioManager.Instance.PlaySfxSound(deleteSound, 1f, 0.9f, 1.1f);
-        artefactTooltip.SetActive(false);
-        deleteBtn.SetActive(false);
+        _audioManager.PlaySfxSound(deleteSound, 1f, 0.9f, 1.1f);
+
+        // Only call SetActive if the state needs to change
+        if (artefactTooltip.activeSelf) artefactTooltip.SetActive(false);
+        if (deleteBtn.activeSelf) deleteBtn.SetActive(false);
+        if (_iconImgGO.activeSelf) _iconImgGO.SetActive(false);
+
         isOccupied = false;
         equipedData = null;
-        iconImg.gameObject.SetActive(false);
-        nameTxt.text = "";
-        descriptionTxt.text = "";
+        nameTxt.text = string.Empty;
+        descriptionTxt.text = string.Empty;
     }
 
     public void SetArtefact(ArtefactData artefact)
@@ -88,10 +100,11 @@ public class ArtefactSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         isOccupied = true;
         equipedData = artefact;
         iconImg.sprite = artefact.icon;
-        iconImg.gameObject.SetActive(true);
+        // Only activate if not already active
+        if (!_iconImgGO.activeSelf) _iconImgGO.SetActive(true);
         nameTxt.text = artefact.name;
         descriptionTxt.text = artefact.description;
-        deleteBtn.SetActive(true);
+        if (!deleteBtn.activeSelf) deleteBtn.SetActive(true);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

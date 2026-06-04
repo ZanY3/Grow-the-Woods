@@ -31,6 +31,13 @@ public class CollectionManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        if(!unlockedPlantsID.Contains(1))
+        {
+            UnlockPlant(1);
+        }
+    }
 
     //-----Plants-----------------------------------------------
 
