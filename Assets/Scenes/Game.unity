@@ -8189,11 +8189,11 @@ MonoBehaviour:
   coinFallStartClue: {fileID: 1771664005}
   clueFadeTime: 0.5
   clueDisplayTime: 1.5
-  spawnRate: 0.5
+  spawnRate: 0.8
   duration: 10
   chanceToStart: 50
-  checkInterval: 25
-  fallDuration: 3
+  checkInterval: 30
+  fallDuration: 4
   canLaunchEvent: 1
   coinsAdder: 0
 --- !u!1 &469479587
