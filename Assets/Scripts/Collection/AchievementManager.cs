@@ -14,6 +14,7 @@ public class AchievementManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI descriptionText;
 
     [Space]
+    [SerializeField] private float showTime;
     [SerializeField] private AudioClip achievementSound;
 
     private Sequence animSequence;
@@ -27,8 +28,11 @@ public class AchievementManager : MonoBehaviour
         originalPosition = panelRect.anchoredPosition;
         panelCanvasGroup.alpha = 0;
     }
-
-    public void ShowAchievement(string description, Sprite icon )
+    private void Start()
+    {
+        ShowAchievement("test achievement", null);
+    }
+    public void ShowAchievement(string description, Sprite icon)
     {
         descriptionText.text = description;
         iconImage.sprite = icon;
@@ -47,7 +51,7 @@ public class AchievementManager : MonoBehaviour
             .Join(panelRect.DOScale(0.8f, 0.5f).From().SetEase(Ease.OutBack))
             .Join(panelCanvasGroup.DOFade(0f, 0.3f).From())
 
-            .AppendInterval(2.5f)
+            .AppendInterval(showTime)
 
             .Append(panelRect.DOAnchorPosY(originalPosition.y + 300f, 0.4f).SetEase(Ease.InBack))
             .Join(panelRect.DOScale(0.8f, 0.4f).SetEase(Ease.InBack))
