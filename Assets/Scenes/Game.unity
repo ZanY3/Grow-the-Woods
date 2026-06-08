@@ -17431,7 +17431,7 @@ MonoBehaviour:
   endingMusic: {fileID: 8300000, guid: c9e1a7c3b5709834198ed626ed58f979, type: 3}
   endCongratsSound: {fileID: 8300000, guid: 0945743e5f07b97468504ef3dfc5846f, type: 3}
   totalCells: 48
-  cellsForNextRegion: 30
+  cellsForNextRegion: 2
   prestigeManager: {fileID: 1230780012}
   nextRegionBtn: {fileID: 544810888}
 --- !u!1 &881044699

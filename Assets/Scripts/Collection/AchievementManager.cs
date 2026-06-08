@@ -28,10 +28,12 @@ public class AchievementManager : MonoBehaviour
         originalPosition = panelRect.anchoredPosition;
         panelCanvasGroup.alpha = 0;
     }
+    /*
     private void Start()
     {
         ShowAchievement("test achievement", null);
     }
+    */
     public void ShowAchievement(string description, Sprite icon)
     {
         descriptionText.text = description;
