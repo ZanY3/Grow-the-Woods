@@ -34,7 +34,7 @@ public class ArtefactSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // Cached gameObject reference from iconImg to avoid repeated property access
     private GameObject _iconImgGO;
 
-    private void Awake()
+    private void Start()
     {
         _audioManager = AudioManager.Instance;
         _statsManager = StatsManager.Instance;
