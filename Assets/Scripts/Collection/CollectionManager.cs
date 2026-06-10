@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class CollectionManager : MonoBehaviour
 {
@@ -49,7 +50,6 @@ public class CollectionManager : MonoBehaviour
         unlockedPlantsID.Add(id);
         SaveData();
 
-        // ИСПРАВЛЕНО: Вызываем ПЛАНТ ачивку для растений
         if (!alreadyAllCollection && unlockedPlantsID.Count >= allPlants.Count)
         {
             AchievementManager.Instance.ShowAchievement(
@@ -72,7 +72,6 @@ public class CollectionManager : MonoBehaviour
         unlockedArtefactsID.Add(runtimeId);
         SaveData();
 
-        // ИСПРАВЛЕНО: Вызываем АРТЕФАКТ ачивку для артефактов
         if (!alreadyAllCollection && unlockedArtefactsID.Count >= allArtefacts.Count)
         {
             AchievementManager.Instance.ShowAchievement(
@@ -123,6 +122,20 @@ public class CollectionManager : MonoBehaviour
             if (int.TryParse(s, out int id))
                 target.Add(id);
         Debug.Log($"[SaveSystem] Loaded {target.Count} {label}.");
+    }
+
+    [ContextMenu("Test Achievement")]
+    public void TestAchievement()
+    {
+        StartCoroutine(TestAchievementSequence());
+    }
+
+    private IEnumerator TestAchievementSequence()
+    {
+        yield return new WaitForSeconds(3f);
+        /*
+        AchievementManager.Instance.ShowAchievement("just for test", null);
+        */
     }
 
     [ContextMenu("Reset Progress")]

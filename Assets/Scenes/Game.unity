@@ -28927,8 +28927,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -93.2, y: -9.2}
-  m_SizeDelta: {x: 75, y: 75}
+  m_AnchoredPosition: {x: -104.2, y: -7.2}
+  m_SizeDelta: {x: 70, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1456831549
 MonoBehaviour:
@@ -30369,7 +30369,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New achievment!
+  m_text: New <color=#FFDE14>achievement</color>!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e33b08c9d2f6e04aacbbf439ef8772e, type: 2}
   m_sharedMaterial: {fileID: 3543146760202126426, guid: 2e33b08c9d2f6e04aacbbf439ef8772e, type: 2}
@@ -30378,8 +30378,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279557887
-  m_fontColor: {r: 1, g: 0.86891985, b: 0.08018869, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -30435,7 +30435,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -115.25426, y: -37.062004, z: -35.109, w: 0}
+  m_margin: {x: -115.25426, y: -37.52264, z: -35.109, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -38887,7 +38887,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 20.747028, y: -0.9431267, z: -73.644035, w: -10.593975}
+  m_margin: {x: 13.1343155, y: -0.9431267, z: -24.11451, w: -10.593975}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
