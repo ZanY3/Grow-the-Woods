@@ -9,7 +9,7 @@ public class AchievementManager : MonoBehaviour
 
     [Header("UI Компоненты")]
     [SerializeField] private RectTransform panelRect;
-    [SerializeField] private CanvasGroup panelCanvasGroup; // Добавь этот компонент на панель для альфы
+    [SerializeField] private CanvasGroup panelCanvasGroup;
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI descriptionText;
 

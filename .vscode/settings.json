@@ -60,13 +60,13 @@
         "*.asset": "yaml",
         "*.meta": "yaml",
         "*.prefab": "yaml",
-        "*.unity": "yaml",
+        "*.unity": "yaml"
     },
     "explorer.fileNesting.enabled": false,
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Grow-the-Woods.slnx",
+    "dotnet.defaultSolution": "My-First-Jam(Game).slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }
