@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Four-Leaf Clover
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
   icon: {fileID: -5039842846620040014, guid: c261f74231ea20e48a4cdfdd2cd86011, type: 3}
-  description: '<color=#00FFFF>+20% chance</color>
+  description: '<color=#00FFFF>+25% chance</color>
 
     for packs'
-  value: 20
+  value: 25
   ID: 3
   type: 3

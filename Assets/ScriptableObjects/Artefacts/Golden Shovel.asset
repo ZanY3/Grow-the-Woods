@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Golden Shovel
   m_EditorClassIdentifier: Assembly-CSharp::ArtefactData
   icon: {fileID: 3242364962376589122, guid: f74a1bf3f58ad484a942f05f0d46fe5f, type: 3}
-  description: '<color=yellow>x2 coins</color>
+  description: '<color=yellow>x2.5 coins</color>
 
     from harvesting.'
-  value: 1
+  value: 1.5
   ID: 4
   type: 0

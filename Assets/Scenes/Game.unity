@@ -917,7 +917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -1688,7 +1688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: isBuyied
@@ -2593,7 +2593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -2778,7 +2778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 75
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -4094,7 +4094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -4279,7 +4279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -4555,7 +4555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -5064,7 +5064,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -6113,7 +6113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: isBuyied
@@ -6302,7 +6302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -6694,7 +6694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -6879,7 +6879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -8604,7 +8604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -9552,7 +9552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -11071,7 +11071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: isBuyied
@@ -12815,7 +12815,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -13130,7 +13130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -14139,7 +14139,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -15353,7 +15353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -16122,7 +16122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 75
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -16581,7 +16581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 75
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -16963,7 +16963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: isBuyied
@@ -17885,7 +17885,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: isBuyied
@@ -18170,7 +18170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -18359,7 +18359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -18540,7 +18540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -19180,7 +19180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -20292,7 +20292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -21405,7 +21405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -21590,7 +21590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: isBuyied
@@ -21783,7 +21783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -22396,7 +22396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -22656,7 +22656,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -23974,7 +23974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 75
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -24290,7 +24290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -25576,7 +25576,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1230780012}
         m_TargetAssemblyTypeName: PrestigeManager, Assembly-CSharp
         m_MethodName: CloseNextRegionPanel
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -26261,7 +26261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: isBuyied
@@ -26465,7 +26465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -27657,7 +27657,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -28149,7 +28149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -29235,7 +29235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -30881,7 +30881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -31484,7 +31484,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: isBuyied
@@ -33407,7 +33407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -34518,7 +34518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -34963,7 +34963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -35360,7 +35360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -35998,7 +35998,7 @@ PrefabInstance:
       objectReference: {fileID: 1029673085}
     - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: priceMultiplier
-      value: 2
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6447012649197593380, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: m_Name
@@ -37769,7 +37769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 185
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
@@ -37954,7 +37954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: price
-      value: 100
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 6493921134460284116, guid: 93145e8c022df0d4fa0c5204685e798f, type: 3}
       propertyPath: closedCellSprite
