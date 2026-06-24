@@ -30,11 +30,21 @@ public class PrestigeManager : MonoBehaviour
 
     [HideInInspector] public int currentRegion = 0;
     [HideInInspector] public int maxRegion = 1;
+    public static PrestigeManager Instance { get; private set; }
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     public void UpdateRegion()
     {
         nextRegionBtn.SetActive(false);
-
+        AudioManager.Instance.PlayNextTrack();
         if (currentRegion < maxRegion)
         {
             currentRegion++;

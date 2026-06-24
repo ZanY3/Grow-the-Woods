@@ -11,7 +11,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
 
     [Header("Music Playlist")]
-    [SerializeField] private AudioClip[] musicPlaylist;
+    [SerializeField] private AudioClip[] music1Playlist;
+    [SerializeField] private AudioClip[] music2Playlist;
 
     [HideInInspector] public bool canPlaySounds = true;
 
@@ -121,8 +122,17 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void PlayNextTrack()
+    public void PlayNextTrack()
     {
+        AudioClip[] musicPlaylist = null;
+
+        if(PrestigeManager.Instance.currentRegion == 0)
+            musicPlaylist = music1Playlist;
+        else if(PrestigeManager.Instance.currentRegion == 1)
+            musicPlaylist = music2Playlist;
+        else
+            musicPlaylist = music1Playlist;
+
         if (musicPlaylist == null || musicPlaylist.Length == 0) return;
 
         if (playedIndexes.Count >= musicPlaylist.Length)

@@ -15081,10 +15081,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   musicSource: {fileID: 785390902}
   sfxSource: {fileID: 1962881066}
-  musicPlaylist:
+  music1Playlist:
   - {fileID: 8300000, guid: 2895883281ddf6e48ae3a5dfd569135b, type: 3}
   - {fileID: 8300000, guid: 4653b4aac91a30643a6ec588869517d1, type: 3}
   - {fileID: 8300000, guid: 6e0df7e559003064f8889e10943dbc2a, type: 3}
+  music2Playlist:
+  - {fileID: 8300000, guid: 2895883281ddf6e48ae3a5dfd569135b, type: 3}
   canPlaySounds: 1
 --- !u!1 &785390900
 GameObject:
