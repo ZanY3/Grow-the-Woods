@@ -20,6 +20,8 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     [SerializeField] private ShopManager shopManager;
     [SerializeField] private float priceMultiplier;
 
+    [SerializeField] private GameObject unavailableTxtObj;
+
     [Header("Feedback")]
     [SerializeField] private Color notEnoughMoneyColor = Color.red;
     [SerializeField] private AudioClip errorSound;
@@ -34,15 +36,17 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     // discount is only applied on top when displaying or buying
     private int currentBasePrice;
 
+    private bool isActive = true;
+
     private Vector3 defaultScale;
     private Vector3 shimmerDefaultScale;
     private Vector3 defaultPosition;
     private Color defaultPriceColor;
-
     public int StartPrice => startPrice;
     public int CurrentBasePrice => currentBasePrice;
 
-    // Price shown/used for buying = currentBasePrice with discount applied
+    [HideInInspector] public int purchasedTimes = 0;
+
     public int Price => Mathf.Max(
         Mathf.RoundToInt(currentBasePrice * (1f - Mathf.Clamp(StatsManager.Instance.shopDiscount, 0f, 0.9f))),
         1
@@ -62,7 +66,13 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
         defaultPriceColor = priceTxt.color;
         RefreshPriceDisplay();
     }
-
+    void Update()
+    {
+        if(offerType == OfferType.ArtefactPack && purchasedTimes >= 3)
+        {
+            SetUnavailable(true);
+        }
+    }
     // Called after each purchase to compound the base price
     public void CompoundPrice()
     {
@@ -88,6 +98,12 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     {
         currentBasePrice = newPrice;
         RefreshPriceDisplay();
+    }
+    public void SetUnavailable(bool unavailable)
+    {
+        isActive = !unavailable;
+        unavailableTxtObj.SetActive(unavailable);
+        priceTxt.gameObject.SetActive(!unavailable);
     }
 
     public void ResetScale()
@@ -138,6 +154,8 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if(!isActive) return;
+        
         AudioManager.Instance.PlaySfxSound(offerChooseSound, 0.15f, 0.9f, 1.1f);
 
         if (shopManager.selectedOffer == this)

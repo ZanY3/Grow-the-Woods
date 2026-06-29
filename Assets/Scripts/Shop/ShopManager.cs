@@ -137,6 +137,7 @@ public class ShopManager : MonoBehaviour
             // Compound the base price — discount is applied separately inside ShopOffer.Price
             selectedOffer.CompoundPrice();
         }
+        selectedOffer.purchasedTimes++;
     }
 
     // Call this from ArtefactsManager after equipping or removing a discount artefact
