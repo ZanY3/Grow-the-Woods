@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Grow-the-Woods.slnx",
+    "dotnet.defaultSolution": "My-First-Jam(Game).slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }

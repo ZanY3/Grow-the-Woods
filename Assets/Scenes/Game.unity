@@ -15086,7 +15086,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4653b4aac91a30643a6ec588869517d1, type: 3}
   - {fileID: 8300000, guid: 6e0df7e559003064f8889e10943dbc2a, type: 3}
   music2Playlist:
-  - {fileID: 8300000, guid: 2895883281ddf6e48ae3a5dfd569135b, type: 3}
+  - {fileID: 8300000, guid: cdfe619d90369ff428ed80c3712b0c2c, type: 3}
+  - {fileID: 8300000, guid: 796ad4d0e1669b2498a9ba839cf3fbfc, type: 3}
   canPlaySounds: 1
 --- !u!1 &785390900
 GameObject:
@@ -17432,7 +17433,7 @@ MonoBehaviour:
   endingMusic: {fileID: 8300000, guid: c9e1a7c3b5709834198ed626ed58f979, type: 3}
   endCongratsSound: {fileID: 8300000, guid: 0945743e5f07b97468504ef3dfc5846f, type: 3}
   totalCells: 48
-  cellsForNextRegion: 2
+  cellsForNextRegion: 30
   prestigeManager: {fileID: 1230780012}
   nextRegionBtn: {fileID: 544810888}
 --- !u!1 &881044699
@@ -36000,7 +36001,7 @@ PrefabInstance:
       objectReference: {fileID: 1029673085}
     - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: priceMultiplier
-      value: 1.75
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6447012649197593380, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: m_Name

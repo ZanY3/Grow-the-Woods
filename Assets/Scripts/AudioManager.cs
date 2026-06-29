@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
     [HideInInspector] public bool canPlaySounds = true;
 
     private List<int> playedIndexes = new List<int>();
+    private AudioClip[] lastPlaylist;
     private float defaultMusicVolume;
     private float defaultSfxVolume;
     private bool lastSoundState;
@@ -126,14 +127,23 @@ public class AudioManager : MonoBehaviour
     {
         AudioClip[] musicPlaylist = null;
 
-        if(PrestigeManager.Instance.currentRegion == 0)
+        if (PrestigeManager.Instance.currentRegion == 0)
             musicPlaylist = music1Playlist;
-        else if(PrestigeManager.Instance.currentRegion == 1)
+        else if (PrestigeManager.Instance.currentRegion == 1)
             musicPlaylist = music2Playlist;
         else
             musicPlaylist = music1Playlist;
 
         if (musicPlaylist == null || musicPlaylist.Length == 0) return;
+
+        // Reset play history whenever we switch to a different playlist
+        // (fixes region 2 OST not playing, since old indexes from the
+        // previous playlist were blocking valid picks in the new one)
+        if (musicPlaylist != lastPlaylist)
+        {
+            playedIndexes.Clear();
+            lastPlaylist = musicPlaylist;
+        }
 
         if (playedIndexes.Count >= musicPlaylist.Length)
             playedIndexes.Clear();

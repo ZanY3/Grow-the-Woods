@@ -44,10 +44,11 @@ public class PrestigeManager : MonoBehaviour
     public void UpdateRegion()
     {
         nextRegionBtn.SetActive(false);
-        AudioManager.Instance.PlayNextTrack();
         if (currentRegion < maxRegion)
         {
             currentRegion++;
+
+            AudioManager.Instance.PlayNextTrack(); // moved here: must run AFTER currentRegion++ so it picks the new region's playlist
 
             CoinManager.Instance.ResetCoins();
             shopManager.ReturnPrices();
@@ -72,6 +73,7 @@ public class PrestigeManager : MonoBehaviour
         }
         else
         {
+            AudioManager.Instance.PlayNextTrack();
             CloseNextRegionPanel();
             EndingManager.Instance.PlayEnding();
             Debug.Log("THE END!");
