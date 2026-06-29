@@ -52,6 +52,7 @@ public class PrestigeManager : MonoBehaviour
 
             CoinManager.Instance.ResetCoins();
             shopManager.ReturnPrices();
+            shopManager.SetRegionForOffers(currentRegion); // apply this region's price multiplier
             EndingManager.Instance.ResetProgress();
 
             for (int i = 0; i < objectsForRegions.Length; i++)

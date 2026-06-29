@@ -18,7 +18,13 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text priceTxt;
     [SerializeField] private RectTransform shimmer;
     [SerializeField] private ShopManager shopManager;
+
+    // Default multiplier (used for region 0, or as fallback if no region override is set)
     [SerializeField] private float priceMultiplier;
+
+    // Optional per-region overrides. Index = region index (0, 1, 2...).
+    // If a region has no entry (out of range, or value <= 0), priceMultiplier is used instead.
+    [SerializeField] private float[] regionPriceMultipliers;
 
     [SerializeField] private GameObject unavailableTxtObj;
 
@@ -32,9 +38,12 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     // startPrice never changes — it's the original serialized value
     private int startPrice;
 
-    // currentBasePrice compounds with priceMultiplier each purchase, NO discount applied
+    // currentBasePrice compounds with the active multiplier each purchase, NO discount applied
     // discount is only applied on top when displaying or buying
     private int currentBasePrice;
+
+    // The multiplier currently in effect (set via SetRegionMultiplier, defaults to priceMultiplier)
+    private float activeMultiplier;
 
     private bool isActive = true;
 
@@ -56,6 +65,7 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     {
         startPrice = offerPrice;
         currentBasePrice = offerPrice;
+        activeMultiplier = priceMultiplier;
 
         defaultScale = iconObject.transform.localScale;
         defaultPosition = iconObject.transform.localPosition;
@@ -68,15 +78,25 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     }
     void Update()
     {
-        if(offerType == OfferType.ArtefactPack && purchasedTimes >= 3)
+        if(offerType == OfferType.ArtefactPack && purchasedTimes >= 3 && PrestigeManager.Instance.currentRegion == 0)
         {
             SetUnavailable(true);
         }
     }
+
+    // Called by ShopManager when the region changes, so CompoundPrice() uses the right multiplier
+    public void SetRegionMultiplier(int region)
+    {
+        if (regionPriceMultipliers != null && region >= 0 && region < regionPriceMultipliers.Length && regionPriceMultipliers[region] > 0f)
+            activeMultiplier = regionPriceMultipliers[region];
+        else
+            activeMultiplier = priceMultiplier;
+    }
+
     // Called after each purchase to compound the base price
     public void CompoundPrice()
     {
-        currentBasePrice = Mathf.RoundToInt(currentBasePrice * priceMultiplier);
+        currentBasePrice = Mathf.RoundToInt(currentBasePrice * activeMultiplier);
         RefreshPriceDisplay();
     }
 

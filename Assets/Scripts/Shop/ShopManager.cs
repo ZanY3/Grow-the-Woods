@@ -21,8 +21,6 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private AudioClip warningSound;
 
     [Space]
-    [Range(1, 2)][SerializeField] private float priceMultiplier;
-    [Space]
     [SerializeField] private ArtefactsManager artefactsManager;
 
     [HideInInspector] public ShopOffer.OfferType selectedOfferType;
@@ -145,6 +143,17 @@ public class ShopManager : MonoBehaviour
     {
         for (int i = 0; i < offers.Length; i++)
             offers[i].RefreshPriceDisplay();
+    }
+    public void ResetPurchaseCounts()
+    {
+        for (int i = 0; i < offers.Length; i++)
+            offers[i].purchasedTimes = 0;
+    }
+
+    public void SetRegionForOffers(int region)
+    {
+        for (int i = 0; i < offers.Length; i++)
+            offers[i].SetRegionMultiplier(region);
     }
 
     private void PlayNoSpaceFeedback()
