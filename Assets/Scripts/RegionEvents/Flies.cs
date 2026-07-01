@@ -42,6 +42,7 @@ public class Flies : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, 
         AudioManager.Instance.PlaySfxSound(fliesFailSound, 0.65f, 0.9f, 1.1f);
         Cell cell = plant.GetComponentInParent<Cell>();
         cell.isOccupied = false;
+        EndingManager.Instance.UpdateProgress(-1);
         plant.GetComponent<Plant>().fliesAlert.SetActive(false);
         Debug.Log("FLIES HAS DESTROYED PLANT");
         Destroy(plant);

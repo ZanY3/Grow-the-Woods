@@ -147,7 +147,10 @@ public class ShopManager : MonoBehaviour
     public void ResetPurchaseCounts()
     {
         for (int i = 0; i < offers.Length; i++)
+        {
             offers[i].purchasedTimes = 0;
+            offers[i].SetUnavailable(false);
+        }
     }
 
     public void SetRegionForOffers(int region)

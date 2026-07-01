@@ -48,11 +48,11 @@ public class PrestigeManager : MonoBehaviour
         {
             currentRegion++;
 
-            AudioManager.Instance.PlayNextTrack(); // moved here: must run AFTER currentRegion++ so it picks the new region's playlist
+            AudioManager.Instance.PlayNextTrack();
 
             CoinManager.Instance.ResetCoins();
             shopManager.ReturnPrices();
-            shopManager.SetRegionForOffers(currentRegion); // apply this region's price multiplier
+            shopManager.SetRegionForOffers(currentRegion);
             EndingManager.Instance.ResetProgress();
 
             for (int i = 0; i < objectsForRegions.Length; i++)

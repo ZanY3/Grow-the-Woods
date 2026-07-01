@@ -18478,7 +18478,7 @@ MonoBehaviour:
   endingMusic: {fileID: 8300000, guid: c9e1a7c3b5709834198ed626ed58f979, type: 3}
   endCongratsSound: {fileID: 8300000, guid: 0945743e5f07b97468504ef3dfc5846f, type: 3}
   totalCells: 48
-  cellsForNextRegion: 2
+  cellsForNextRegion: 25
   prestigeManager: {fileID: 1230780012}
   nextRegionBtn: {fileID: 544810888}
 --- !u!1 &881044699
@@ -37455,7 +37455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: 'regionPriceMultipliers.Array.data[1]'
-      value: 1.8
+      value: 1.9
       objectReference: {fileID: 0}
     - target: {fileID: 6447012649197593380, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: m_Name
@@ -40654,7 +40654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6062040491247812182, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: 'regionPriceMultipliers.Array.data[1]'
-      value: 1.15
+      value: 1.19
       objectReference: {fileID: 0}
     - target: {fileID: 6447012649197593380, guid: bf99acbbe43695741a5cfa7177f42eed, type: 3}
       propertyPath: m_Name
