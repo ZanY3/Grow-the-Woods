@@ -76,11 +76,16 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
         defaultPriceColor = priceTxt.color;
         RefreshPriceDisplay();
     }
+
     void Update()
     {
-        if(offerType == OfferType.ArtefactPack && purchasedTimes >= 3 && PrestigeManager.Instance.currentRegion == 0)
+        // Only the artefact pack has a region-0 purchase cap. Recompute both ways every
+        // frame so it re-enables automatically once currentRegion advances past 0.
+        if (offerType == OfferType.ArtefactPack)
         {
-            SetUnavailable(true);
+            bool shouldBeUnavailable = purchasedTimes >= 3 && PrestigeManager.Instance.currentRegion == 0;
+            if (shouldBeUnavailable != !isActive)
+                SetUnavailable(shouldBeUnavailable);
         }
     }
 
@@ -119,6 +124,7 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
         currentBasePrice = newPrice;
         RefreshPriceDisplay();
     }
+
     public void SetUnavailable(bool unavailable)
     {
         isActive = !unavailable;

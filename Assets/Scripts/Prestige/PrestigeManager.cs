@@ -53,6 +53,7 @@ public class PrestigeManager : MonoBehaviour
             CoinManager.Instance.ResetCoins();
             shopManager.ReturnPrices();
             shopManager.SetRegionForOffers(currentRegion);
+            shopManager.ResetPurchaseCounts();
             EndingManager.Instance.ResetProgress();
 
             for (int i = 0; i < objectsForRegions.Length; i++)
