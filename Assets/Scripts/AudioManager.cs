@@ -47,7 +47,14 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if (!overrideMusic && isTrackPlaying && !musicSource.isPlaying && !isMusicPaused && !musicFadeTween.IsActive())
+        // musicSource.time <= 0.01f distinguishes a track that actually finished
+        // (Unity resets time to 0 when a non-looping clip ends) from one that's
+        // merely paused (time keeps its position). Without this, if isPlaying
+        // hasn't flipped back to true yet on the same frame focus is regained,
+        // this check misfires and jumps to a new track instead of resuming.
+        bool trackNaturallyFinished = !musicSource.isPlaying && musicSource.time <= 0.01f;
+
+        if (!overrideMusic && isTrackPlaying && trackNaturallyFinished && !isMusicPaused && !musicFadeTween.IsActive())
         {
             PlayNextTrack();
         }
@@ -73,19 +80,11 @@ public class AudioManager : MonoBehaviour
     {
         if (!hasFocus)
         {
-            if (musicSource.isPlaying)
-            {
-                musicSource.Pause();
-                isMusicPaused = true;
-            }
+            PauseMusicForBackground();
         }
         else
         {
-            if (isMusicPaused)
-            {
-                musicSource.UnPause();
-                isMusicPaused = false;
-            }
+            ResumeMusicFromBackground();
         }
     }
 
@@ -93,20 +92,35 @@ public class AudioManager : MonoBehaviour
     {
         if (isPaused)
         {
-            if (musicSource.isPlaying)
-            {
-                musicSource.Pause();
-                isMusicPaused = true;
-            }
+            PauseMusicForBackground();
         }
         else
         {
-            if (isMusicPaused)
-            {
-                musicSource.UnPause();
-                isMusicPaused = false;
-            }
+            ResumeMusicFromBackground();
         }
+    }
+
+    private void PauseMusicForBackground()
+    {
+        if (musicSource.isPlaying)
+        {
+            musicSource.Pause();
+            isMusicPaused = true;
+        }
+        // Also pause the fade tween itself so it can't keep ticking (and
+        // potentially finish + fire onComplete, e.g. swap clips) while the
+        // app is in the background and the audio is paused.
+        musicFadeTween?.Pause();
+    }
+
+    private void ResumeMusicFromBackground()
+    {
+        if (isMusicPaused)
+        {
+            musicSource.UnPause();
+            isMusicPaused = false;
+        }
+        musicFadeTween?.Play();
     }
 
     private void ApplySoundState()
