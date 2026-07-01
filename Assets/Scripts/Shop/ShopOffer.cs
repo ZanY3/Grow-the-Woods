@@ -84,8 +84,6 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
         if (offerType == OfferType.ArtefactPack)
         {
             bool shouldBeUnavailable = purchasedTimes >= 3 && PrestigeManager.Instance.currentRegion == 0;
-            if (shouldBeUnavailable != !isActive)
-                SetUnavailable(shouldBeUnavailable);
         }
     }
 
@@ -123,13 +121,6 @@ public class ShopOffer : MonoBehaviour, IPointerClickHandler
     {
         currentBasePrice = newPrice;
         RefreshPriceDisplay();
-    }
-
-    public void SetUnavailable(bool unavailable)
-    {
-        isActive = !unavailable;
-        unavailableTxtObj.SetActive(unavailable);
-        priceTxt.gameObject.SetActive(!unavailable);
     }
 
     public void ResetScale()

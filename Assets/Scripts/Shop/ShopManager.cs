@@ -149,7 +149,6 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < offers.Length; i++)
         {
             offers[i].purchasedTimes = 0;
-            offers[i].SetUnavailable(false);
         }
     }
 

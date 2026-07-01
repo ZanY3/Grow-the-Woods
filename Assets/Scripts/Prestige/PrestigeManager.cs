@@ -104,23 +104,9 @@ public class PrestigeManager : MonoBehaviour
         announceSeq.OnComplete(() =>
         {
             nextRegionPanel.SetActive(false);
-            OpenArtefactPanelWithAnim(); // Вызываем новую анимацию
         });
     }
 
-    private void OpenArtefactPanelWithAnim()
-    {
-        AudioManager.Instance.PlaySfxSound(rewardSound, 0.3f, 0.95f, 1.05f);
-
-        // Подготовка панели перед показом
-        artefactOpenPanel.SetActive(true);
-        artefactCanvasGroup.alpha = 0;
-        artefactRect.localScale = Vector3.one * 0.8f;
-
-        // Быстрая и сочная анимация появления
-        artefactCanvasGroup.DOFade(1, 0.4f);
-        artefactRect.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
-    }
 
     public void OpenNextRegionPanel()
     {
